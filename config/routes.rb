@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :projects, only: %i[index new create show] do
     resources :items, only: %i[create edit update]
+    resources :item_groups, only: %i[create update destroy] # Add routes to create, rename, and delete groups within an RFQ.
   end
 
   resources :suppliers, only: :index

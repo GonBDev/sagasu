@@ -24,10 +24,20 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def add_material?
-    user.buyer? && show? && record.draft?
+    editable_by_owner? # Apply the shared edit rule when adding materials.
   end
 
   def edit_material?
-    add_material?
+    editable_by_owner? # Apply the same rule when updating or moving materials.
   end
+
+  def manage_item_groups? # Authorize creating, renaming, and deleting groups.
+    editable_by_owner? # Apply the same rule to group changes.
+  end # End the group management policy.
+
+  private # Keep the shared authorization helper internal.
+
+  def editable_by_owner? # Centralize authorization for project edits.
+    user.buyer? && show? && (record.draft? || record.returned?) # Require buyer role, ownership, and an editable status.
+  end # End the shared authorization helper.
 end
