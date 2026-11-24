@@ -1,0 +1,13 @@
+<h1>New RFQ Project</h1>
+
+<%= simple_form_for @project do |f| %>
+  <%= f.input :title %>
+  <%= f.input :erp_rfq, label: "ERP RFQ reference", as: :string %>
+  <%= f.input :scope %>
+  <%= f.input :client_name, as: :string %>
+  <%= f.input :client_area, as: :string %>
+  <%= f.input :budget_amount %>
+  <%= f.input :budget_currency, as: :string %>
+  <%= f.input :buyer_comment %>
+  <%= f.button :submit, "Save draft", class: "btn btn-primary" %>
+<% end %>
