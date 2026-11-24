@@ -4,6 +4,9 @@ class Item < ApplicationRecord
 
   validate :item_group_belongs_to_project
 
+  validates :description, :unit_of_measure, presence: true
+  validates :quantity, numericality: { greater_than: 0 }
+
   private
 
   def item_group_belongs_to_project

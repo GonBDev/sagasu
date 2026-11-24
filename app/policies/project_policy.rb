@@ -10,6 +10,9 @@ class ProjectPolicy < ApplicationPolicy
     # def resolve
     #   scope.all
     # end
+    def resolve
+      scope.where(user_id: user.id)
+    end
   end
 
   def create?
@@ -18,5 +21,13 @@ class ProjectPolicy < ApplicationPolicy
 
   def show?
     record.user_id == user.id
+  end
+
+  def add_material?
+    user.buyer? && show? && record.draft?
+  end
+
+  def edit_material?
+    add_material?
   end
 end
