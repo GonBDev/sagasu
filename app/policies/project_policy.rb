@@ -11,16 +11,18 @@ class ProjectPolicy < ApplicationPolicy
     #   scope.all
     # end
     def resolve
-      scope.where(user_id: user.id)
+      return scope.all if user.has_role?(:viewer) || user.has_role?(:auditor) # Let viewers and auditors list all RFQs.
+
+      scope.where(user_id: user.id) # Limit everyone else to their own RFQs.
     end
   end
 
   def create?
-    user.buyer?
+    user.has_role?(:buyer) # Require a buyer grant to create RFQs.
   end
 
   def show?
-    record.user_id == user.id
+    record.user_id == user.id || user.has_role?(:viewer) || user.has_role?(:auditor) # Allow owners, viewers, and auditors to open RFQs.
   end
 
   def add_material?
@@ -38,6 +40,6 @@ class ProjectPolicy < ApplicationPolicy
   private # Keep the shared authorization helper internal.
 
   def editable_by_owner? # Centralize authorization for project edits.
-    user.buyer? && show? && (record.draft? || record.returned?) # Require buyer role, ownership, and an editable status.
+    user.has_role?(:buyer) && record.user_id == user.id && (record.draft? || record.returned?) # Require ownership even when the buyer also has organization-wide read access.
   end # End the shared authorization helper.
 end

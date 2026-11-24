@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   end
 
   resources :suppliers, only: :index
+
+    resources :users, only: [] do # Scope role changes to the target account.
+    resources :user_roles, only: %i[create destroy] # Expose grant and revoke actions.
+  end # Close the nested user routes.
 end

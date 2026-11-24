@@ -4,7 +4,8 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers # Enable sign_in for request tests.
 
   setup do # Start each test with its own buyer, RFQ, groups, and material.
-    buyer = User.create!(email: "buyer@example.com", password: "test-password", role: :buyer) # Create the RFQ owner.
+    buyer = User.create!(email: "buyer@example.com", password: "test-password") # Create the owner before assigning the buyer grant.
+    buyer.user_roles.create!(role: :buyer) # Grant the buyer access through the new table.
     @project = buyer.projects.create!(title: "Office supplies", status: :draft) # Start with an editable RFQ.
     @source_group = @project.item_groups.create!(title: "Electrical") # Create the material's starting group.
     @target_group = @project.item_groups.create!(title: "Equipment") # Create another group in the same RFQ.
