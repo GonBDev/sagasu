@@ -1,24 +1,50 @@
 <h1><%= @project.title %></h1>
 <p>Status: <%= @project.status.humanize %></p>
 
-<h2>Materials</h2>
-
-<% if @items.empty? %>
-  <p>No materials added yet.</p>
-<% else %>
-  <ul>
-    <% @items.each do |item| %>
-      <li>
-        <%= item.description %>
-        · <%= number_with_precision(item.quantity, strip_insignificant_zeros: true, precision: nil) %>
-        <%= item.unit_of_measure %>
-        <% if policy(@project).edit_material? %>
-          <%= link_to "Edit", edit_project_item_path(@project, item) %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+<h2>Material groups</h2><%# Add the group section heading. %>
+<% can_manage_groups = policy(@project).manage_item_groups? %><%# Check whether the buyer can change groups. %>
+<% if can_manage_groups %><%# Show group creation when permitted. %>
+  <%= simple_form_for :item_group, url: project_item_groups_path(@project), method: :post do |form| %><%# Submit to the nested create route. %>
+    <%= form.input :title, label: "Group name", required: true %><%# Collect the new group name. %>
+    <%= form.button :submit, "Create group", class: "btn btn-primary" %><%# Save the new group. %>
+  <% end %><%# Close the create form. %>
+<% end %><%# Close the creation permission check. %>
+<% groups = @project.item_groups.order(:title, :id).to_a %><%# Load the RFQ's groups once. %>
+<% materials_by_group = @items.group_by(&:item_group_id) %><%# Index the saved materials by group ID. %>
+<% material_group_options = groups.map { |group| [group.title, group.id] } %><%# Reuse the same choices in every move form. %>
+<% (groups + [nil]).each do |group| %><%# Add an Ungrouped section after the saved groups. %>
+  <div class="border rounded p-3 my-3"><%# Give each group its own section. %>
+    <h3 class="h5"><%= group ? group.title : "Ungrouped materials" %></h3><%# Name the section using the saved group or the Ungrouped label. %>
+    <% if group && can_manage_groups %><%# Show rename and delete controls for saved groups. %>
+      <%= simple_form_for group, url: project_item_group_path(@project, group), method: :patch do |form| %><%# Submit edits to the nested update route. %>
+        <%= form.input :title, label: "Group name" %><%# Prefill the current name. %>
+        <%= form.button :submit, "Rename group", class: "btn btn-outline-primary" %><%# Save the edited name. %>
+      <% end %><%# Close the rename form before rendering the separate delete form. %>
+      <%= button_to "Delete group", project_item_group_path(@project, group), method: :delete, class: "btn btn-outline-danger mt-2", form: { data: { turbo_confirm: "Delete this group? Its materials will become ungrouped." } } %><%# Confirm before submitting the delete request. %>
+    <% end %><%# Close the editing permission check. %>
+    <% section_materials = materials_by_group.fetch(group&.id, []) %><%# Get the materials for this section. %>
+    <% if section_materials.empty? %><%# Check whether this section has any materials. %>
+      <p>No materials in this section.</p><%# Show the empty state for this section. %>
+    <% else %><%# Show the assigned materials. %>
+      <ul><%# Start the section’s materials list. %>
+        <% section_materials.each do |item| %><%# Render each material in this section. %>
+          <li><%# Start the material row. %>
+            <%= item.description %><%# Show the material description. %>
+            · <%= number_with_precision(item.quantity, strip_insignificant_zeros: true, precision: nil) %><%# Show the quantity. %>
+            <%= item.unit_of_measure %><%# Show the unit. %>
+            <% if policy(@project).edit_material? %><%# Check permission to edit or move the material. %>
+              <%= link_to "Edit", edit_project_item_path(@project, item) %><%# Open the material edit form. %>
+              <%= simple_form_for item, url: project_item_path(@project, item), method: :patch do |form| %><%# Submit moves through the existing update route. %>
+                <%= form.input :item_group_id, as: :select, collection: material_group_options, include_blank: "Ungrouped", label: "Group", required: false, input_html: { id: dom_id(item, :group_select) } %><%# Give each group selector its own ID and allow clearing the assignment. %>
+                <%= form.button :submit, "Move material", class: "btn btn-outline-primary btn-sm" %><%# Save the selected group. %>
+              <% end %><%# Close the move form. %>
+            <% end %><%# Close the material edit permission check. %>
+          </li><%# Close the material row. %>
+        <% end %><%# Finish listing materials in this section. %>
+      </ul><%# Close the materials list. %>
+    <% end %><%# Close the section’s empty-state check. %>
+  </div><%# Close the group section. %>
+<% end %><%# Finish listing groups. %>
 
 <% if policy(@project).add_material? %>
   <h2>Add material</h2>

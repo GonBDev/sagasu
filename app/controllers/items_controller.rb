@@ -22,7 +22,14 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(item_params)
+    attributes = item_params # Keep the submitted material fields.
+    if attributes.key?(:item_group_id) # Preserve the current group when the regular edit form omits it.
+      group_id = attributes.delete(:item_group_id) # Resolve the submitted ID through the current project.
+      # A nonblank ID must belong to this RFQ.
+      attributes[:item_group] = @project.item_groups.find(group_id) if group_id.present?
+      attributes[:item_group] = nil if group_id.blank? # A blank selection moves the material to Ungrouped.
+    end
+    if @item.update(attributes) # Save the material changes and any new assignment.
       redirect_to project_path(@project), notice: "Material updated.", status: :see_other
     else
       render :edit, status: 422
@@ -32,12 +39,14 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:erp_material, :description, :quantity, :unit_of_measure)
+    params.require(:item).permit(:erp_material, :description, :quantity,
+                                 :unit_of_measure, :item_group_id)
+    # Accept a group assignment from the move form.
   end
 
   def material_access_denied
     redirect_to project_path(@project),
-                alert: "You can only change materials on your own draft RFQs.",
+                lert: "You can only change materials on your own draft or returned RFQs.", # Match the policy's editable statuses.
                 status: :see_other
   end
 
