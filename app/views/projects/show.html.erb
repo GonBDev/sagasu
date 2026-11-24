@@ -1,2 +1,27 @@
 <h1><%= @project.title %></h1>
 <p>Status: <%= @project.status.humanize %></p>
+
+<h2>Materials</h2>
+
+<% if @items.empty? %>
+  <p>No materials added yet.</p>
+<% else %>
+  <ul>
+    <% @items.each do |item| %>
+      <li>
+        <%= item.description %>
+        · <%= number_with_precision(item.quantity, strip_insignificant_zeros: true, precision: nil) %>
+        <%= item.unit_of_measure %>
+        <% if policy(@project).edit_material? %>
+          <%= link_to "Edit", edit_project_item_path(@project, item) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if policy(@project).add_material? %>
+  <h2>Add material</h2>
+
+<%= render "items/form", project: @project, item: @item, submit_label: "Add material" %>
+<% end %>

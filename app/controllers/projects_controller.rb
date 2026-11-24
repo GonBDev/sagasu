@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
-  after_action :verify_authorized
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
   rescue_from Pundit::NotAuthorizedError, with: :project_access_denied
 
   def new
@@ -21,6 +23,18 @@ class ProjectsController < ApplicationController
   def show
     @project = current_user.projects.find(params[:id])
     authorize @project
+    @item = @project.items.build
+    @items = @project.items.order(:id)
+  end
+
+  def index
+    @query = params[:q].to_s.strip
+    @projects = policy_scope(Project).order(updated_at: :desc)
+
+    return unless @query.present?
+
+    term = Project.sanitize_sql_like(@query)
+    @projects = @projects.where("title ILIKE ?", "%#{term}%")
   end
 
   private

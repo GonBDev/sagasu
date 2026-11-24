@@ -1,2 +1,17 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container py-5">
+  <h1>Sagasu</h1>
+  <p class="lead">Create RFQs and organize the materials you need to buy.</p>
+
+  <section id="quick-start" class="mt-4">
+    <h2>Quick Start</h2>
+
+    <% if user_signed_in? %>
+      <% if policy(Project).new? %>
+        <%= link_to "Create an RFQ", new_project_path, class: "btn btn-primary" %>
+      <% end %>
+      <%= link_to "My Projects", projects_path, class: "btn btn-outline-primary" %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path, class: "btn btn-primary" %>
+    <% end %>
+  </section>
+</div>
