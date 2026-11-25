@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :item_groups, only: %i[create update destroy] # Add routes to create, rename, and delete groups within an RFQ.
   end
 
-  resources :suppliers, only: :index
+  resources :suppliers, only: %i[index show]
 
     resources :users, only: [] do # Scope role changes to the target account.
     resources :user_roles, only: %i[create destroy] # Expose grant and revoke actions.

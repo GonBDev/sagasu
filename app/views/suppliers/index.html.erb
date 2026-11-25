@@ -6,7 +6,7 @@
   <% else %>
     <ul class="list-group">
       <% @suppliers.each do |supplier| %>
-        <li class="list-group-item"><%= supplier.name %></li>
+        <li class="list-group-item"><%= link_to supplier.name, supplier_path(supplier) %></li>
       <% end %>
     </ul>
   <% end %>
