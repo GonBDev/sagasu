@@ -1,10 +1,25 @@
-// Define variables for your color scheme
+// Sagasu palette (docs/brand/README.md). Contrast ratios are WCAG 2.1, against the background named.
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Brand
+$blue-slate:    #326273; // logo, navbar, headings, primary buttons (white text: 6.7:1)
+$slate-dark:    #24495A; // hover / pressed state of Blue Slate
+$pacific-blue:  #5C9EAD; // icons, borders, charts. Never behind white text (3.0:1)
+$light-pacific: #A3CDD6; // Pacific Blue on dark backgrounds only
+$pacific-soft:  #E8F2F5; // light tint for selected rows and info panels
+$tangerine:     #E39774; // accent: AI suggestions, selected supplier. Use Ink text on it (5.9:1)
+$tangerine-soft: #FBEDE6; // light tint behind AI explanations
+$white:         #FFFFFF;
+$platinum:      #EEEEEE; // borders, secondary surfaces
+$canvas:        #F4F5F5; // page background (lighter Platinum)
+$ink:           #1E2F36; // body text (13.9:1 on white)
+$muted:         #4F6470; // secondary text (6.2:1 on white, 5.6:1 on canvas)
+
+$border-subtle: #D4DEE0; // dividers on light surfaces
+
+// Status: always shown with an icon and a text label, never color alone
+$green:       #2F7A5C;  // approved (5.2:1 on its tint)
+$green-soft:  #E6F3EC;
+$red:         #B2453F;  // returned / error (5.4:1 on its tint)
+$red-soft:    #FBEBEA;
+$yellow:      #8A6416;  // pending (5.3:1 on its tint)
+$yellow-soft: #FBF1DC;

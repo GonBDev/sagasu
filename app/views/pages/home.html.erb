@@ -1,17 +1,150 @@
-<div class="container py-5">
-  <h1>Sagasu</h1>
-  <p class="lead">Create RFQs and organize the materials you need to buy.</p>
+<% content_for :title, "Supplier Discovery and RFQ Projects | Sagasu" %>
 
-  <section id="quick-start" class="mt-4">
-    <h2>Quick Start</h2>
+<main class="sagasu-home">
+  <section class="sagasu-home__hero" aria-labelledby="home-title">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+          <div class="sagasu-home__brand">
+            <%= image_tag "sagasu-logo-mark.svg", alt: "", width: 36, height: 36 %>
+            <span>Sagasu</span>
+          </div>
+          <h1 id="home-title">Find the right suppliers <span>for your RFQ.</span></h1>
+          <p class="sagasu-home__intro">Bring your purchasing needs and supplier research together. Define your RFQ, group related materials, and review supplier records as you prepare a bidder list.</p>
 
-    <% if user_signed_in? %>
-      <% if policy(Project).new? %>
-        <%= link_to "Create an RFQ", new_project_path, class: "btn btn-primary" %>
-      <% end %>
-      <%= link_to "My Projects", projects_path, class: "btn btn-outline-primary" %>
-    <% else %>
-      <%= link_to "Log in", new_user_session_path, class: "btn btn-primary" %>
-    <% end %>
+          <div id="quick-start" class="d-flex flex-wrap gap-2">
+            <% if user_signed_in? %>
+              <% if policy(Project).new? %>
+                <%= link_to "Create an RFQ", new_project_path, class: "btn sagasu-home__primary" %>
+              <% end %>
+              <%= link_to "My Projects", projects_path, class: "btn sagasu-home__secondary" %>
+            <% else %>
+              <%= link_to new_user_registration_path, class: "btn sagasu-home__primary" do %>
+                Create an account <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to "Log in", new_user_session_path, class: "btn sagasu-home__secondary" %>
+            <% end %>
+          </div>
+
+          <nav class="sagasu-home__jump d-flex flex-wrap gap-3 mt-4" aria-label="On this page">
+            <a href="#how-it-works">How it works</a>
+            <a href="#trust-and-evidence">Trust &amp; evidence</a>
+            <a href="#product-vision">Product vision</a>
+          </nav>
+        </div>
+
+        <div class="col-lg-6">
+          <figure class="sagasu-home__preview mb-0">
+            <figcaption class="sagasu-home__preview-heading pb-3">
+              <span>Example RFQ</span>
+              <span class="badge rounded-pill sagasu-home__draft">Draft</span>
+            </figcaption>
+            <p class="h4 mt-3 mb-1">Shinjuku office tower</p>
+            <p class="small mb-4">Source facing bricks and mortar for delivery to Tokyo.</p>
+            <p class="sagasu-home__eyebrow">Material groups</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-0 py-3">
+                <strong class="d-block">Masonry</strong>
+                <span class="small">Facing bricks · 50,000 units</span>
+              </li>
+              <li class="list-group-item px-0 py-3">
+                <strong class="d-block">Mortar</strong>
+                <span class="small">Masonry mortar · 120 bags</span>
+              </li>
+            </ul>
+          </figure>
+        </div>
+      </div>
+    </div>
   </section>
-</div>
+
+  <section id="how-it-works" class="sagasu-home__band" aria-labelledby="home-workflow">
+    <div class="container">
+      <h2 id="home-workflow">From purchasing need to supplier research</h2>
+      <ol class="row row-cols-1 row-cols-md-3 g-3 list-unstyled mt-3 mb-0">
+        <% [
+          ["clipboard-list", "Describe the need", "Create an RFQ and enter the materials you need to buy."],
+          ["layer-group", "Group related materials", "Keep items that can go to the same type of supplier together."],
+          ["search", "Review supplier records", "Check the directory for supplier categories, locations, and contact details."]
+        ].each do |icon, title, description| %>
+          <li class="col">
+            <div class="card card-body sagasu-home__step h-100 p-4 rounded-4">
+              <i class="fas fa-<%= icon %> sagasu-home__step-icon" aria-hidden="true"></i>
+              <h3><%= title %></h3>
+              <p class="mb-0"><%= description %></p>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </section>
+
+  <section id="trust-and-evidence" class="sagasu-home__band sagasu-home__band--muted" aria-labelledby="home-trust">
+    <div class="container">
+      <div class="row gy-4 align-items-start">
+        <div class="col-lg-4">
+          <p class="sagasu-home__eyebrow">Trust &amp; evidence</p>
+          <h2 id="home-trust">See what each supplier record contains.</h2>
+        </div>
+        <div class="col-lg-8">
+          <div class="row row-cols-1 row-cols-sm-2 g-3">
+            <% [
+              ["tags", "Business activity", "Review the recorded category, description, and tags to assess fit."],
+              ["map-marker-alt", "Location", "Check the supplier’s city and country. Confirm delivery coverage separately."],
+              ["address-card", "Contact details", "Look for a primary email address or website before reaching out."],
+              ["database", "Source and status", "Check the source system and whether the record is marked active."]
+            ].each do |icon, title, description| %>
+              <div class="col">
+                <div class="card card-body sagasu-home__principle h-100 p-3 rounded-4 flex-row align-items-baseline gap-2 bg-white">
+                  <i class="fas fa-<%= icon %>" aria-hidden="true"></i>
+                  <div>
+                    <h3><%= title %></h3>
+                    <p class="mb-0"><%= description %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="product-vision" class="sagasu-home__band" aria-labelledby="home-vision">
+    <div class="container">
+      <p class="sagasu-home__eyebrow">Product vision</p>
+      <h2 id="home-vision">From supplier discovery to an auditable bidder list</h2>
+      <p class="sagasu-home__intro">Sagasu’s vision is to help procurement teams build bidder lists and preserve the reasoning behind their decisions.</p>
+      <ul class="row row-cols-1 row-cols-md-3 g-3 list-unstyled mb-0">
+        <% [
+          ["search", "AI-assisted discovery", "Review why a supplier was suggested, what evidence supports the match, and which details still need confirmation."],
+          ["users", "Buyer collaboration", "Share observations with authorized colleagues and record why suppliers were shortlisted."],
+          ["clipboard-check", "Human approval and audit", "Have designated approvers review the bidder list and preserve the evidence and decisions for authorized audit."]
+        ].each do |icon, title, description| %>
+          <li class="col">
+            <div class="card card-body sagasu-home__step h-100 p-4 rounded-4">
+              <i class="fas fa-<%= icon %> sagasu-home__step-icon" aria-hidden="true"></i>
+              <h3><%= title %></h3>
+              <p class="mb-0"><%= description %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </section>
+
+  <div class="container py-4">
+    <section class="sagasu-home__cta" aria-labelledby="home-next">
+      <div>
+        <h2 id="home-next"><%= user_signed_in? ? "Return to your projects." : "Get started with Sagasu." %></h2>
+        <% if user_signed_in? %>
+          <%= link_to "My Projects", projects_path, class: "btn sagasu-home__accent mt-2" %>
+        <% else %>
+          <%= link_to new_user_registration_path, class: "btn sagasu-home__accent mt-2" do %>
+            Create an account <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</main>

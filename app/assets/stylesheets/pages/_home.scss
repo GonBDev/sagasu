@@ -1,1 +1,209 @@
-// Specific CSS for your home-page
+.sagasu-home {
+  background: $white;
+  color: $muted;
+
+  h1, h2, h3 {
+    color: $blue-slate;
+    font-weight: 700;
+  }
+
+  h1 {
+    max-width: 16ch;
+    font-size: clamp(2.5rem, 5.2vw, 4.35rem);
+    line-height: 1.04;
+    letter-spacing: -.045em;
+
+    span {
+      color: $ink;
+    }
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  a:focus-visible {
+    outline: 3px solid $ink;
+    outline-offset: 3px;
+  }
+
+  .btn {
+    border-radius: .5rem;
+    font-weight: 700;
+    padding: .7rem 1.1rem;
+    transition: background-color .2s ease, color .2s ease;
+  }
+
+  &__hero {
+    padding-block: clamp(2.75rem, 7vw, 6rem);
+    background: linear-gradient(150deg, $white 25%, $pacific-soft);
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    margin-bottom: 1.25rem;
+    color: $blue-slate;
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  &__eyebrow {
+    color: $ink;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: .65rem;
+  }
+
+  &__intro {
+    max-width: 56ch;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.65;
+  }
+
+  &__jump a {
+    color: $ink;
+    font-size: .875rem;
+    text-underline-offset: .2em;
+  }
+
+  &__primary {
+    color: $white;
+    background: $blue-slate;
+
+    &:hover, &:focus-visible {
+      color: $white;
+      background: $slate-dark;
+    }
+  }
+
+  &__secondary {
+    color: $ink;
+    background: $white;
+    border-color: $blue-slate;
+
+    &:hover, &:focus-visible {
+      color: $ink;
+      background: $pacific-soft;
+      border-color: $blue-slate;
+    }
+  }
+
+  &__preview {
+    border: 1px solid $border-subtle;
+    border-radius: 1rem;
+    border-top: .25rem solid $pacific-blue;
+    background: $white;
+    padding: clamp(1rem, 3vw, 2rem);
+    box-shadow: 0 .75rem 2.5rem rgba($ink, .12);
+  }
+
+  &__preview-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    border-bottom: 1px solid $border-subtle;
+    color: $ink;
+    font-size: .875rem;
+    font-weight: 700;
+  }
+
+  &__draft {
+    color: $ink;
+    background: $pacific-soft;
+  }
+
+  &__preview .list-group-item {
+    --bs-list-group-bg: #{$white};
+    --bs-list-group-color: #{$muted};
+    --bs-list-group-border-color: #{$border-subtle};
+  }
+
+  &__band {
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+
+    &--muted {
+      background: $platinum;
+    }
+  }
+
+  &__step, &__principle {
+    color: inherit;
+    font-size: .9rem;
+    line-height: 1.55;
+  }
+
+  &__step {
+    background: $white;
+    --bs-card-border-color: #{$border-subtle};
+  }
+
+  &__step-icon {
+    display: inline-grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    margin-bottom: 1rem;
+    color: $blue-slate;
+    background: $pacific-soft;
+    border-radius: .5rem;
+  }
+
+  &__principle {
+    --bs-card-border-color: #{$border-subtle};
+
+    > i {
+      color: $blue-slate;
+    }
+  }
+
+  &__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    color: $white;
+    background: linear-gradient(120deg, $blue-slate, $slate-dark);
+    border-radius: 1rem;
+
+    h2 {
+      margin-bottom: 0;
+      color: inherit;
+    }
+
+    a:focus-visible {
+      outline-color: $white;
+    }
+  }
+
+  &__accent {
+    color: $white;
+    background: $blue-slate;
+    border-color: $white;
+
+    &:hover, &:focus-visible {
+      color: $ink;
+      background: $white;
+      border-color: $white;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sagasu-home .btn {
+    transition: none;
+  }
+}

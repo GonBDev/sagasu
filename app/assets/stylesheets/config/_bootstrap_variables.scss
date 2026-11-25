@@ -7,16 +7,18 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
+$body-bg:                $canvas;
 $font-size-base:         1rem;
 
 // Colors
-$body-color: $gray;
-$primary:    $blue;
+$body-color: $ink;
+$headings-color: $blue-slate;
+$border-color: $border-subtle;
+$primary:    $blue-slate;
 $success:    $green;
-$info:       $yellow;
+$info:       $pacific-blue;
 $danger:     $red;
-$warning:    $orange;
+$warning:    $yellow;
 
 // Buttons & inputs' radius
 $border-radius-sm:            .0625rem;
