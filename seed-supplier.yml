@@ -1,0 +1,111 @@
+suppliers:
+  - erp_vendor_id: "DEMO-0001"
+    name: "Aobane Construction Supply"
+    sm_vendor_id: "SM-DEMO-0001"
+    source_system: "demo"
+    primary_email: "quotes@aobane-supply.example.test"
+    country_code: "JP"
+    state_name: "Tokyo"
+    city: "Koto"
+    tax_id: "DEMO-JP-TAX-0001"
+    tax_id_type_code: "DEMO"
+    active: true
+    category: "Structural Materials"
+    business_activity: "Wholesale distribution and job-site delivery of structural steel and concrete accessories."
+    description: "Supplies reinforcing bar, welded wire mesh, anchor bolts, and formwork hardware for commercial construction. Offers cut-to-length preparation and scheduled deliveries in the Tokyo area."
+    website: "https://aobane-supply.example.test"
+    ai_comments: "Fictional supplier with overlapping rebar and formwork capabilities for ranking tests."
+    tags: [rebar, welded wire mesh, anchor bolts, formwork, site delivery]
+    size: "mid"
+
+  - erp_vendor_id: "DEMO-0002"
+    name: "Mizunagi Building Supply"
+
+  - erp_vendor_id: "DEMO-0003"
+    name: "Kohaku Ready-Mix"
+    country_code: "JP"
+    state_name: "Kanagawa"
+    city: "Yokohama"
+    category: "Concrete"
+    description: "Supplies ready-mix concrete for foundations, slabs, and retaining walls. Coordinates pump-truck delivery."
+    primary_email: "dispatch@kohaku-concrete.example.test"
+    active: true
+    tags: [ready-mix concrete, concrete pumping, foundations]
+
+  - erp_vendor_id: "DEMO-0004"
+    name: "Shirokumo Reinforcement Works"
+    country_code: "JP"
+    state_name: "Saitama"
+    city: "Kawaguchi"
+    category: "Rebar Fabrication and Installation"
+    description: "Cuts and bends reinforcing bar from drawings and provides site crews for rebar installation."
+    primary_email: "estimating@shirokumo-rebar.example.test"
+    active: true
+    tags: [rebar, fabrication, installation]
+
+  - erp_vendor_id: "DEMO-0005"
+    name: "Natsuhara Scaffold Rental"
+    country_code: "JP"
+    state_name: "Osaka"
+    city: "Sakai"
+    category: "Temporary Works"
+    description: "Rents modular scaffolding, temporary stairs, and edge protection. Provides erection and dismantling crews."
+    primary_email: "rentals@natsuhara-scaffold.example.test"
+    active: true
+    tags: [scaffolding, rental, edge protection]
+
+  - erp_vendor_id: "DEMO-0006"
+    name: "Tokinami Dewatering Services"
+    country_code: "JP"
+    state_name: "Aichi"
+    city: "Nagoya"
+    category: "Site Services"
+    description: "Provides excavation dewatering, temporary pump rental, and on-site monitoring."
+    primary_email: "projects@tokinami-dewatering.example.test"
+    active: true
+    tags: [dewatering, pumps, excavation]
+
+  - erp_vendor_id: "DEMO-0007"
+    name: "Akeboshi Electrical Materials"
+    country_code: "JP"
+    state_name: "Fukuoka"
+    city: "Fukuoka"
+    category: "Electrical"
+    description: "Supplies conduit, cable trays, distribution boards, and temporary power equipment for job sites."
+    primary_email: "sales@akeboshi-electrical.example.test"
+    active: true
+    tags: [conduit, cable trays, temporary power]
+
+  - erp_vendor_id: "DEMO-0008"
+    name: "Yukimori Formwork Rental"
+    country_code: "JP"
+    state_name: "Hokkaido"
+    city: "Sapporo"
+    category: "Temporary Works"
+    description: "Rents reusable wall forms, shoring props, and formwork hardware."
+    primary_email: "rentals@yukimori-formwork.example.test"
+    active: false
+    tags: [formwork, shoring, rental]
+
+  - erp_vendor_id: "DEMO-0009"
+    name: "Hibari Waterproofing Works"
+    country_code: "JP"
+    state_name: "Miyagi"
+    city: "Sendai"
+    category: "Waterproofing"
+    description: "Installs sheet membranes and liquid-applied waterproofing for roofs, balconies, and basements."
+    primary_email: null
+    active: true
+    size: "small"
+    tags: [waterproofing, membranes, roofing]
+
+  - erp_vendor_id: "DEMO-0010"
+    name: "Asagiri Construction Logistics"
+    country_code: "JP"
+    state_name: "Hiroshima"
+    city: "Hiroshima"
+    category: "Construction Logistics"
+    description: "Coordinates flatbed deliveries, truck-mounted crane unloading, and scheduled site deliveries."
+    primary_email: "dispatch@asagiri-logistics.example.test"
+    active: true
+    tags: [crane unloading, flatbed transport, site delivery]

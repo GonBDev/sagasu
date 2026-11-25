@@ -5,4 +5,9 @@ class SuppliersController < ApplicationController
     authorize Supplier
     @suppliers = Supplier.order(:name)
   end
+
+  def show
+    @supplier = Supplier.find(params[:id])
+    authorize @supplier
+  end
 end

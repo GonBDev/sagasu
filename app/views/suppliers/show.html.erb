@@ -1,0 +1,29 @@
+<div class="container py-4">
+  <%= link_to "Back to suppliers", suppliers_path, class: "d-inline-block mb-3" %>
+  <h1><%= @supplier.name %></h1>
+
+  <dl class="row mt-4">
+    <% {
+      "ERP vendor ID" => @supplier.erp_vendor_id,
+      "Supplier management ID" => @supplier.sm_vendor_id,
+      "Source system" => @supplier.source_system,
+      "Status" => { true => "Active", false => "Inactive" }[@supplier.active],
+      "Category" => @supplier.category,
+      "Size" => @supplier.size&.humanize,
+      "Business activity" => @supplier.business_activity,
+      "Description" => @supplier.description,
+      "Primary email" => @supplier.primary_email,
+      "Website" => @supplier.website,
+      "Country code" => @supplier.country_code,
+      "State or prefecture" => @supplier.state_name,
+      "City" => @supplier.city,
+      "Tax ID" => @supplier.tax_id,
+      "Tax ID type" => @supplier.tax_id_type_code,
+      "Tags" => @supplier.tags.join(", "),
+      "AI comments" => @supplier.ai_comments
+    }.each do |label, value| %>
+      <dt class="col-sm-4 col-lg-3"><%= label %></dt>
+      <dd class="col-sm-8 col-lg-9 text-break"><%= value.presence || "—" %></dd>
+    <% end %>
+  </dl>
+</div>
