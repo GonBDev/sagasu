@@ -1,12 +1,168 @@
 .navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
+  --bs-navbar-color: #{$muted};
+  --bs-navbar-hover-color: #{$blue-slate};
+  --bs-navbar-brand-color: #{$blue-slate};
+  --bs-navbar-brand-hover-color: #{$slate-dark};
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+  padding: 0;
+  background: $white;
+  border-bottom: 1px solid $border-subtle;
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+  .sagasu-nav-inner {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 82.5rem;
+    min-height: 4.25rem;
+    margin-inline: auto;
+    padding: .75rem clamp(1rem, 3vw, 2rem);
+    column-gap: clamp(.5rem, 1.4vw, 1.25rem);
+  }
+
+  .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .navbar-collapse {
+    column-gap: .5rem;
+  }
+
+  .navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: clamp(.375rem, .85vw, .75rem);
+    white-space: nowrap;
+    border-radius: .5rem;
+    font-weight: 600;
+
+    &:hover, &[aria-current="page"] {
+      color: $blue-slate;
+      background: $pacific-soft;
+    }
+  }
+
+  .btn, .navbar-toggler, .dropdown-item {
+    min-height: 44px;
+    border-radius: .5rem;
+  }
+
+  a.btn, .dropdown-item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid $blue-slate;
+    outline-offset: 2px;
+  }
+
+  .sagasu-nav-actions {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: clamp(.375rem, 1vw, .75rem);
+    margin-inline-start: auto;
+
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  .sagasu-nav-account {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .125rem .375rem;
+    color: $blue-slate;
+
+    &:hover, &[aria-expanded="true"] {
+      color: $ink;
+      background: $pacific-soft;
+      border-color: $ink;
+    }
+  }
+
+  .sagasu-nav-avatar {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 2px solid $white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px $light-pacific;
+    color: $white;
+    background: $blue-slate;
+    font-weight: 700;
+  }
+
+  .sagasu-nav-menu {
+    width: 17rem;
+    max-width: calc(100vw - 2rem);
+    min-width: 0;
+    padding: .5rem;
+    background: $canvas;
+    border-color: $border-subtle;
+    border-radius: .875rem;
+    box-shadow: 0 .75rem 2rem rgba($ink, .12);
+
+    .dropdown-item {
+      gap: .5rem;
+
+      &:hover, &:focus-visible {
+        color: $ink;
+        background: $pacific-soft;
+      }
+    }
+  }
+
+  .sagasu-nav-profile {
+    padding: .75rem .875rem;
+    overflow-wrap: anywhere;
+  }
+
+  .sagasu-nav-name {
+    margin-bottom: .25rem;
+    font-weight: 700;
+  }
+
+  .sagasu-nav-email {
+    margin-bottom: .5rem;
+    color: $muted;
+    font-size: .875rem;
+  }
+
+  .sagasu-nav-role {
+    padding: .125rem .5rem;
+    border-radius: 50rem;
+    color: $blue-slate;
+    background: $pacific-soft;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  @include media-breakpoint-down(md) {
+    .navbar-collapse {
+      padding-block: .5rem .25rem;
+    }
+
+    .sagasu-nav-actions {
+      flex-wrap: wrap;
+      margin-block-start: .5rem;
+      padding-block-start: .5rem;
+      border-top: 1px solid $border-subtle;
+    }
+
+    .sagasu-nav-account-group {
+      margin-inline-start: auto;
+    }
+  }
 }
