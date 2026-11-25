@@ -25,3 +25,15 @@ Start the app with `bin/rails server` and sign in with one of these addresses. A
 | `admin@sagasu.ai` | Admin |
 
 For repeated use, set `SAGASU_DEMO_PASSWORD` in your local `.env` and run `bin/rails db:seed`. Reruns preserve existing accounts, passwords, and grants. These accounts are seeded only in development.
+
+
+
+
+
+FOR seed-supplier.yml
+A local seed-supplier.yml at the Sagasu project root gives you a file you can prepare separately and load with bin/rails db:seed
+
+Require erp_vendor_id and name for each seed row. The app allows suppliers without an ERP ID, but the seed needs a stable key. Quote identifiers to preserve leading zeroes.
+Use the existing supplier column names. Keep contact and location fields optional. Use two-letter country codes, YAML booleans for active, and a YAML list for tags. Leave tax IDs, supplier-management IDs, and AI comments out of the starter data.
+Update matching suppliers by ERP ID. Apply the fields present in the YAML and preserve omitted fields. Keep suppliers absent from the file. If a row is invalid or an ID appears twice in the file, report the offending row and roll back the batch.
+Commit fictional demo data. Use DEMO- IDs and example.test contacts. Include overlapping capabilities for future search tests, plus one inactive supplier and one without an email.
