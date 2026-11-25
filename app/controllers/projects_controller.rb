@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = current_user.projects.find(params[:id])
+    @project = policy_scope(Project).find(params[:id]) # Load the RFQ from the projects this user can read.
     authorize @project
     @item = @project.items.build
     @items = @project.items.order(:id)
