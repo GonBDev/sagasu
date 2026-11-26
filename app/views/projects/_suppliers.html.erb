@@ -1,0 +1,101 @@
+<section aria-labelledby="supplier-suggestions-title">
+  <header class="mb-3">
+    <h2 id="supplier-suggestions-title" class="h4 mb-1">
+      <i class="fas fa-magnifying-glass me-1" aria-hidden="true"></i> Supplier suggestions
+    </h2>
+    <p class="text-body-secondary mb-0">Review the catalog evidence and confirm suitability with the supplier.</p>
+  </header>
+
+  <% if groups.empty? %>
+    <div class="card bg-white rounded-4 p-3">
+      <p class="mb-0">
+        No material groups yet.
+        <%= link_to "View Groups", bidder_list_groups_project_path(project) %>
+      </p>
+    </div>
+  <% end %>
+
+  <% groups.each do |group| %>
+    <% materials = materials_by_group.fetch(group.id, []) %>
+    <% suggestions = suggestions_by_group.fetch(group.id, []) %>
+    <% selected_ids = selected_by_group.fetch(group.id, []).map(&:supplier_id) %>
+    <section id="<%= dom_id(group, :supplier_search) %>" class="card bg-white rounded-4 mb-3" aria-labelledby="<%= dom_id(group, :suppliers_title) %>">
+      <div class="card-body p-3 p-md-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+          <div class="text-break">
+            <h3 id="<%= dom_id(group, :suppliers_title) %>" class="h5 mb-1"><%= group.title %></h3>
+            <p class="small text-body-secondary mb-0"><%= pluralize(materials.size, "material") %></p>
+          </div>
+          <% if can_manage_groups && materials.any? %>
+            <%= button_to "Suggest suppliers", suggest_suppliers_project_item_group_path(project, group),
+                          method: :post, class: "btn btn-outline-primary",
+                          data: { turbo_submits_with: "Finding suppliers…" } %>
+          <% end %>
+        </div>
+
+        <% if suggestions.empty? %>
+          <p class="text-body-secondary mb-0 mt-3">
+            <%= materials.empty? ? "This group has no materials." : "No AI suggestions for this group yet." %>
+          </p>
+        <% else %>
+          <ul class="list-group list-group-flush mt-2">
+            <% suggestions.each do |suggestion| %>
+              <li class="list-group-item bg-white px-0 py-3 text-break">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                  <%= link_to suggestion.supplier.name, supplier_path(suggestion.supplier), class: "fw-semibold" %>
+                  <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">AI suggested</span>
+                  <% if suggestion.selected? %>
+                    <span class="badge rounded-pill bg-success-subtle text-success-emphasis">Selected</span>
+                  <% end %>
+                  <% unless suggestion.supplier.active? %>
+                    <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Inactive</span>
+                  <% end %>
+                </div>
+                <p class="mb-0"><%= suggestion.ai_reason %></p>
+                <% if can_manage_groups && (suggestion.selected? || suggestion.supplier.active?) %>
+                  <%= button_to(suggestion.selected? ? "Remove from draft" : "Add to group",
+                                shortlist_supplier_project_item_group_path(project, group), method: :patch,
+                                params: { supplier_id: suggestion.supplier_id, selected: (!suggestion.selected?).to_s },
+                                class: "btn btn-sm btn-outline-primary mt-2") %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if can_manage_groups %>
+          <%= turbo_frame_tag dom_id(group, :supplier_results), class: "d-block border-top pt-3 mt-3",
+                              data: { turbo_action: "replace" } do %>
+            <%= render "suppliers/searchbar", search_path: bidder_list_suppliers_project_path(project),
+                                             query: search_group == group ? search_query : nil,
+                                             group_id: group.id, input_id: dom_id(group, :supplier_query) %>
+            <% if search_group == group && search_results %>
+              <% if search_results.empty? %>
+                <p class="text-body-secondary mt-3 mb-0">No active suppliers match your search.</p>
+              <% else %>
+                <ul class="list-group list-group-flush mt-2">
+                  <% search_results.each do |supplier| %>
+                    <li class="list-group-item px-0 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                      <div class="text-break">
+                        <%= link_to supplier.name, supplier_path(supplier), class: "fw-semibold", data: { turbo_frame: "_top" } %>
+                        <% if supplier.category.present? %>
+                          <span class="d-block small text-body-secondary"><%= supplier.category %></span>
+                        <% end %>
+                      </div>
+                      <% if selected_ids.include?(supplier.id) %>
+                        <span class="badge bg-success-subtle text-success-emphasis">Selected</span>
+                      <% else %>
+                        <%= button_to "Add to group", shortlist_supplier_project_item_group_path(project, group),
+                                      method: :patch, params: { supplier_id: supplier.id, selected: "true", q: search_query },
+                                      class: "btn btn-sm btn-outline-primary" %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</section>

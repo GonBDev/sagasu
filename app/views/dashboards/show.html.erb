@@ -1,0 +1,127 @@
+<% content_for :title, "Dashboard" %>
+<% status_labels = { "draft" => "Draft", "pending_approval" => "Waiting for approval", "returned" => "Returned", "approved" => "Approved" } %>
+<% status_colors = { "draft" => "secondary", "pending_approval" => "warning", "returned" => "danger", "approved" => "success" } %>
+<% metrics = [
+  ["folder-open", @project_count, "RFQ projects", projects_path],
+  ["list-check", @selection_count, "Supplier selections", nil],
+  ["hourglass-half", @status_counts.fetch("pending_approval", 0), "Waiting for approval", dashboard_path(status: "pending_approval")],
+  ["envelope", @unread_count, "Unread messages", messages_path]
+] %>
+
+<main class="container py-4 py-lg-5">
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+    <div class="text-break">
+      <p class="small text-uppercase fw-semibold text-body-secondary mb-1"><%= l(Date.current, format: "%A %e %B") %></p>
+      <h1 class="mb-1">
+        <%= current_user.name.present? ? "Welcome back, #{current_user.name.split.first}" : "Welcome back" %>
+      </h1>
+    </div>
+    <% if policy(Project).new? %>
+      <%= link_to new_project_path, class: "btn btn-primary fw-semibold" do %>
+        <i class="fas fa-plus me-1" aria-hidden="true"></i> New RFQ project
+      <% end %>
+    <% end %>
+  </header>
+
+  <section aria-label="Dashboard summary" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
+    <% metrics.each do |icon, count, label, path| %>
+      <div class="col">
+        <div class="card bg-white rounded-4 shadow-sm h-100">
+          <div class="card-body">
+            <span class="d-inline-block bg-primary-subtle text-primary-emphasis rounded-3 px-2 py-1 mb-2">
+              <i class="fas fa-<%= icon %>" aria-hidden="true"></i>
+            </span>
+            <p class="h2 mb-1"><%= number_with_delimiter(count) %></p>
+            <% if path %>
+              <%= link_to label, path, class: "link-primary" %>
+            <% else %>
+              <p class="text-body-secondary mb-0"><%= label %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+
+  <section id="quick-start" class="mb-4" aria-labelledby="dashboard-tasks-title">
+    <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-2">
+      <h2 id="dashboard-tasks-title" class="h4 mb-0">Needs attention</h2>
+      <%= link_to "View Sagasu Bot tasks", messages_path, class: "small link-primary" %>
+    </div>
+    <div class="card bg-white rounded-4">
+      <% if @pending_approvals.empty? && @returned_projects.empty? %>
+        <p class="card-body text-body-secondary mb-0">You have no outstanding RFQ tasks.</p>
+      <% else %>
+        <ul class="list-group list-group-flush rounded-4">
+          <% @pending_approvals.each do |approval| %>
+            <li class="list-group-item d-flex flex-wrap gap-2 align-items-baseline">
+              <strong>Review bidder list</strong>
+              <%= link_to approval.bidder_list_version.snapshot.fetch("project").fetch("title"),
+                          bidder_list_approval_project_path(approval.project_id), class: "text-break" %>
+            </li>
+          <% end %>
+          <% @returned_projects.each do |project| %>
+            <li class="list-group-item d-flex flex-wrap gap-2 align-items-baseline">
+              <strong>Revise returned RFQ</strong>
+              <%= link_to project.title, bidder_list_approval_project_path(project), class: "text-break" %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </section>
+
+  <section aria-labelledby="dashboard-projects-title">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      <h2 id="dashboard-projects-title" class="h4 mb-0">
+        <i class="fas fa-folder-open me-1" aria-hidden="true"></i> Recent projects
+      </h2>
+      <nav class="nav nav-pills flex-wrap gap-1" aria-label="Filter projects by status">
+        <% { nil => "All" }.merge(status_labels).each do |status, label| %>
+          <% count = status ? @status_counts.fetch(status, 0) : @project_count %>
+          <%= link_to dashboard_path(status: status), class: class_names("nav-link", active: @status == status),
+                      aria: { current: ("page" if @status == status) } do %>
+            <%= label %> <span class="badge rounded-pill bg-light text-dark"><%= count %></span>
+          <% end %>
+        <% end %>
+      </nav>
+    </div>
+
+    <% if @projects.empty? %>
+      <p class="card bg-white rounded-4 p-3 text-body-secondary"><%= @status ? "No projects match this status." : "No projects to display yet." %></p>
+    <% else %>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+        <% @projects.each do |project| %>
+          <% material_count = @material_counts.fetch(project.id, 0) %>
+          <% grouped_count = @grouped_counts.fetch(project.id, 0) %>
+          <% color = status_colors.fetch(project.status) %>
+          <div class="col">
+            <article class="card bg-white rounded-4 shadow-sm h-100">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-2">
+                  <p class="small text-body-secondary text-break mb-0"><%= project.erp_rfq.presence || "No ERP RFQ reference" %></p>
+                  <span class="badge rounded-pill bg-<%= color %>-subtle text-<%= color %>-emphasis"><%= status_labels.fetch(project.status) %></span>
+                </div>
+                <h3 class="h5 text-break"><%= link_to project.title, project_path(project) %></h3>
+                <% if project.client_name.present? || project.client_area.present? %>
+                  <p class="small text-body-secondary text-break"><%= [project.client_name.presence, project.client_area.presence].compact.join(" · ") %></p>
+                <% end %>
+                <dl class="d-flex flex-wrap gap-3 small mt-auto mb-2">
+                  <div><dt>Materials</dt><dd class="mb-0"><%= material_count %></dd></div>
+                  <div><dt>Groups</dt><dd class="mb-0"><%= @group_counts.fetch(project.id, 0) %></dd></div>
+                  <div><dt>Suppliers selected</dt><dd class="mb-0"><%= @selection_counts.fetch(project.id, 0) %></dd></div>
+                </dl>
+                <% if material_count.positive? %>
+                  <p class="small text-body-secondary mb-1">Materials grouped: <%= grouped_count %> of <%= material_count %></p>
+                  <progress class="w-100 mb-2" aria-label="Materials grouped" value="<%= grouped_count %>" max="<%= material_count %>"></progress>
+                <% end %>
+                <p class="small text-body-secondary mb-0">Updated <%= time_ago_in_words(project.updated_at) %> ago</p>
+              </div>
+            </article>
+          </div>
+        <% end %>
+      </div>
+      <%= link_to "View all projects", projects_path, class: "d-inline-block mt-3 link-primary" %>
+    <% end %>
+  </section>
+</main>

@@ -37,6 +37,19 @@ class ProjectPolicy < ApplicationPolicy
     editable_by_owner? # Apply the same rule to group changes.
   end # End the group management policy.
 
+  def approval_workspace?
+    show? || user.has_role?(:admin) ||
+      (user.has_role?(:approver) && record.approvals.where(approver: user).exists?)
+  end
+
+  def prepare_supplier_invitations?
+    record.approved? && record.user_id == user.id && user.has_role?(:buyer)
+  end
+
+  def submit_approval?
+    editable_by_owner? || (user.has_role?(:admin) && (record.draft? || record.returned?))
+  end
+
   private # Keep the shared authorization helper internal.
 
   def editable_by_owner? # Centralize authorization for project edits.

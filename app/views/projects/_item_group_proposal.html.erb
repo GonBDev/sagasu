@@ -1,0 +1,25 @@
+<section class="card rounded-4 border-primary-subtle bg-primary-subtle my-3" aria-labelledby="item-group-proposal-title">
+  <div class="card-body">
+    <p class="small fw-semibold text-primary-emphasis mb-1">AI proposal</p>
+    <h3 id="item-group-proposal-title" class="h5">Review suggested groups</h3>
+    <p class="text-body-secondary">AI grouped the ungrouped materials. Your saved groups and assignments are unchanged.</p>
+
+    <% groups.each do |group| %>
+      <div class="bg-white rounded-3 p-3 mt-3 text-break">
+        <h4 class="h6"><%= group.fetch("title") %></h4>
+        <p><%= group.fetch("rationale") %></p>
+        <ul class="mb-0">
+          <% group.fetch("item_ids").each do |id| %>
+            <li><%= materials_by_id[id]&.description || "Material no longer available" %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      <%= button_to "Apply suggested groups", apply_proposal_project_item_groups_path(project), method: :post,
+                    params: { proposal_id: proposal_id }, class: "btn btn-primary" %>
+      <%= link_to "Close preview", bidder_list_groups_project_path(project), class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+</section>

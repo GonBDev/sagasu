@@ -1,0 +1,46 @@
+<aside class="col-lg-4" aria-label="Conversations">
+  <div class="card bg-white rounded-4 mb-3">
+    <div class="card-body">
+      <%= link_to messages_path, class: "d-block fw-semibold mb-2", aria: { current: ("page" if current_page?(messages_path)) } do %>
+        <i class="fas fa-robot" aria-hidden="true"></i> Sagasu Bot
+      <% end %>
+      <%= button_to "Me · Personal notes", notes_chats_path, method: :post, class: "btn btn-outline-primary btn-sm" %>
+    </div>
+  </div>
+
+  <div class="card bg-white rounded-4 mb-3">
+    <div class="card-body">
+      <h2 class="h5">New conversation</h2>
+      <%= form_with url: chats_path, method: :post do |form| %>
+        <%= form.label :recipient_email, "Recipient email", class: "form-label" %>
+        <%= form.email_field :recipient_email, required: true, class: "form-control mb-2" %>
+        <%= form.submit "Open conversation", class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card bg-white rounded-4">
+    <div class="card-body">
+      <h2 class="h5">Conversations</h2>
+      <% if @chats.empty? %>
+        <p class="text-body-secondary mb-0">No conversations yet.</p>
+      <% else %>
+        <ul class="list-group list-group-flush">
+          <% @chats.each do |chat| %>
+            <% partner = chat.other_participant(current_user) %>
+            <% unread = @unread_counts.fetch(chat.id, 0) %>
+            <li class="list-group-item px-0">
+              <%= link_to chat_path(chat), class: "d-flex align-items-center justify-content-between gap-2 text-break",
+                          data: { turbo_prefetch: false }, aria: { current: ("page" if chat == @chat) } do %>
+                <span><%= chat.notes? ? "Me" : (partner.name.presence || partner.email) %></span>
+                <% if unread.positive? %>
+                  <span class="badge rounded-pill text-bg-primary"><%= unread %><span class="visually-hidden"> unread</span></span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</aside>

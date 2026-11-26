@@ -21,10 +21,60 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = policy_scope(Project).find(params[:id]) # Load the RFQ from the projects this user can read.
-    authorize @project
+    if request.path_parameters[:workspace_step] == "approval"
+      @project = Project.find(params[:id])
+      authorize @project, :approval_workspace?
+      load_approval_workspace
+    else
+      @project = policy_scope(Project).find(params[:id])
+      authorize @project
+    end
     @item = @project.items.build
     @items = @project.items.order(:id)
+
+    if request.path_parameters[:workspace_step] == "suppliers"
+      load_supplier_workspace
+    end
+
+    if params[:proposal_id].present? && policy(@project).manage_item_groups?
+      run = AiRun.grouping.find_by!(
+        id: params[:proposal_id], project: @project, user: current_user, status: "completed"
+      )
+      @proposed_groups = JSON.parse(run.output)
+      @proposal_id = run.id
+    end
+  end
+
+  def submit_approval
+    @project = Project.find(params[:id])
+    authorize @project, :submit_approval?
+
+    alert = @project.with_lock do
+      authorize @project, :submit_approval?
+      if @project.approvals.pending.exists?
+        next "This RFQ already has a pending approval."
+      end
+
+      latest = @project.bidder_list_versions.order(version_number: :desc).first
+      if latest.nil? || latest.id.to_s != params[:bidder_list_version_id] ||
+         latest.snapshot != BidderListSnapshot.for_project(@project)
+        next "Save the current bidder list in Suppliers before submitting it."
+      end
+
+      approver = eligible_approvers.find_by(id: params[:approver_id])
+      next "Choose a user with the Approver grant." unless approver
+
+      approval = @project.approvals.create!(approver: approver, bidder_list_version: latest)
+      @project.pending_approval!
+      approval.notify_reviewer!
+      nil
+    end
+
+    if alert
+      redirect_to bidder_list_approval_project_path(@project), alert: alert, status: :see_other
+    else
+      redirect_to bidder_list_approval_project_path(@project), notice: "Bidder list submitted for approval.", status: :see_other
+    end
   end
 
   def index
@@ -38,6 +88,56 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def load_approval_workspace
+    approvals = @project.approvals.includes(:approver, :bidder_list_version)
+    if policy(@project).show? || current_user.has_role?(:admin)
+      @review_state = approvals.order(created_at: :desc, id: :desc).first
+    else
+      @review_state = approvals.where(approver: current_user).order(created_at: :desc, id: :desc).first
+    end
+
+    load_supplier_invitations if policy(@project).prepare_supplier_invitations?
+
+    return unless policy(@project).submit_approval?
+
+    @submission_version = @project.bidder_list_versions.order(version_number: :desc).first
+    @submission_outdated = @submission_version && @submission_version.snapshot != BidderListSnapshot.for_project(@project)
+    @eligible_approvers = eligible_approvers.order(:name, :email)
+  end
+
+  def load_supplier_invitations
+    return unless @review_state&.approved? && @review_state.bidder_list_version
+
+    @supplier_invitations = SupplierInvitations.new(@review_state.bidder_list_version).call
+  rescue SupplierInvitations::TemplateError => error
+    @supplier_invitation_error = error.message
+  end
+
+  def eligible_approvers
+    User.where(id: UserRole.approver.select(:user_id)).where.not(id: [current_user.id, @project.user_id])
+  end
+
+  def load_supplier_workspace
+    entries = GroupSupplier.where(item_group_id: @project.item_groups.select(:id))
+                           .where("ai_suggested = ? OR selected = ?", true, true)
+                           .includes(:supplier).order(:id).to_a
+    @supplier_suggestions_by_group = entries.select(&:ai_suggested?).group_by(&:item_group_id)
+    @selected_suppliers_by_group = entries.select(&:selected?).group_by(&:item_group_id)
+    @latest_bidder_list_version = @project.bidder_list_versions.order(version_number: :desc).first
+    if @latest_bidder_list_version
+      draft_snapshot = BidderListSnapshot.build(
+        @project, groups: @project.item_groups.order(:id), items: @items, selections: @selected_suppliers_by_group
+      )
+      @bidder_list_unsaved = @latest_bidder_list_version.snapshot != draft_snapshot
+    end
+
+    return unless policy(@project).manage_item_groups? && params[:supplier_group_id].present?
+
+    @supplier_search_group = @project.item_groups.find(params[:supplier_group_id])
+    @supplier_query = params[:q].to_s.strip
+    @supplier_search_results = Supplier.search_catalog(@supplier_query).limit(25) if @supplier_query.present?
+  end
 
   def project_access_denied
     redirect_to root_path, alert: "You don't have access to that RFQ action.",

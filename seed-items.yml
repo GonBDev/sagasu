@@ -1,64 +1,1682 @@
+# Fictional Sagasu demo data; not a construction specification or priced estimate.
+# 332 items; 5-30 per project. Services use the existing description, quantity and unit fields.
 items:
-  - project_slug: shinjuku-office-masonry
-    erp_material: DEMO-MAT-001
-    description: Exterior clay facing brick
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-001"
+    description: "Exterior clay facing brick"
     quantity: 50000
-    unit_of_measure: each
-  - project_slug: shinjuku-office-masonry
-    erp_material: DEMO-MAT-002
-    description: Premixed masonry mortar, 25 kg bag
+    unit_of_measure: "each"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-002"
+    description: "Premixed masonry mortar, 25 kg bag"
     quantity: 120
-    unit_of_measure: bags
-  - project_slug: shinjuku-office-masonry
-    erp_material: DEMO-MAT-003
-    description: Stainless steel masonry wall ties
+    unit_of_measure: "bags"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-003"
+    description: "Stainless steel masonry wall ties"
     quantity: 2400
-    unit_of_measure: each
+    unit_of_measure: "each"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-013"
+    description: "Brickwork movement joint sealant, 600 ml cartridge"
+    quantity: 80
+    unit_of_measure: "cartridges"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-014"
+    description: "Preformed stainless steel cavity flashing"
+    quantity: 110
+    unit_of_measure: "m"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-015"
+    description: "Exterior brick corner units"
+    quantity: 600
+    unit_of_measure: "each"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-016"
+    description: "Masonry water repellent coating"
+    quantity: 180
+    unit_of_measure: "L"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-017"
+    description: "Brick sample panel fabrication service"
+    quantity: 2
+    unit_of_measure: "panels"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-018"
+    description: "Facade access scaffold rental service"
+    quantity: 4
+    unit_of_measure: "weeks"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-019"
+    description: "Bricklaying installation service"
+    quantity: 580
+    unit_of_measure: "m²"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-020"
+    description: "Facade inspection and adhesion testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "shinjuku-office-masonry"
+    erp_material: "DEMO-MAT-021"
+    description: "Scheduled unloading and material handling service in Shinjuku"
+    quantity: 6
+    unit_of_measure: "deliveries"
 
-  - project_slug: yokohama-loading-dock
-    erp_material: DEMO-MAT-004
-    description: Ready-mix concrete, 30 MPa
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-004"
+    description: "Ready-mix concrete, 30 MPa"
     quantity: 82.5
-    unit_of_measure: m³
-  - project_slug: yokohama-loading-dock
-    erp_material: DEMO-MAT-005
-    description: Deformed reinforcing bar, D16
+    unit_of_measure: "m³"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-005"
+    description: "Deformed reinforcing bar, D16"
     quantity: 3200
-    unit_of_measure: kg
-  - project_slug: yokohama-loading-dock
-    erp_material: DEMO-MAT-006
-    description: Welded wire reinforcement mesh
+    unit_of_measure: "kg"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-006"
+    description: "Welded wire reinforcement mesh"
     quantity: 160
-    unit_of_measure: m²
+    unit_of_measure: "m²"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-022"
+    description: "Crushed aggregate subbase"
+    quantity: 35
+    unit_of_measure: "m³"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-023"
+    description: "Load transfer dowel bars, 25 mm"
+    quantity: 120
+    unit_of_measure: "each"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-024"
+    description: "Concrete joint sealant"
+    quantity: 90
+    unit_of_measure: "m"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-025"
+    description: "Concrete pumping service"
+    quantity: 2
+    unit_of_measure: "days"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-026"
+    description: "Reinforcement fixing and formwork installation service"
+    quantity: 275
+    unit_of_measure: "m²"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-027"
+    description: "Concrete placing and power trowel finishing service"
+    quantity: 275
+    unit_of_measure: "m²"
+  - project_slug: "yokohama-loading-dock"
+    erp_material: "DEMO-MAT-028"
+    description: "Concrete strength testing service"
+    quantity: 6
+    unit_of_measure: "sets"
 
-  - project_slug: kawasaki-workshop-drainage
-    erp_material: DEMO-MAT-007
-    description: PVC stormwater pipe, 150 mm
+  - project_slug: "kawasaki-workshop-drainage"
+    erp_material: "DEMO-MAT-007"
+    description: "PVC stormwater pipe, 150 mm"
     quantity: 96
-    unit_of_measure: m
-  - project_slug: kawasaki-workshop-drainage
-    erp_material: DEMO-MAT-008
-    description: Precast concrete inspection chamber
+    unit_of_measure: "m"
+  - project_slug: "kawasaki-workshop-drainage"
+    erp_material: "DEMO-MAT-008"
+    description: "Precast concrete inspection chamber"
     quantity: 6
-    unit_of_measure: each
-  - project_slug: kawasaki-workshop-drainage
-    erp_material: DEMO-MAT-009
-    description: Ductile iron traffic-rated chamber cover
+    unit_of_measure: "each"
+  - project_slug: "kawasaki-workshop-drainage"
+    erp_material: "DEMO-MAT-009"
+    description: "Ductile iron traffic-rated chamber cover"
     quantity: 6
-    unit_of_measure: each
+    unit_of_measure: "each"
+  - project_slug: "kawasaki-workshop-drainage"
+    erp_material: "DEMO-MAT-029"
+    description: "Trench excavation, pipe installation and backfilling service"
+    quantity: 96
+    unit_of_measure: "m"
+  - project_slug: "kawasaki-workshop-drainage"
+    erp_material: "DEMO-MAT-030"
+    description: "Drainage CCTV inspection and water flow testing service"
+    quantity: 1
+    unit_of_measure: "lot"
 
-  - project_slug: saitama-service-stairs
-    erp_material: DEMO-MAT-010
-    description: Galvanized steel stair tread with nonslip nosing
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-010"
+    description: "Galvanized steel stair tread with nonslip nosing"
     quantity: 28
-    unit_of_measure: each
-  - project_slug: saitama-service-stairs
-    erp_material: DEMO-MAT-011
-    description: Galvanized steel guardrail assembly
+    unit_of_measure: "each"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-011"
+    description: "Galvanized steel guardrail assembly"
     quantity: 34
-    unit_of_measure: m
-  - project_slug: saitama-service-stairs
-    erp_material: DEMO-MAT-012
-    description: M16 galvanized mechanical anchor
+    unit_of_measure: "m"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-012"
+    description: "M16 galvanized mechanical anchor"
     quantity: 96
-    unit_of_measure: each
+    unit_of_measure: "each"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-031"
+    description: "Galvanized steel stair stringer fabrication"
+    quantity: 4
+    unit_of_measure: "each"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-032"
+    description: "Steel landing grating panel"
+    quantity: 12
+    unit_of_measure: "m²"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-033"
+    description: "Galvanized structural connection bolt set, M20"
+    quantity: 64
+    unit_of_measure: "sets"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-034"
+    description: "Crane lifting and stair erection service"
+    quantity: 2
+    unit_of_measure: "days"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-035"
+    description: "Anchor pull-out testing service"
+    quantity: 12
+    unit_of_measure: "tests"
+  - project_slug: "saitama-service-stairs"
+    erp_material: "DEMO-MAT-036"
+    description: "Stair and guardrail installation inspection service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-037"
+    description: "Insulated metal roof panel, 75 mm core"
+    quantity: 1250
+    unit_of_measure: "m²"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-038"
+    description: "Galvanized roof purlin"
+    quantity: 380
+    unit_of_measure: "m"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-039"
+    description: "Roof ridge flashing"
+    quantity: 72
+    unit_of_measure: "m"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-040"
+    description: "Roof eaves flashing"
+    quantity: 110
+    unit_of_measure: "m"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-041"
+    description: "Roof panel fixing screw with sealing washer"
+    quantity: 4200
+    unit_of_measure: "each"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-042"
+    description: "Butyl roof sealing tape"
+    quantity: 150
+    unit_of_measure: "rolls"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-043"
+    description: "Rainwater gutter, coated steel"
+    quantity: 110
+    unit_of_measure: "m"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-044"
+    description: "Downpipe, 100 mm"
+    quantity: 85
+    unit_of_measure: "m"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-045"
+    description: "Translucent rooflight panel"
+    quantity: 45
+    unit_of_measure: "m²"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-046"
+    description: "Fall arrest horizontal lifeline kit"
+    quantity: 3
+    unit_of_measure: "sets"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-047"
+    description: "Existing roof removal and segregated waste transport service"
+    quantity: 1250
+    unit_of_measure: "m²"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-048"
+    description: "Roof panel and flashing installation service"
+    quantity: 1250
+    unit_of_measure: "m²"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-049"
+    description: "Mobile elevated work platform rental service"
+    quantity: 3
+    unit_of_measure: "weeks"
+  - project_slug: "chiba-warehouse-roof"
+    erp_material: "DEMO-MAT-050"
+    description: "Roof water penetration testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-051"
+    description: "Metal partition stud, 65 mm"
+    quantity: 720
+    unit_of_measure: "m"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-052"
+    description: "Gypsum board, 12.5 mm"
+    quantity: 1100
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-053"
+    description: "Mineral wool partition insulation, 50 mm"
+    quantity: 450
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-054"
+    description: "Acoustic ceiling tile, 600 x 600 mm"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-055"
+    description: "Suspended ceiling grid kit"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-056"
+    description: "Carpet tile, 500 x 500 mm"
+    quantity: 380
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-057"
+    description: "Vinyl flooring for pantry"
+    quantity: 40
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-058"
+    description: "Aluminum skirting"
+    quantity: 290
+    unit_of_measure: "m"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-059"
+    description: "Solid core internal door set"
+    quantity: 12
+    unit_of_measure: "sets"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-060"
+    description: "Glass meeting room partition"
+    quantity: 65
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-061"
+    description: "Low-odor interior wall paint"
+    quantity: 240
+    unit_of_measure: "L"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-062"
+    description: "Door lever and lock set"
+    quantity: 12
+    unit_of_measure: "sets"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-063"
+    description: "Partition and ceiling installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-064"
+    description: "Floor preparation and floor finish installation service"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-065"
+    description: "Wall painting service"
+    quantity: 900
+    unit_of_measure: "m²"
+  - project_slug: "tokyo-office-fitout"
+    erp_material: "DEMO-MAT-066"
+    description: "Post-construction cleaning service"
+    quantity: 420
+    unit_of_measure: "m²"
+
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-067"
+    description: "Cross-linked polyethylene water pipe, 20 mm"
+    quantity: 640
+    unit_of_measure: "m"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-068"
+    description: "Cross-linked polyethylene water pipe, 13 mm"
+    quantity: 480
+    unit_of_measure: "m"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-069"
+    description: "Insulated hot water pipe sleeve"
+    quantity: 420
+    unit_of_measure: "m"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-070"
+    description: "PVC sanitary drainage pipe, 100 mm"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-071"
+    description: "PVC sanitary branch pipe, 50 mm"
+    quantity: 240
+    unit_of_measure: "m"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-072"
+    description: "Drainage pipe fitting assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-073"
+    description: "Water isolation ball valve, 20 mm"
+    quantity: 48
+    unit_of_measure: "each"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-074"
+    description: "Apartment water meter assembly"
+    quantity: 12
+    unit_of_measure: "sets"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-075"
+    description: "Pressure reducing valve assembly"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-076"
+    description: "Kitchen sink mixer tap"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-077"
+    description: "Washbasin mixer tap"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-078"
+    description: "Toilet suite with cistern"
+    quantity: 12
+    unit_of_measure: "sets"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-079"
+    description: "Stainless steel floor drain"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-080"
+    description: "Pipe support and clamp assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-081"
+    description: "Plumbing installation service"
+    quantity: 12
+    unit_of_measure: "apartments"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-082"
+    description: "Water supply pressure testing service"
+    quantity: 12
+    unit_of_measure: "apartments"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-083"
+    description: "Drainage leak and flow testing service"
+    quantity: 12
+    unit_of_measure: "apartments"
+  - project_slug: "osaka-apartment-plumbing"
+    erp_material: "DEMO-MAT-084"
+    description: "Pipe flushing and system handover documentation service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-085"
+    description: "Low-voltage distribution panel, 200 V three-phase"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-086"
+    description: "Molded case circuit breaker, 100 A"
+    quantity: 8
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-087"
+    description: "Earth leakage circuit breaker, 30 A"
+    quantity: 20
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-088"
+    description: "Power cable, 600 V CV 38 mm² three-core"
+    quantity: 360
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-089"
+    description: "Power cable, 600 V CV 14 mm² three-core"
+    quantity: 480
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-090"
+    description: "Control cable, 1.25 mm² eight-core"
+    quantity: 250
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-091"
+    description: "Galvanized cable tray, 300 mm wide"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-092"
+    description: "Cable tray support bracket"
+    quantity: 90
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-093"
+    description: "Metal electrical conduit, 28 mm"
+    quantity: 220
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-094"
+    description: "Conduit coupling and connector assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-095"
+    description: "Industrial socket outlet, 200 V"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-096"
+    description: "Weatherproof junction box"
+    quantity: 30
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-097"
+    description: "LED high-bay luminaire, 200 V"
+    quantity: 36
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-098"
+    description: "Emergency exit light assembly"
+    quantity: 8
+    unit_of_measure: "each"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-099"
+    description: "Earthing conductor, 22 mm²"
+    quantity: 220
+    unit_of_measure: "m"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-100"
+    description: "Cable gland and termination lug assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-101"
+    description: "Cable tray and conduit installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-102"
+    description: "Cable pulling and termination service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-103"
+    description: "Shutdown changeover and panel commissioning service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "nagoya-factory-electrical"
+    erp_material: "DEMO-MAT-104"
+    description: "Insulation resistance and earthing resistance testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-105"
+    description: "Fabricated steel brace assembly to engineer drawings"
+    quantity: 8
+    unit_of_measure: "sets"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-106"
+    description: "Steel gusset plate fabrication"
+    quantity: 32
+    unit_of_measure: "each"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-107"
+    description: "High-strength structural bolt set, M22"
+    quantity: 320
+    unit_of_measure: "sets"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-108"
+    description: "Chemical anchor rod, M20"
+    quantity: 240
+    unit_of_measure: "each"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-109"
+    description: "Anchor adhesive cartridge"
+    quantity: 90
+    unit_of_measure: "cartridges"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-110"
+    description: "Non-shrink structural grout, 25 kg bag"
+    quantity: 160
+    unit_of_measure: "bags"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-111"
+    description: "Epoxy crack injection resin"
+    quantity: 75
+    unit_of_measure: "kg"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-112"
+    description: "Crack injection port and seal kit"
+    quantity: 120
+    unit_of_measure: "sets"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-113"
+    description: "Carbon fiber strengthening sheet"
+    quantity: 180
+    unit_of_measure: "m²"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-114"
+    description: "Carbon fiber epoxy primer"
+    quantity: 45
+    unit_of_measure: "kg"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-115"
+    description: "Carbon fiber saturating resin"
+    quantity: 120
+    unit_of_measure: "kg"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-116"
+    description: "Concrete repair mortar, 25 kg bag"
+    quantity: 80
+    unit_of_measure: "bags"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-117"
+    description: "Corrosion protection primer"
+    quantity: 55
+    unit_of_measure: "L"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-118"
+    description: "Structural steel finish coating"
+    quantity: 80
+    unit_of_measure: "L"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-119"
+    description: "Temporary dust barrier panel"
+    quantity: 120
+    unit_of_measure: "m²"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-120"
+    description: "Temporary support prop rental service"
+    quantity: 6
+    unit_of_measure: "weeks"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-121"
+    description: "Existing concrete reinforcement scanning service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-122"
+    description: "Anchor drilling and installation service"
+    quantity: 240
+    unit_of_measure: "each"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-123"
+    description: "Steel brace erection service"
+    quantity: 8
+    unit_of_measure: "sets"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-124"
+    description: "Concrete crack injection and patch repair service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-125"
+    description: "Carbon fiber strengthening installation service"
+    quantity: 180
+    unit_of_measure: "m²"
+  - project_slug: "sendai-school-seismic"
+    erp_material: "DEMO-MAT-126"
+    description: "Anchor proof testing and retrofit inspection service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-127"
+    description: "VRF outdoor condensing unit, 200 V"
+    quantity: 3
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-128"
+    description: "Ceiling concealed indoor air-conditioning unit"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-129"
+    description: "Indoor unit wired controller"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-130"
+    description: "Central air-conditioning controller"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-131"
+    description: "Refrigerant copper pipe, 9.52 mm"
+    quantity: 280
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-132"
+    description: "Refrigerant copper pipe, 15.88 mm"
+    quantity: 240
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-133"
+    description: "Refrigerant branch joint kit"
+    quantity: 21
+    unit_of_measure: "sets"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-134"
+    description: "Closed-cell refrigerant pipe insulation"
+    quantity: 520
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-135"
+    description: "Condensate drain pipe, 25 mm"
+    quantity: 300
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-136"
+    description: "Condensate drain insulation"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-137"
+    description: "Galvanized sheet metal supply duct"
+    quantity: 220
+    unit_of_measure: "m²"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-138"
+    description: "Flexible insulated air duct, 150 mm"
+    quantity: 120
+    unit_of_measure: "m"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-139"
+    description: "Supply air grille"
+    quantity: 48
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-140"
+    description: "Return air grille"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-141"
+    description: "Fire damper to project schedule"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-142"
+    description: "Equipment vibration isolation mount"
+    quantity: 36
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-143"
+    description: "Fresh air ventilation unit"
+    quantity: 3
+    unit_of_measure: "each"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-144"
+    description: "Ventilation air filter set"
+    quantity: 6
+    unit_of_measure: "sets"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-145"
+    description: "Existing equipment removal and refrigerant recovery service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-146"
+    description: "Outdoor equipment crane lifting service"
+    quantity: 2
+    unit_of_measure: "days"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-147"
+    description: "Air-conditioning equipment and pipework installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-148"
+    description: "Ductwork and grille installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-149"
+    description: "Refrigerant pressure testing and evacuation service"
+    quantity: 3
+    unit_of_measure: "systems"
+  - project_slug: "fukuoka-hotel-hvac"
+    erp_material: "DEMO-MAT-150"
+    description: "HVAC commissioning, air balancing and operator training service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-151"
+    description: "Japanese cedar repair timber, graded to project schedule"
+    quantity: 3.2
+    unit_of_measure: "m³"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-152"
+    description: "Japanese cypress sill section"
+    quantity: 48
+    unit_of_measure: "m"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-153"
+    description: "Traditional clay roof replacement tile"
+    quantity: 650
+    unit_of_measure: "each"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-154"
+    description: "Roof underlay membrane"
+    quantity: 160
+    unit_of_measure: "m²"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-155"
+    description: "Timber connection reinforcement plate"
+    quantity: 80
+    unit_of_measure: "each"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-156"
+    description: "Tatami mat made to room dimensions"
+    quantity: 16
+    unit_of_measure: "each"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-157"
+    description: "Shoji sliding screen assembly"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-158"
+    description: "Lime plaster finish material"
+    quantity: 420
+    unit_of_measure: "kg"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-159"
+    description: "Timber floorboard, 15 mm"
+    quantity: 95
+    unit_of_measure: "m²"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-160"
+    description: "Specialist timber repair and joinery service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-161"
+    description: "Roof tile repair and installation service"
+    quantity: 160
+    unit_of_measure: "m²"
+  - project_slug: "kyoto-townhouse-restoration"
+    erp_material: "DEMO-MAT-162"
+    description: "Lime plaster application and finish service"
+    quantity: 180
+    unit_of_measure: "m²"
+
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-163"
+    description: "Ready-mix concrete, 30 MPa, wall placement"
+    quantity: 165
+    unit_of_measure: "m³"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-164"
+    description: "Deformed reinforcing bar, D19"
+    quantity: 12500
+    unit_of_measure: "kg"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-165"
+    description: "Reusable wall formwork panel rental service"
+    quantity: 4
+    unit_of_measure: "weeks"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-166"
+    description: "Perforated drainage pipe, 100 mm"
+    quantity: 130
+    unit_of_measure: "m"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-167"
+    description: "Drainage aggregate"
+    quantity: 85
+    unit_of_measure: "m³"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-168"
+    description: "Filter geotextile"
+    quantity: 450
+    unit_of_measure: "m²"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-169"
+    description: "Wall weep hole sleeve"
+    quantity: 65
+    unit_of_measure: "each"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-170"
+    description: "Excavation and off-site spoil transport service"
+    quantity: 320
+    unit_of_measure: "m³"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-171"
+    description: "Retaining wall reinforcement, formwork and concreting service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "hiroshima-retaining-wall"
+    erp_material: "DEMO-MAT-172"
+    description: "Backfill placement and compaction testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-173"
+    description: "Dense-graded asphalt surfacing mix"
+    quantity: 260
+    unit_of_measure: "t"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-174"
+    description: "Asphalt binder course mix"
+    quantity: 310
+    unit_of_measure: "t"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-175"
+    description: "Crushed stone roadbase"
+    quantity: 280
+    unit_of_measure: "m³"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-176"
+    description: "Asphalt tack coat emulsion"
+    quantity: 1800
+    unit_of_measure: "L"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-177"
+    description: "Precast concrete kerb"
+    quantity: 160
+    unit_of_measure: "m"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-178"
+    description: "Traffic-rated trench drain channel"
+    quantity: 42
+    unit_of_measure: "m"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-179"
+    description: "Thermoplastic pavement marking material"
+    quantity: 420
+    unit_of_measure: "kg"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-180"
+    description: "Asphalt milling and removed material transport service"
+    quantity: 2400
+    unit_of_measure: "m²"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-181"
+    description: "Roadbase preparation and asphalt paving service"
+    quantity: 2400
+    unit_of_measure: "m²"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-182"
+    description: "Kerb and trench drain installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kobe-port-pavement"
+    erp_material: "DEMO-MAT-183"
+    description: "Pavement line marking and compaction testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-184"
+    description: "Electric snowmelt heating cable to design wattage"
+    quantity: 1400
+    unit_of_measure: "m"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-185"
+    description: "Heating cable fixing rail"
+    quantity: 160
+    unit_of_measure: "m"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-186"
+    description: "Heated area insulation board"
+    quantity: 140
+    unit_of_measure: "m²"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-187"
+    description: "Snowmelt control panel"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-188"
+    description: "Pavement temperature sensor"
+    quantity: 4
+    unit_of_measure: "each"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-189"
+    description: "Snow and moisture sensor"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-190"
+    description: "Weatherproof electrical junction box"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-191"
+    description: "Power cable, 600 V CV 8 mm² three-core"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-192"
+    description: "Entrance trench drain with grating"
+    quantity: 24
+    unit_of_measure: "m"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-193"
+    description: "Ready-mix concrete for entrance reinstatement"
+    quantity: 24
+    unit_of_measure: "m³"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-194"
+    description: "Existing entrance pavement removal service"
+    quantity: 140
+    unit_of_measure: "m²"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-195"
+    description: "Heating cable, sensor and control installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "sapporo-roof-snowmelt"
+    erp_material: "DEMO-MAT-196"
+    description: "Electrical testing and snowmelt system commissioning service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-197"
+    description: "Cleanroom wall panel, 50 mm"
+    quantity: 280
+    unit_of_measure: "m²"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-198"
+    description: "Walkable cleanroom ceiling panel"
+    quantity: 140
+    unit_of_measure: "m²"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-199"
+    description: "Flush cleanroom glazed window"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-200"
+    description: "Interlocked cleanroom door pair"
+    quantity: 3
+    unit_of_measure: "sets"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-201"
+    description: "Cleanroom single door assembly"
+    quantity: 6
+    unit_of_measure: "sets"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-202"
+    description: "Seamless antistatic epoxy flooring system"
+    quantity: 140
+    unit_of_measure: "m²"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-203"
+    description: "HEPA fan filter unit"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-204"
+    description: "Differential pressure sensor with display"
+    quantity: 8
+    unit_of_measure: "each"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-205"
+    description: "Stainless steel pass-through box"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-206"
+    description: "Cleanroom compatible sealing compound"
+    quantity: 80
+    unit_of_measure: "cartridges"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-207"
+    description: "Cleanroom panel and door installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-208"
+    description: "Antistatic floor installation service"
+    quantity: 140
+    unit_of_measure: "m²"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-209"
+    description: "Fan filter unit and pressure monitoring installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-210"
+    description: "Airflow balancing and HEPA filter integrity testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "tsukuba-laboratory-cleanroom"
+    erp_material: "DEMO-MAT-211"
+    description: "Cleanroom particle count acceptance testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-212"
+    description: "Fire sprinkler head to project schedule"
+    quantity: 120
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-213"
+    description: "Steel sprinkler pipe, 50 mm"
+    quantity: 240
+    unit_of_measure: "m"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-214"
+    description: "Steel sprinkler pipe, 25 mm"
+    quantity: 360
+    unit_of_measure: "m"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-215"
+    description: "Grooved coupling and fitting assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-216"
+    description: "Sprinkler alarm valve assembly"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-217"
+    description: "Fire water isolation valve, 100 mm"
+    quantity: 4
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-218"
+    description: "Fire pump package to hydraulic design"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-219"
+    description: "Fire hose cabinet assembly"
+    quantity: 6
+    unit_of_measure: "sets"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-220"
+    description: "Portable dry powder fire extinguisher"
+    quantity: 18
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-221"
+    description: "Addressable smoke detector"
+    quantity: 42
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-222"
+    description: "Manual fire alarm call point"
+    quantity: 8
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-223"
+    description: "Fire alarm sounder and strobe assembly"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-224"
+    description: "Fire alarm control panel"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-225"
+    description: "Fire-resistant alarm cable"
+    quantity: 850
+    unit_of_measure: "m"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-226"
+    description: "Sprinkler pipework and pump installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-227"
+    description: "Fire alarm wiring and device installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "hamamatsu-fire-protection"
+    erp_material: "DEMO-MAT-228"
+    description: "Integrated fire system testing and handover service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-229"
+    description: "Ready-mix concrete for equipment bases"
+    quantity: 38
+    unit_of_measure: "m³"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-230"
+    description: "Deformed reinforcing bar, D13"
+    quantity: 2600
+    unit_of_measure: "kg"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-231"
+    description: "Prefabricated weatherproof equipment enclosure"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-232"
+    description: "Polyethylene raw water tank, 5000 L"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-233"
+    description: "Treated water storage tank, 3000 L"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-234"
+    description: "Submersible feed pump to process schedule"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-235"
+    description: "Duplex media filtration skid"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-236"
+    description: "Cartridge filter housing"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-237"
+    description: "Filter cartridge, 20 micron"
+    quantity: 24
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-238"
+    description: "Chemical dosing pump package"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-239"
+    description: "Chemical storage bund"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-240"
+    description: "PVC process pipe, 50 mm"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-241"
+    description: "PVC isolation valve, 50 mm"
+    quantity: 18
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-242"
+    description: "Process pipe fitting assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-243"
+    description: "Inline flow meter"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-244"
+    description: "pH sensor and transmitter assembly"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-245"
+    description: "Process control panel"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-246"
+    description: "Concrete foundation and enclosure installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-247"
+    description: "Tank, skid and process piping installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-248"
+    description: "Electrical controls installation and functional testing service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "niigata-water-treatment"
+    erp_material: "DEMO-MAT-249"
+    description: "Treatment trial operation and water quality sampling service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-250"
+    description: "Precast concrete ramp kerb"
+    quantity: 48
+    unit_of_measure: "m"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-251"
+    description: "Ready-mix concrete for access ramp"
+    quantity: 16
+    unit_of_measure: "m³"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-252"
+    description: "Deformed reinforcing bar, D13"
+    quantity: 1100
+    unit_of_measure: "kg"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-253"
+    description: "Stainless steel ramp handrail"
+    quantity: 62
+    unit_of_measure: "m"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-254"
+    description: "Nonslip external ramp tile"
+    quantity: 85
+    unit_of_measure: "m²"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-255"
+    description: "Tactile paving warning block"
+    quantity: 160
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-256"
+    description: "Tactile paving guidance block"
+    quantity: 240
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-257"
+    description: "Automatic sliding entrance door assembly"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-258"
+    description: "Entrance door activation sensor"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-259"
+    description: "Accessible restroom sliding door set"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-260"
+    description: "Accessible toilet suite"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-261"
+    description: "Wall-mounted accessible washbasin"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-262"
+    description: "Lever-operated washbasin mixer"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-263"
+    description: "Stainless steel grab rail set"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-264"
+    description: "Fold-down support rail"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-265"
+    description: "Restroom emergency call button and alarm kit"
+    quantity: 2
+    unit_of_measure: "sets"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-266"
+    description: "Accessible mirror assembly"
+    quantity: 2
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-267"
+    description: "High-contrast directional sign"
+    quantity: 18
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-268"
+    description: "Braille restroom sign"
+    quantity: 4
+    unit_of_measure: "each"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-269"
+    description: "Temporary public-route barrier"
+    quantity: 30
+    unit_of_measure: "m"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-270"
+    description: "Ramp earthworks, formwork and concreting service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-271"
+    description: "Ramp tile and tactile paving installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-272"
+    description: "Automatic entrance door installation and commissioning service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-273"
+    description: "Accessible restroom plumbing and fixture installation service"
+    quantity: 2
+    unit_of_measure: "rooms"
+  - project_slug: "takamatsu-community-center"
+    erp_material: "DEMO-MAT-274"
+    description: "Wayfinding installation and accessibility handover inspection service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-275"
+    description: "Polymer-modified concrete repair mortar, 25 kg bag"
+    quantity: 180
+    unit_of_measure: "bags"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-276"
+    description: "Reinforcement corrosion inhibitor"
+    quantity: 90
+    unit_of_measure: "L"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-277"
+    description: "Reinforcement passivation coating"
+    quantity: 60
+    unit_of_measure: "kg"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-278"
+    description: "Epoxy concrete crack injection resin"
+    quantity: 85
+    unit_of_measure: "kg"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-279"
+    description: "Crack injection packer"
+    quantity: 240
+    unit_of_measure: "each"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-280"
+    description: "Exterior flexible wall filler"
+    quantity: 180
+    unit_of_measure: "kg"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-281"
+    description: "Facade primer"
+    quantity: 260
+    unit_of_measure: "L"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-282"
+    description: "Weather-resistant exterior finish coating"
+    quantity: 620
+    unit_of_measure: "L"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-283"
+    description: "Elastomeric facade joint sealant, 600 ml cartridge"
+    quantity: 260
+    unit_of_measure: "cartridges"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-284"
+    description: "Closed-cell joint backing rod"
+    quantity: 780
+    unit_of_measure: "m"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-285"
+    description: "Aluminum window perimeter flashing"
+    quantity: 180
+    unit_of_measure: "m"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-286"
+    description: "Stainless steel facade fixing assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-287"
+    description: "Liquid-applied roof waterproofing membrane"
+    quantity: 980
+    unit_of_measure: "kg"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-288"
+    description: "Waterproofing reinforcement fleece"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-289"
+    description: "Waterproofing upstand termination bar"
+    quantity: 210
+    unit_of_measure: "m"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-290"
+    description: "Roof drainage outlet assembly"
+    quantity: 12
+    unit_of_measure: "each"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-291"
+    description: "Balcony nonslip floor coating"
+    quantity: 140
+    unit_of_measure: "L"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-292"
+    description: "Temporary window protection film"
+    quantity: 650
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-293"
+    description: "Debris containment mesh"
+    quantity: 1800
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-294"
+    description: "Facade scaffold rental service"
+    quantity: 8
+    unit_of_measure: "weeks"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-295"
+    description: "Facade condition survey and repair mapping service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-296"
+    description: "Concrete breakout and reinforcement treatment service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-297"
+    description: "Concrete patch repair and crack injection service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-298"
+    description: "Exterior wall preparation and coating service"
+    quantity: 1800
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-299"
+    description: "Window perimeter and facade joint resealing service"
+    quantity: 780
+    unit_of_measure: "m"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-300"
+    description: "Roof waterproofing installation service"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-301"
+    description: "Balcony surface preparation and coating service"
+    quantity: 220
+    unit_of_measure: "m²"
+  - project_slug: "naha-hotel-facade"
+    erp_material: "DEMO-MAT-302"
+    description: "Waterproofing flood testing and facade final inspection service"
+    quantity: 1
+    unit_of_measure: "lot"
+
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-303"
+    description: "Crushed aggregate foundation subbase"
+    quantity: 72
+    unit_of_measure: "m³"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-304"
+    description: "Ready-mix concrete for foundations and slab"
+    quantity: 86
+    unit_of_measure: "m³"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-305"
+    description: "Deformed reinforcing bar, D16"
+    quantity: 5800
+    unit_of_measure: "kg"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-306"
+    description: "Under-slab vapor barrier membrane"
+    quantity: 320
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-307"
+    description: "Foundation anchor bolt set"
+    quantity: 64
+    unit_of_measure: "sets"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-308"
+    description: "Engineered timber post and beam package"
+    quantity: 18
+    unit_of_measure: "m³"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-309"
+    description: "Timber structural connector assortment"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-310"
+    description: "Structural plywood sheathing, 24 mm"
+    quantity: 320
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-311"
+    description: "Mineral wool wall insulation, 100 mm"
+    quantity: 380
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-312"
+    description: "Vapor control membrane"
+    quantity: 420
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-313"
+    description: "Weather-resistant exterior membrane"
+    quantity: 410
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-314"
+    description: "Standing seam coated steel roof sheet"
+    quantity: 360
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-315"
+    description: "Roof gutter and downpipe package"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-316"
+    description: "Double-glazed aluminum window"
+    quantity: 22
+    unit_of_measure: "each"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-317"
+    description: "Insulated external entrance door set"
+    quantity: 3
+    unit_of_measure: "sets"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-318"
+    description: "Cedar exterior cladding board"
+    quantity: 300
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-319"
+    description: "Internal gypsum board, 12.5 mm"
+    quantity: 680
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-320"
+    description: "Interior wall and ceiling paint"
+    quantity: 210
+    unit_of_measure: "L"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-321"
+    description: "Porcelain floor tile"
+    quantity: 180
+    unit_of_measure: "m²"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-322"
+    description: "Accessible restroom fixture package"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-323"
+    description: "Domestic water and drainage pipework package"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-324"
+    description: "LED interior luminaire"
+    quantity: 48
+    unit_of_measure: "each"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-325"
+    description: "Low-voltage electrical distribution board"
+    quantity: 1
+    unit_of_measure: "each"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-326"
+    description: "Air source heat pump air-conditioning package"
+    quantity: 1
+    unit_of_measure: "sets"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-327"
+    description: "Groundworks, foundations and slab construction service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-328"
+    description: "Timber frame erection and structural connection service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-329"
+    description: "Roofing, window and external cladding installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-330"
+    description: "Interior partition, painting and tiling service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-331"
+    description: "Plumbing, electrical and HVAC installation service"
+    quantity: 1
+    unit_of_measure: "lot"
+  - project_slug: "kanazawa-visitor-center"
+    erp_material: "DEMO-MAT-332"
+    description: "Integrated commissioning, final cleaning and handover service"
+    quantity: 1
+    unit_of_measure: "lot"

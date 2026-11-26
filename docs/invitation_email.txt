@@ -1,0 +1,12 @@
+Subject: Request for quotation {{rfq_reference}} | {{project_title}}
+
+Hello {{supplier_name}},
+
+We invite you to provide a quotation for the materials below for {{project_title}} (RFQ {{rfq_reference}}).
+
+{{material_list}}
+
+Please include unit prices, lead times, delivery terms, and how long your quotation is valid. Let us know if you can quote only part of the list or need more information.
+
+Thank you,
+Procurement team

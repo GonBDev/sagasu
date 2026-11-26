@@ -1,0 +1,65 @@
+<div class="card bg-white rounded-4 mb-4">
+  <div class="card-body p-3 p-md-4">
+    <h2 id="materials-title" class="h4 d-flex flex-wrap align-items-center gap-2 mb-3">
+      <i class="fas fa-cubes" aria-hidden="true"></i>
+      <%= assign_groups ? "Material assignments" : "Materials" %>
+      <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">
+        <span class="visually-hidden">Total materials:</span> <%= @items.size %>
+      </span>
+    </h2>
+    <% if @items.empty? %>
+      <p class="text-body-secondary mb-0">No materials have been added.</p>
+    <% else %>
+      <div class="table-responsive" tabindex="0" role="region" aria-labelledby="materials-title">
+        <table class="table table-hover align-middle mb-0" aria-labelledby="materials-title">
+          <thead>
+            <tr class="small text-uppercase">
+              <th scope="col" class="text-body-secondary">Material</th>
+              <th scope="col" class="text-body-secondary">Quantity</th>
+              <th scope="col" class="text-body-secondary">Group</th>
+              <% if can_edit_materials && !assign_groups %>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% group_titles = material_group_options.to_h { |title, id| [id, title] } %>
+            <% @items.each do |item| %>
+              <tr>
+                <th scope="row" class="py-3 text-break">
+                  <%= item.description %>
+                  <% if item.erp_material.present? %>
+                    <span class="d-block small fw-normal text-body-secondary"><%= item.erp_material %></span>
+                  <% end %>
+                </th>
+                <td class="py-3 text-nowrap">
+                  <%= number_with_precision(item.quantity, strip_insignificant_zeros: true, precision: nil) %>
+                  <%= item.unit_of_measure %>
+                </td>
+                <td class="py-3">
+                  <% if can_edit_materials && assign_groups %>
+                    <%= simple_form_for item, url: project_item_path(@project, item), method: :patch, html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
+                      <%= form.input :item_group_id, as: :select, collection: material_group_options, include_blank: "Ungrouped", label: "Group", required: false,
+                                     label_html: { class: "visually-hidden" }, wrapper_html: { class: "mb-0 mw-100" },
+                                     input_html: { id: dom_id(item, :group_select), aria: { label: "Group for #{item.description}" } } %>
+                      <%= form.button :submit, "Move material", class: "btn btn-outline-primary btn-sm text-nowrap" %>
+                    <% end %>
+                  <% else %>
+                    <%= group_titles.fetch(item.item_group_id, "Ungrouped") %>
+                  <% end %>
+                </td>
+                <% if can_edit_materials && !assign_groups %>
+                  <td class="py-3 text-end">
+                    <%= link_to edit_project_item_path(@project, item), class: "btn btn-outline-primary btn-sm", aria: { label: "Edit #{item.description}" } do %>
+                      <i class="fas fa-pen" aria-hidden="true"></i><span class="visually-hidden">Edit</span>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

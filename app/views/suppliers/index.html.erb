@@ -1,13 +1,19 @@
 <div class="container py-4">
   <h1>Suppliers</h1>
 
-  <% if @suppliers.empty? %>
-    <p>No suppliers have been added yet.</p>
-  <% else %>
-    <ul class="list-group">
-      <% @suppliers.each do |supplier| %>
-        <li class="list-group-item"><%= link_to supplier.name, supplier_path(supplier) %></li>
-      <% end %>
-    </ul>
+  <%= turbo_frame_tag "supplier-directory-results", class: "d-block", data: { turbo_action: "replace" } do %>
+    <div class="mb-3">
+      <%= render "suppliers/searchbar", search_path: suppliers_path, query: @query, group_id: nil, input_id: "supplier-directory-query" %>
+    </div>
+
+    <% if @suppliers.empty? %>
+      <p><%= @query.present? ? "No active suppliers match your search." : "No suppliers have been added yet." %></p>
+    <% else %>
+      <ul class="list-group">
+        <% @suppliers.each do |supplier| %>
+          <li class="list-group-item"><%= link_to supplier.name, supplier_path(supplier), data: { turbo_frame: "_top" } %></li>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
 </div>

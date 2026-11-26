@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   root to: "pages#home"
+  get "dashboard", to: "dashboards#show", as: :dashboard
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -14,8 +15,36 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :projects, only: %i[index new create show] do
-    resources :items, only: %i[create edit update]
-    resources :item_groups, only: %i[create update destroy] # Add routes to create, rename, and delete groups within an RFQ.
+    member do # Route each workspace step through the existing project show action.
+      get "bidder-list/materials", to: "projects#show", as: :bidder_list_materials, defaults: { workspace_step: "materials" }
+      get "bidder-list/groups", to: "projects#show", as: :bidder_list_groups, defaults: { workspace_step: "groups" }
+      get "bidder-list/suppliers", to: "projects#show", as: :bidder_list_suppliers, defaults: { workspace_step: "suppliers" }
+      get "bidder-list/approval", to: "projects#show", as: :bidder_list_approval, defaults: { workspace_step: "approval" }
+      post "bidder-list/approval", to: "projects#submit_approval", as: :submit_bidder_list_approval
+    end
+
+    resources :bidder_list_versions, only: %i[create show]
+
+    resources :items, only: %i[create edit update] do
+      post :preview_import, on: :collection
+      post :import, on: :collection
+    end
+    resources :item_groups, only: %i[create update destroy] do
+      post :suggest_suppliers, on: :member
+      patch :shortlist_supplier, on: :member
+      post :propose, on: :collection
+      post :apply_proposal, on: :collection
+    end
+  end
+
+  get "messages", to: "chats#index", as: :messages
+  resources :chats, only: %i[show create] do
+    post :notes, on: :collection
+    resources :messages, only: :create
+  end
+
+  resources :approvals, only: :index do
+    patch :decide, on: :member
   end
 
   resources :suppliers, only: %i[index show]
