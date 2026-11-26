@@ -1,6 +1,16 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+#
+# Current results:
+# Heroku: => [[1, "buyer01@sagasu.ai"], [2, "buyer02@sagasu.ai"]]
+# PC server: =>
+# [[1, "base@sagasu.ai"], [2, "buyer01@sagasu.ai"],
+# [3, "buyer02@sagasu.ai"], [4, "boss@sagasu.ai"],
+# [5, "manager@sagasu.ai"], [6, "keyuser@sagasu.ai"],
+# [7, "auditor@sagasu.ai"], [8, "admin@sagasu.ai"]]
+
+#
 seed_demo_data = Rails.env.development? ||
                  (Rails.env.production? && ENV["SAGASU_SEED_DEMO"] == "1")
 
@@ -14,7 +24,7 @@ if seed_demo_data
     "manager" => %i[approver viewer], # Exercise organization-wide RFQ viewing.
     "keyuser" => %i[keyuser], # Exercise ordinary role assignment.
     "auditor" => %i[auditor], # Exercise organization-wide read access.
-    "admin" => %i[admin] # Provision the development role administrator.
+    "admin" => %i[admin] # Provision the development role administrator.z
   } # Finish defining the demo accounts.
 
   if Rails.env.production?
