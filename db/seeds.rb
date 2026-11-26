@@ -1,10 +1,10 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+seed_demo_data = Rails.env.development? ||
+                 (Rails.env.production? && ENV["SAGASU_SEED_DEMO"] == "1")
 
-
-if Rails.env.development? # Create demo accounts only in development.
-  password = ENV.fetch("SAGASU_DEMO_PASSWORD") # Read the password from the local environment.
+if seed_demo_data
 
   demo_accounts = { # List the grants each account receives in addition to BASE.
     "base" => [], # Exercise the default signup access.
@@ -17,21 +17,39 @@ if Rails.env.development? # Create demo accounts only in development.
     "admin" => %i[admin] # Provision the development role administrator.
   } # Finish defining the demo accounts.
 
+  if Rails.env.production?
+    demo_accounts = demo_accounts.slice("buyer01", "buyer02")
+    passwords = demo_accounts.keys.to_h do |username|
+      [username, ENV.fetch("SAGASU_DEMO_#{username.upcase}_PASSWORD")]
+    end
+    minimum_length = User.password_length.min
+    if passwords.values.any? { |password| password.blank? || !User.password_length.cover?(password.length) }
+      raise ArgumentError, "Production demo passwords must meet the account password length requirements (minimum #{minimum_length} characters)"
+    end
+    if passwords.values.uniq.size != demo_accounts.size
+      raise ArgumentError, "Production demo buyers must have distinct passwords"
+    end
+  else
+    password = ENV.fetch("SAGASU_DEMO_PASSWORD")
+    passwords = demo_accounts.keys.index_with(password)
+  end
+
+  puts "Creating users…"
   demo_accounts.each do |username, roles| # Provision each account by email.
     User.find_or_create_by!(email: "#{username}@sagasu.ai") do |user| # Set defaults for newly created accounts.
       user.name = username.humanize # Set a readable display name.
-      user.password = password # Set the initial demo password.
+      user.password = passwords.fetch(username) # Set the initial demo password.
       ([:base] + roles).each do |role| # Give every demo account BASE.
         user.user_roles.build(role: role) # Save the grant with the account.
       end # Finish building the grants.
     end # Preserve existing accounts on reruns.
   end # Finish provisioning demo users.
-end # Finish the development-only seed.
+end # Finish demo account provisioning.
 
 
 require "yaml" # Load the YAML parser.
 
-if Rails.env.development? # Load the fictional supplier catalog in development.
+if seed_demo_data # Load the fictional supplier catalog.
   path = Rails.root.join("seed-supplier.yml") # Resolve the local YAML file from the app root.
   sample = YAML.safe_load_file(path) # Read the YAML as plain Ruby data.
   suppliers = sample["suppliers"] if sample.is_a?(Hash) # Read the top-level supplier list.
@@ -78,9 +96,9 @@ if Rails.env.development? # Load the fictional supplier catalog in development.
   end # Commit the supplier batch once every entry succeeds.
 
   puts "Imported #{suppliers.size} supplier entries." # Report success after the transaction commits.
-end # Finish the development-only supplier seed.
+end # Finish the demo supplier seed.
 
-if Rails.env.development?
+if seed_demo_data
   project_sample = YAML.safe_load_file(Rails.root.join("seed-projects.yml"))
   item_sample = YAML.safe_load_file(Rails.root.join("seed-items.yml"))
   project_rows = project_sample.fetch("projects")
