@@ -1,0 +1,64 @@
+items:
+  - project_slug: shinjuku-office-masonry
+    erp_material: DEMO-MAT-001
+    description: Exterior clay facing brick
+    quantity: 50000
+    unit_of_measure: each
+  - project_slug: shinjuku-office-masonry
+    erp_material: DEMO-MAT-002
+    description: Premixed masonry mortar, 25 kg bag
+    quantity: 120
+    unit_of_measure: bags
+  - project_slug: shinjuku-office-masonry
+    erp_material: DEMO-MAT-003
+    description: Stainless steel masonry wall ties
+    quantity: 2400
+    unit_of_measure: each
+
+  - project_slug: yokohama-loading-dock
+    erp_material: DEMO-MAT-004
+    description: Ready-mix concrete, 30 MPa
+    quantity: 82.5
+    unit_of_measure: m³
+  - project_slug: yokohama-loading-dock
+    erp_material: DEMO-MAT-005
+    description: Deformed reinforcing bar, D16
+    quantity: 3200
+    unit_of_measure: kg
+  - project_slug: yokohama-loading-dock
+    erp_material: DEMO-MAT-006
+    description: Welded wire reinforcement mesh
+    quantity: 160
+    unit_of_measure: m²
+
+  - project_slug: kawasaki-workshop-drainage
+    erp_material: DEMO-MAT-007
+    description: PVC stormwater pipe, 150 mm
+    quantity: 96
+    unit_of_measure: m
+  - project_slug: kawasaki-workshop-drainage
+    erp_material: DEMO-MAT-008
+    description: Precast concrete inspection chamber
+    quantity: 6
+    unit_of_measure: each
+  - project_slug: kawasaki-workshop-drainage
+    erp_material: DEMO-MAT-009
+    description: Ductile iron traffic-rated chamber cover
+    quantity: 6
+    unit_of_measure: each
+
+  - project_slug: saitama-service-stairs
+    erp_material: DEMO-MAT-010
+    description: Galvanized steel stair tread with nonslip nosing
+    quantity: 28
+    unit_of_measure: each
+  - project_slug: saitama-service-stairs
+    erp_material: DEMO-MAT-011
+    description: Galvanized steel guardrail assembly
+    quantity: 34
+    unit_of_measure: m
+  - project_slug: saitama-service-stairs
+    erp_material: DEMO-MAT-012
+    description: M16 galvanized mechanical anchor
+    quantity: 96
+    unit_of_measure: each

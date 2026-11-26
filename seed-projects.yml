@@ -1,0 +1,40 @@
+projects:
+  - slug: shinjuku-office-masonry
+    buyer_email: buyer01@sagasu.ai
+    erp_rfq: DEMO-RFQ-001
+    title: Shinjuku office tower masonry
+    scope: Source facing bricks and masonry supplies for the tower exterior, with phased delivery to Tokyo.
+    client_name: Shinjuku Office Development
+    client_area: Building Envelope
+    budget_amount: 8500000
+    budget_currency: JPY
+
+  - slug: yokohama-loading-dock
+    buyer_email: buyer01@sagasu.ai
+    erp_rfq: DEMO-RFQ-002
+    title: Yokohama loading dock slab
+    scope: Source concrete and reinforcement for a warehouse loading dock.
+    client_name: Yokohama Logistics Center
+    client_area: Civil Works
+    budget_amount: 5200000
+    budget_currency: JPY
+
+  - slug: kawasaki-workshop-drainage
+    buyer_email: buyer02@sagasu.ai
+    erp_rfq: DEMO-RFQ-003
+    title: Kawasaki workshop drainage renewal
+    scope: Replace the workshop stormwater drainage line and inspection chambers.
+    client_name: Kawasaki Maintenance Depot
+    client_area: Facilities
+    budget_amount: 3400000
+    budget_currency: JPY
+
+  - slug: saitama-service-stairs
+    buyer_email: buyer02@sagasu.ai
+    erp_rfq: DEMO-RFQ-004
+    title: Saitama service stairs and guards
+    scope: Source galvanized steel for new service stairs and pedestrian guardrails.
+    client_name: Saitama Distribution Center
+    client_area: Site Safety
+    budget_amount: 6100000
+    budget_currency: JPY
