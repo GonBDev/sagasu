@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_24_102453) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_26_074216) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,8 +37,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_24_102453) do
     t.jsonb "snapshot"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "bidder_list_version_id"
     t.index ["approver_id"], name: "index_approvals_on_approver_id"
+    t.index ["bidder_list_version_id"], name: "index_approvals_on_bidder_list_version_id"
+    t.index ["project_id"], name: "index_approvals_on_one_pending_version_per_project", unique: true, where: "((status = 'pending'::text) AND (bidder_list_version_id IS NOT NULL))"
     t.index ["project_id"], name: "index_approvals_on_project_id"
+  end
+
+  create_table "bidder_list_versions", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "created_by_id", null: false
+    t.integer "version_number", null: false
+    t.jsonb "snapshot", null: false
+    t.text "change_reason"
+    t.datetime "created_at", null: false
+    t.index ["created_by_id"], name: "index_bidder_list_versions_on_created_by_id"
+    t.index ["project_id", "version_number"], name: "index_bidder_list_versions_on_project_id_and_version_number", unique: true
+    t.check_constraint "version_number > 0", name: "bidder_list_versions_positive_number"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.bigint "participant_one_id", null: false
+    t.bigint "participant_two_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_one_id", "participant_two_id"], name: "index_chats_on_participant_one_id_and_participant_two_id", unique: true
+    t.index ["participant_two_id"], name: "index_chats_on_participant_two_id"
+    t.check_constraint "participant_one_id <= participant_two_id", name: "chats_ordered_participants"
   end
 
   create_table "group_suppliers", force: :cascade do |t|
@@ -79,6 +104,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_24_102453) do
     t.datetime "updated_at", null: false
     t.index ["item_group_id"], name: "index_items_on_item_group_id"
     t.index ["project_id"], name: "index_items_on_project_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.bigint "sender_id", null: false
+    t.text "content", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "task_id"
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+    t.index ["task_id"], name: "index_messages_on_task_id", unique: true
   end
 
   create_table "projects", force: :cascade do |t|
@@ -137,6 +175,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_24_102453) do
     t.index ["erp_vendor_id"], name: "index_suppliers_on_erp_vendor_id", unique: true
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "assignee_id", null: false
+    t.string "actionable_type", null: false
+    t.bigint "actionable_id", null: false
+    t.string "kind", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actionable_type", "actionable_id", "kind"], name: "index_tasks_on_actionable_type_and_actionable_id_and_kind", unique: true
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "role", null: false
@@ -160,17 +209,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_24_102453) do
 
   add_foreign_key "ai_runs", "projects"
   add_foreign_key "ai_runs", "users"
+  add_foreign_key "approvals", "bidder_list_versions"
   add_foreign_key "approvals", "projects"
   add_foreign_key "approvals", "users", column: "approver_id"
+  add_foreign_key "bidder_list_versions", "projects"
+  add_foreign_key "bidder_list_versions", "users", column: "created_by_id"
+  add_foreign_key "chats", "users", column: "participant_one_id"
+  add_foreign_key "chats", "users", column: "participant_two_id"
   add_foreign_key "group_suppliers", "ai_runs"
   add_foreign_key "group_suppliers", "item_groups"
   add_foreign_key "group_suppliers", "suppliers"
   add_foreign_key "item_groups", "projects"
   add_foreign_key "items", "item_groups"
   add_foreign_key "items", "projects"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "tasks"
+  add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "projects", "users"
   add_foreign_key "reviews", "projects"
   add_foreign_key "reviews", "suppliers"
   add_foreign_key "reviews", "users"
+  add_foreign_key "tasks", "users", column: "assignee_id"
   add_foreign_key "user_roles", "users"
 end

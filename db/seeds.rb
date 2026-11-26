@@ -12,7 +12,7 @@
 
 #
 seed_demo_data = Rails.env.development? ||
-                 (Rails.env.production? && ENV["SAGASU_SEED_DEMO"] == "1")
+                 (Rails.env.production? )#&& ENV["SAGASU_SEED_DEMO"] == "1")
 
 if seed_demo_data
 
@@ -27,7 +27,7 @@ if seed_demo_data
     "admin" => %i[admin] # Provision the development role administrator.z
   } # Finish defining the demo accounts.
 
-  if Rails.env.production?
+  if false #Rails.env.production?   # I don't want right now a distinction, production mush have all demo_accounts
     demo_accounts = demo_accounts.slice("buyer01", "buyer02")
     passwords = demo_accounts.keys.to_h do |username|
       [username, ENV.fetch("SAGASU_DEMO_#{username.upcase}_PASSWORD")]

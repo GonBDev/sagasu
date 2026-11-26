@@ -1,0 +1,65 @@
+<section class="card bg-white rounded-4" aria-labelledby="approval-title">
+  <div class="card-body p-3 p-md-4">
+    <h2 id="approval-title" class="h4">Approval</h2>
+
+    <% if review_state %>
+      <div class="border rounded-3 p-3 mb-3">
+        <h3 class="h6">Latest submission · <%= review_state.status.humanize %></h3>
+        <p class="mb-1">Approver: <%= review_state.approver.name.presence || review_state.approver.email %></p>
+        <p class="small text-body-secondary mb-1">Submitted <%= l(review_state.created_at, format: :short) %></p>
+        <% if review_state.bidder_list_version %>
+          <%= link_to "View submitted version #{review_state.bidder_list_version.version_number}",
+                      project_bidder_list_version_path(project, review_state.bidder_list_version) %>
+        <% end %>
+        <% if review_state.decided_at %>
+          <p class="small text-body-secondary mt-3 mb-1">Decided <%= l(review_state.decided_at, format: :short) %></p>
+          <p class="mb-0 text-break"><strong>Decision comment:</strong> <%= review_state.comment %></p>
+        <% end %>
+
+        <% if policy(review_state).decide? %>
+          <%= form_with url: decide_approval_path(review_state), method: :patch, class: "border-top pt-3 mt-3" do |form| %>
+            <div class="mb-3">
+              <%= form.label :comment, "Decision comment", class: "form-label" %>
+              <%= form.text_area :comment, required: true, rows: 3, class: "form-control" %>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <%= form.button "Approve", name: "decision", value: "approved", class: "btn btn-primary" %>
+              <%= form.button "Return to buyer", name: "decision", value: "returned", class: "btn btn-outline-primary" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if can_submit %>
+      <% if submission_version.nil? || submission_outdated %>
+        <p class="mb-0">Save the current bidder list before submitting it.</p>
+        <% if can_open_suppliers %>
+          <%= link_to "Go to Suppliers", bidder_list_suppliers_project_path(project) %>
+        <% end %>
+      <% elsif eligible_approvers.empty? %>
+        <p class="mb-0">No eligible approvers are available for this RFQ.</p>
+      <% elsif !review_state&.pending? %>
+        <p><%= link_to "Review saved version #{submission_version.version_number}",
+                       project_bidder_list_version_path(project, submission_version) %></p>
+        <%= form_with url: submit_bidder_list_approval_project_path(project), method: :post do |form| %>
+          <%= form.hidden_field :bidder_list_version_id, value: submission_version.id %>
+          <div class="mb-3">
+            <%= form.label :approver_id, "Approver", class: "form-label" %>
+            <%= form.collection_select :approver_id, eligible_approvers, :id, ->(user) { user.name.presence || user.email },
+                                       { prompt: "Choose an approver" }, { class: "form-select", required: true } %>
+          </div>
+          <%= form.submit "Submit for approval", class: "btn btn-primary", data: { turbo_submits_with: "Submitting…" } %>
+        <% end %>
+      <% end %>
+    <% elsif review_state.nil? %>
+      <p class="text-body-secondary mb-0">No bidder list has been submitted for approval.</p>
+    <% end %>
+  </div>
+</section>
+
+<% if @supplier_invitations || @supplier_invitation_error %>
+  <%= render "projects/supplier_invitations", invitations: @supplier_invitations,
+                                               template_error: @supplier_invitation_error,
+                                               version: review_state.bidder_list_version %>
+<% end %>

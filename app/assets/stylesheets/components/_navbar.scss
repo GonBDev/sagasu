@@ -149,7 +149,7 @@
     text-transform: uppercase;
   }
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     .navbar-collapse {
       padding-block: .5rem .25rem;
     }

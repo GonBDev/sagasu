@@ -15,4 +15,14 @@ class Supplier < ApplicationRecord
   end
 
   has_many :reviews
+
+  def self.search_catalog(query)
+    pattern = "%#{sanitize_sql_like(query)}%"
+    where(active: true).where(<<~SQL, pattern: pattern).order(:name, :id)
+      suppliers.name ILIKE :pattern OR suppliers.category ILIKE :pattern OR EXISTS (
+        SELECT 1 FROM unnest(suppliers.tags) AS catalog_tag(value)
+        WHERE catalog_tag.value ILIKE :pattern
+      )
+    SQL
+  end
 end

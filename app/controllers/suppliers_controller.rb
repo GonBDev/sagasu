@@ -3,7 +3,8 @@ class SuppliersController < ApplicationController
 
   def index
     authorize Supplier
-    @suppliers = Supplier.order(:name)
+    @query = params[:q].to_s.strip
+    @suppliers = @query.present? ? Supplier.search_catalog(@query) : Supplier.order(:name)
   end
 
   def show

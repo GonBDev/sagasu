@@ -1,40 +1,183 @@
+# Fictional Sagasu demo data; not a construction specification or priced estimate.
+# 20 projects: 10 for buyer01@sagasu.ai and 10 for buyer02@sagasu.ai. Budgets are illustrative JPY totals.
 projects:
-  - slug: shinjuku-office-masonry
-    buyer_email: buyer01@sagasu.ai
-    erp_rfq: DEMO-RFQ-001
-    title: Shinjuku office tower masonry
-    scope: Source facing bricks and masonry supplies for the tower exterior, with phased delivery to Tokyo.
-    client_name: Shinjuku Office Development
-    client_area: Building Envelope
+  - slug: "shinjuku-office-masonry"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-001"
+    title: "Shinjuku office tower masonry"
+    scope: "Source facing bricks and masonry supplies for the tower exterior, with phased delivery to Tokyo."
+    client_name: "Shinjuku Office Development"
+    client_area: "Building Envelope"
     budget_amount: 8500000
-    budget_currency: JPY
-
-  - slug: yokohama-loading-dock
-    buyer_email: buyer01@sagasu.ai
-    erp_rfq: DEMO-RFQ-002
-    title: Yokohama loading dock slab
-    scope: Source concrete and reinforcement for a warehouse loading dock.
-    client_name: Yokohama Logistics Center
-    client_area: Civil Works
+    budget_currency: "JPY"
+  - slug: "yokohama-loading-dock"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-002"
+    title: "Yokohama loading dock slab"
+    scope: "Source concrete and reinforcement for a warehouse loading dock."
+    client_name: "Yokohama Logistics Center"
+    client_area: "Civil Works"
     budget_amount: 5200000
-    budget_currency: JPY
-
-  - slug: kawasaki-workshop-drainage
-    buyer_email: buyer02@sagasu.ai
-    erp_rfq: DEMO-RFQ-003
-    title: Kawasaki workshop drainage renewal
-    scope: Replace the workshop stormwater drainage line and inspection chambers.
-    client_name: Kawasaki Maintenance Depot
-    client_area: Facilities
+    budget_currency: "JPY"
+  - slug: "kawasaki-workshop-drainage"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-003"
+    title: "Kawasaki workshop drainage renewal"
+    scope: "Replace the workshop stormwater drainage line and inspection chambers."
+    client_name: "Kawasaki Maintenance Depot"
+    client_area: "Facilities"
     budget_amount: 3400000
-    budget_currency: JPY
-
-  - slug: saitama-service-stairs
-    buyer_email: buyer02@sagasu.ai
-    erp_rfq: DEMO-RFQ-004
-    title: Saitama service stairs and guards
-    scope: Source galvanized steel for new service stairs and pedestrian guardrails.
-    client_name: Saitama Distribution Center
-    client_area: Site Safety
+    budget_currency: "JPY"
+  - slug: "saitama-service-stairs"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-004"
+    title: "Saitama service stairs and guards"
+    scope: "Source galvanized steel for new service stairs and pedestrian guardrails."
+    client_name: "Saitama Distribution Center"
+    client_area: "Site Safety"
     budget_amount: 6100000
-    budget_currency: JPY
+    budget_currency: "JPY"
+  - slug: "chiba-warehouse-roof"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-005"
+    title: "Chiba warehouse roof refurbishment"
+    scope: "Procure insulated roofing materials and installation services for a warehouse in Chiba, with work phased around ongoing logistics operations."
+    client_name: "Chiba Bay Logistics Hub"
+    client_area: "Roofing"
+    budget_amount: 18600000
+    budget_currency: "JPY"
+  - slug: "tokyo-office-fitout"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-006"
+    title: "Tokyo Kanda office interior fit-out"
+    scope: "Purchase partition, ceiling and finish materials with fit-out services for a tenant office in Kanda, Tokyo; coordinate deliveries through a shared building loading bay."
+    client_name: "Kanda Business Center"
+    client_area: "Interior Works"
+    budget_amount: 22400000
+    budget_currency: "JPY"
+  - slug: "osaka-apartment-plumbing"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-007"
+    title: "Osaka apartment plumbing installation"
+    scope: "Source water supply, sanitary drainage and plumbing installation for a 12-unit apartment building in Osaka; include pressure tests and handover records."
+    client_name: "Osaka Nishi Residential Development"
+    client_area: "Plumbing"
+    budget_amount: 15800000
+    budget_currency: "JPY"
+  - slug: "nagoya-factory-electrical"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-008"
+    title: "Nagoya factory electrical distribution upgrade"
+    scope: "Procure electrical distribution equipment and installation services for an existing factory in Nagoya; schedule the final changeover during an agreed shutdown."
+    client_name: "Nagoya Manufacturing Expansion"
+    client_area: "Electrical Works"
+    budget_amount: 28500000
+    budget_currency: "JPY"
+  - slug: "sendai-school-seismic"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-009"
+    title: "Sendai school seismic retrofit package"
+    scope: "Source structural strengthening materials and specialist installation for a school building in Sendai using the project engineer design; phase noisy work outside teaching hours."
+    client_name: "Sendai Learning Campus"
+    client_area: "Structural Retrofit"
+    budget_amount: 42000000
+    budget_currency: "JPY"
+  - slug: "fukuoka-hotel-hvac"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-010"
+    title: "Fukuoka hotel HVAC replacement"
+    scope: "Purchase air-conditioning equipment, ductwork and mechanical services for a 24-room hotel renovation in Fukuoka; replace systems by floor and commission controls."
+    client_name: "Fukuoka Central Hotel Renewal"
+    client_area: "Mechanical Works"
+    budget_amount: 36500000
+    budget_currency: "JPY"
+  - slug: "kyoto-townhouse-restoration"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-011"
+    title: "Kyoto timber townhouse restoration"
+    scope: "Procure timber, roof and interior materials with specialist craft services for a traditional townhouse renovation in Kyoto; retain existing features identified in the conservation drawings."
+    client_name: "Kyoto Higashiyama Townhouse"
+    client_area: "Restoration"
+    budget_amount: 14800000
+    budget_currency: "JPY"
+  - slug: "hiroshima-retaining-wall"
+    buyer_email: "buyer01@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-012"
+    title: "Hiroshima hillside retaining wall"
+    scope: "Source concrete, reinforcement and drainage materials for an engineered retaining wall in Hiroshima, including earthworks, construction and quality testing."
+    client_name: "Hiroshima Hillside Access Project"
+    client_area: "Earthworks and Structures"
+    budget_amount: 26000000
+    budget_currency: "JPY"
+  - slug: "kobe-port-pavement"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-013"
+    title: "Kobe logistics yard pavement rehabilitation"
+    scope: "Procure pavement materials and roadworks services for a logistics yard in Kobe, including drainage adjustments and new vehicle markings."
+    client_name: "Kobe Harbor Logistics Yard"
+    client_area: "External Works"
+    budget_amount: 19800000
+    budget_currency: "JPY"
+  - slug: "sapporo-roof-snowmelt"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-014"
+    title: "Sapporo building entrance snowmelt system"
+    scope: "Source heating, drainage and control equipment for an entrance snowmelt installation in Sapporo, with associated concrete reinstatement and cold-weather commissioning."
+    client_name: "Sapporo North Office Access"
+    client_area: "Winterization"
+    budget_amount: 12500000
+    budget_currency: "JPY"
+  - slug: "tsukuba-laboratory-cleanroom"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-015"
+    title: "Tsukuba laboratory cleanroom fit-out"
+    scope: "Procure cleanroom envelope, air handling components and specialist installation for a laboratory in Tsukuba; perform acceptance testing against the project cleanroom specification."
+    client_name: "Tsukuba Research Laboratory"
+    client_area: "Specialist Fit-out"
+    budget_amount: 48000000
+    budget_currency: "JPY"
+  - slug: "hamamatsu-fire-protection"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-016"
+    title: "Hamamatsu workshop fire protection renewal"
+    scope: "Purchase fire suppression and alarm equipment with specialist installation for a workshop in Hamamatsu, including coordinated testing and handover documentation."
+    client_name: "Hamamatsu Industrial Workshop"
+    client_area: "Fire Protection"
+    budget_amount: 24600000
+    budget_currency: "JPY"
+  - slug: "niigata-water-treatment"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-017"
+    title: "Niigata site water treatment building"
+    scope: "Source civil, process piping and equipment packages for a construction-site water treatment building in Niigata; include installation and trial operation against the project effluent criteria."
+    client_name: "Niigata Infrastructure Worksite"
+    client_area: "Water Treatment"
+    budget_amount: 33200000
+    budget_currency: "JPY"
+  - slug: "takamatsu-community-center"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-018"
+    title: "Takamatsu community center accessibility upgrade"
+    scope: "Procure accessible entrance, restroom and wayfinding materials with renovation services for a community center in Takamatsu; keep agreed public routes operational."
+    client_name: "Takamatsu Community Facilities"
+    client_area: "Accessibility"
+    budget_amount: 21400000
+    budget_currency: "JPY"
+  - slug: "naha-hotel-facade"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-019"
+    title: "Naha hotel facade and waterproofing renewal"
+    scope: "Source facade repair, corrosion protection and waterproofing materials for a hotel in Naha, Okinawa; coordinate coastal exposure protection and phased access around occupied areas."
+    client_name: "Naha Seafront Hotel"
+    client_area: "Facade Renewal"
+    budget_amount: 39800000
+    budget_currency: "JPY"
+  - slug: "kanazawa-visitor-center"
+    buyer_email: "buyer02@sagasu.ai"
+    erp_rfq: "DEMO-RFQ-020"
+    title: "Kanazawa visitor center construction package"
+    scope: "Procure a mixed civil, timber, envelope and building-services package for a small visitor center in Kanazawa, including installation, testing and completion services."
+    client_name: "Kanazawa Visitor Facilities Development"
+    client_area: "General Construction"
+    budget_amount: 68000000
+    budget_currency: "JPY"

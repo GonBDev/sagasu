@@ -1,0 +1,76 @@
+<% snapshot = @version.snapshot %>
+<% rfq = snapshot.fetch("project") %>
+<% content_for :title, "Bidder list version #{@version.version_number} | #{rfq.fetch('title')}" %>
+
+<main class="container py-4">
+  <% if policy(@project).show? %>
+    <%= link_to "← Back to Suppliers", bidder_list_suppliers_project_path(@project), class: "d-inline-block mb-3" %>
+  <% else %>
+    <%= link_to "← Back to Approval", bidder_list_approval_project_path(@project), class: "d-inline-block mb-3" %>
+  <% end %>
+  <header class="card bg-white rounded-4 p-3 p-md-4 mb-4">
+    <h1 class="h3">Bidder list version <%= @version.version_number %></h1>
+    <p class="text-body-secondary mb-2">
+      Saved <%= l(@version.created_at, format: :short) %> by <%= @version.created_by.name.presence || @version.created_by.email %>
+    </p>
+    <% if rfq["erp_rfq"].present? %>
+      <p class="small text-body-secondary mb-1"><%= rfq["erp_rfq"] %></p>
+    <% end %>
+    <h2 class="h5"><%= rfq.fetch("title") %></h2>
+    <% if rfq["scope"].present? %>
+      <p class="mb-0 text-break"><%= rfq["scope"] %></p>
+    <% end %>
+  </header>
+
+  <% snapshot.fetch("groups").each do |group| %>
+    <section class="card bg-white rounded-4 p-3 p-md-4 mb-3">
+      <h2 class="h5 text-break"><%= group.fetch("title") %></h2>
+      <h3 class="h6">Materials</h3>
+      <% if group.fetch("materials").empty? %>
+        <p class="text-body-secondary">No materials in this group.</p>
+      <% else %>
+        <ul>
+          <% group.fetch("materials").each do |material| %>
+            <li><%= material.fetch("description") %> · <%= material["quantity"] %> <%= material["unit_of_measure"] %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <h3 class="h6">Selected suppliers</h3>
+      <% if group.fetch("suppliers").empty? %>
+        <p class="text-body-secondary mb-0">No suppliers selected.</p>
+      <% else %>
+        <ul class="mb-0">
+          <% group.fetch("suppliers").each do |supplier| %>
+            <li class="text-break">
+              <strong><%= supplier.fetch("name") %></strong>
+              <span class="small text-body-secondary">· <%= supplier.fetch("source") == "ai" ? "AI suggestion" : "Added through search" %></span>
+              <% if supplier["ai_reason"].present? %>
+                <p class="small mb-1">AI rationale: <%= supplier["ai_reason"] %></p>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if snapshot.fetch("ungrouped_materials").any? %>
+    <section class="card bg-white rounded-4 p-3 p-md-4 mb-3">
+      <h2 class="h5">Ungrouped materials</h2>
+      <ul class="mb-0">
+        <% snapshot.fetch("ungrouped_materials").each do |material| %>
+          <li><%= material.fetch("description") %> · <%= material["quantity"] %> <%= material["unit_of_measure"] %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <nav class="d-flex flex-wrap gap-3" aria-label="Saved bidder list versions">
+    <% if @previous_version %>
+      <%= link_to "← Version #{@previous_version.version_number}", project_bidder_list_version_path(@project, @previous_version) %>
+    <% end %>
+    <% if @next_version %>
+      <%= link_to "Version #{@next_version.version_number} →", project_bidder_list_version_path(@project, @next_version) %>
+    <% end %>
+  </nav>
+</main>

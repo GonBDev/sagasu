@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :user_roles, dependent: :destroy # Give each account multiple grants and remove them when the account is deleted.
   has_many :projects
+  has_many :chats_as_participant_one, class_name: "Chat", foreign_key: :participant_one_id, dependent: :destroy
+  has_many :chats_as_participant_two, class_name: "Chat", foreign_key: :participant_two_id, dependent: :destroy
   has_many :approvals, foreign_key: :approver_id, inverse_of: :approver
   has_many :reviews
 

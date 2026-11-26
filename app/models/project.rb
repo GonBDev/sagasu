@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :item_groups
   has_many :items
+  has_many :bidder_list_versions
 
   enum :status, {
     draft: "draft",
