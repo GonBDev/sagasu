@@ -79,3 +79,38 @@ if Rails.env.development? # Load the fictional supplier catalog in development.
 
   puts "Imported #{suppliers.size} supplier entries." # Report success after the transaction commits.
 end # Finish the development-only supplier seed.
+
+if Rails.env.development?
+  project_sample = YAML.safe_load_file(Rails.root.join("seed-projects.yml"))
+  item_sample = YAML.safe_load_file(Rails.root.join("seed-items.yml"))
+  project_rows = project_sample.fetch("projects")
+  item_rows = item_sample.fetch("items")
+
+  Project.transaction do
+    puts "Creating demo projects..."
+    projects = {} # YAML slug => Project
+    project_rows.each do |row|
+      slug = row.fetch("slug")
+      raise ArgumentError, "seed-projects.yml: duplicate project slug #{slug.inspect}" if projects.key?(slug)
+
+      buyer = User.find_by!(email: row.fetch("buyer_email"))
+      projects[slug] = buyer.projects.find_or_create_by!(erp_rfq: row.fetch("erp_rfq")) do |project|
+        project.assign_attributes(row.slice("title", "scope", "client_name", "client_area", "budget_amount", "budget_currency"))
+      end
+    end
+
+    puts "Creating demo items..."
+    item_rows.each do |row|
+      slug = row.fetch("project_slug")
+      project = projects.fetch(slug) do
+        raise ArgumentError, "seed-items.yml: unknown project slug #{slug.inspect}"
+      end
+
+      project.items.find_or_create_by!(erp_material: row.fetch("erp_material")) do |item|
+        item.assign_attributes(row.slice("description", "quantity", "unit_of_measure"))
+      end
+    end
+  end
+
+  puts "Seeded #{project_rows.size} demo projects and #{item_rows.size} demo items."
+end
