@@ -202,6 +202,25 @@ end # Finish the cross-owner write test.
     end
   end
 
+  test "smart fill is restricted to buyers and requires pasted text" do
+    sign_in @reader
+    post smart_fill_projects_path(format: :json), params: { smart_fill_text: "Project: Warehouse lighting" }
+    assert_response :forbidden
+
+    buyer = @project.user
+    buyer.user_roles.create!(role: :buyer)
+    sign_in buyer
+
+    get new_project_path
+    assert_select "form[action=?] textarea[name='smart_fill_text']", smart_fill_projects_path(format: :json)
+    assert_select "form[data-smart-fill-target='projectForm'][action=?]", projects_path
+
+    assert_no_difference -> { Project.count } do
+      post smart_fill_projects_path(format: :json), params: { smart_fill_text: " " }
+      assert_response 422
+    end
+  end
+
   test "owning buyer can edit project information on draft and returned RFQs" do
     owner = @project.user
     owner.user_roles.create!(role: :buyer)

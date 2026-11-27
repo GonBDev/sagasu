@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  BUDGET_CURRENCIES = %w[JPY USD EUR MXN PEN CFP].freeze
+
   belongs_to :user
   has_many :item_groups
   has_many :items
