@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Sagasu | WWW SQL Designer PostgreSQL diagram | db/schema.rb version 2026_11_26_074216 -->
+<!-- Application database only. Partial indexes and check constraints are recorded in table comments. -->
+<sql>
+  <datatypes db="postgresql">
+    <group label="Numeric" color="rgb(238,238,170)">
+      <type label="Integer" length="0" sql="INTEGER" quote="" />
+      <type label="Decimal" length="1" sql="DECIMAL" quote="" />
+      <type label="Serial" length="0" sql="SERIAL" quote="" />
+      <type label="Big integer" length="0" sql="BIGINT" quote="" />
+      <type label="Big serial" length="0" sql="BIGSERIAL" quote="" />
+      <type label="Double precision" length="0" sql="DOUBLE PRECISION" quote="" />
+    </group>
+    <group label="Character" color="rgb(255,200,200)">
+      <type label="Text" length="0" sql="TEXT" quote="'" />
+      <type label="Boolean" length="0" sql="BOOLEAN" quote="" />
+      <type label="Variable character" length="0" sql="VARCHAR" quote="'" />
+      <type label="Variable character array" length="0" sql="VARCHAR[]" quote="'" />
+      <type label="JSON binary" length="0" sql="JSONB" quote="'" />
+    </group>
+    <group label="Date &amp; Time" color="rgb(200,255,200)">
+      <type label="Timestamp" length="1" sql="TIMESTAMP" quote="'" />
+      <type label="Date" length="0" sql="DATE" quote="'" />
+    </group>
+  </datatypes>
+  <table x="1240" y="60" name="users">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="email" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>''</default>
+    </row>
+    <row name="encrypted_password" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>''</default>
+    </row>
+    <row name="reset_password_token" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="reset_password_sent_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="remember_created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="name" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="UNIQUE" name="index_users_on_email">
+      <part>email</part>
+    </key>
+    <key type="UNIQUE" name="index_users_on_reset_password_token">
+      <part>reset_password_token</part>
+    </key>
+    <comment>Devise accounts. Roles are assigned through user_roles.</comment>
+  </table>
+  <table x="940" y="60" name="projects">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="title" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="erp_rfq" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="scope" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="client_name" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="client_area" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="budget_amount" null="1" autoincrement="0">
+      <datatype>DECIMAL</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="budget_currency" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="status" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>'draft'</default>
+    </row>
+    <row name="buyer_comment" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_projects_on_user_id">
+      <part>user_id</part>
+    </key>
+    <comment>Buyer-owned RFQs. Status: draft, pending_approval, approved or returned.</comment>
+  </table>
+  <table x="1240" y="440" name="approvals">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="project_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="approver_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="status" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>'pending'</default>
+    </row>
+    <row name="comment" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="decided_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="snapshot" null="1" autoincrement="0">
+      <datatype>JSONB</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="bidder_list_version_id" null="1" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="bidder_list_versions" row="id" />
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_approvals_on_approver_id">
+      <part>approver_id</part>
+    </key>
+    <key type="INDEX" name="index_approvals_on_bidder_list_version_id">
+      <part>bidder_list_version_id</part>
+    </key>
+    <key type="INDEX" name="index_approvals_on_project_id">
+      <part>project_id</part>
+    </key>
+    <comment>Assigned reviews of saved versions. Status: pending, approved or returned. The separate snapshot column and nullable version reference remain available for older records. PostgreSQL partial UNIQUE INDEX index_approvals_on_one_pending_version_per_project (project_id) WHERE ((status = 'pending'::text) AND (bidder_list_version_id IS NOT NULL)). This index is documented here because the XML key format cannot express its predicate.</comment>
+  </table>
+  <table x="940" y="450" name="items">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="project_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="item_group_id" null="1" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="item_groups" row="id" />
+    </row>
+    <row name="erp_material" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="description" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="quantity" null="1" autoincrement="0">
+      <datatype>DECIMAL</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="unit_of_measure" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_items_on_item_group_id">
+      <part>item_group_id</part>
+    </key>
+    <key type="INDEX" name="index_items_on_project_id">
+      <part>project_id</part>
+    </key>
+    <comment>Material lines. item_group_id is nullable for ungrouped materials. The Rails group delete action clears assignments before deleting the group.</comment>
+  </table>
+  <table x="640" y="60" name="item_groups">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="project_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="title" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="description" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="ai_reason" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="position" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_item_groups_on_project_id">
+      <part>project_id</part>
+    </key>
+    <comment>Material groups within an RFQ. Buyers can create them manually or apply a reviewed AI proposal.</comment>
+  </table>
+  <table x="340" y="60" name="group_suppliers">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="item_group_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="item_groups" row="id" />
+    </row>
+    <row name="supplier_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="suppliers" row="id" />
+    </row>
+    <row name="ai_run_id" null="1" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="ai_runs" row="id" />
+    </row>
+    <row name="ai_suggested" null="0" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>FALSE</default>
+    </row>
+    <row name="ai_reason" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="selected" null="0" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>FALSE</default>
+    </row>
+    <row name="feedback_reason" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="source" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_group_suppliers_on_ai_run_id">
+      <part>ai_run_id</part>
+    </key>
+    <key type="UNIQUE" name="index_group_suppliers_on_item_group_id_and_supplier_id">
+      <part>item_group_id</part>
+      <part>supplier_id</part>
+    </key>
+    <key type="INDEX" name="index_group_suppliers_on_supplier_id">
+      <part>supplier_id</part>
+    </key>
+    <comment>Supplier candidates per material group. Source is ai or search. selected records the buyer decision independently of the AI suggestion.</comment>
+  </table>
+  <table x="40" y="60" name="suppliers">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="name" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="primary_email" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="erp_vendor_id" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="sm_vendor_id" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="source_system" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="country_code" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="state_name" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="city" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="tax_id" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="tax_id_type_code" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="active" null="1" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="category" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="business_activity" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="description" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="website" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="ai_comments" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="tags" null="0" autoincrement="0">
+      <datatype>VARCHAR[]</datatype>
+      <default>'{}'</default>
+    </row>
+    <row name="size" null="1" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="UNIQUE" name="index_suppliers_on_erp_vendor_id">
+      <part>erp_vendor_id</part>
+    </key>
+    <comment>Supplier directory. A supplier may have no ERP vendor ID. tags is a PostgreSQL character array.</comment>
+  </table>
+  <table x="40" y="590" name="reviews">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="supplier_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="suppliers" row="id" />
+    </row>
+    <row name="project_id" null="1" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="rating" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="comment" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="visibility" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>'organization'</default>
+    </row>
+    <row name="ai_usable" null="0" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>TRUE</default>
+    </row>
+    <row name="status" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>'unverified'</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_reviews_on_project_id">
+      <part>project_id</part>
+    </key>
+    <key type="INDEX" name="index_reviews_on_supplier_id">
+      <part>supplier_id</part>
+    </key>
+    <key type="INDEX" name="index_reviews_on_user_id">
+      <part>user_id</part>
+    </key>
+    <comment>Supplier observations. Project visibility requires a project in Rails. Status: unverified, verified or disputed.</comment>
+  </table>
+  <table x="640" y="420" name="ai_runs">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="project_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="user_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="kind" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="model" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="prompt" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="output" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="status" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_ai_runs_on_project_id">
+      <part>project_id</part>
+    </key>
+    <key type="INDEX" name="index_ai_runs_on_user_id">
+      <part>user_id</part>
+    </key>
+    <comment>Stored AI runs for grouping and supplier suggestions. prompt and output are text fields.</comment>
+  </table>
+  <table x="940" y="820" name="bidder_list_versions">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="project_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="projects" row="id" />
+    </row>
+    <row name="created_by_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="version_number" null="0" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="snapshot" null="0" autoincrement="0">
+      <datatype>JSONB</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="change_reason" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_bidder_list_versions_on_created_by_id">
+      <part>created_by_id</part>
+    </key>
+    <key type="UNIQUE" name="index_bidder_list_versions_on_project_id_and_version_number">
+      <part>project_id</part>
+      <part>version_number</part>
+    </key>
+    <comment>Numbered bidder-list snapshots per RFQ. The application treats saved version attributes as read-only. CHECK bidder_list_versions_positive_number: version_number &gt; 0.</comment>
+  </table>
+  <table x="1540" y="60" name="chats">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="participant_one_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="participant_two_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="UNIQUE" name="index_chats_on_participant_one_id_and_participant_two_id">
+      <part>participant_one_id</part>
+      <part>participant_two_id</part>
+    </key>
+    <key type="INDEX" name="index_chats_on_participant_two_id">
+      <part>participant_two_id</part>
+    </key>
+    <comment>Private conversation between two users. Equal participant IDs represent personal notes. CHECK chats_ordered_participants: participant_one_id &lt;= participant_two_id.</comment>
+  </table>
+  <table x="1840" y="60" name="messages">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="chat_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="chats" row="id" />
+    </row>
+    <row name="sender_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="content" null="0" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="read_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="task_id" null="1" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="tasks" row="id" />
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="INDEX" name="index_messages_on_chat_id">
+      <part>chat_id</part>
+    </key>
+    <key type="INDEX" name="index_messages_on_sender_id">
+      <part>sender_id</part>
+    </key>
+    <key type="UNIQUE" name="index_messages_on_task_id">
+      <part>task_id</part>
+    </key>
+    <comment>Messages from a chat participant. read_at tracks when an incoming message was read. A task-linked message is shown as Sagasu Bot.</comment>
+  </table>
+  <table x="1840" y="430" name="tasks">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="assignee_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="actionable_type" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="actionable_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="kind" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="UNIQUE" name="index_tasks_on_actionable_type_and_actionable_id_and_kind">
+      <part>actionable_type</part>
+      <part>actionable_id</part>
+      <part>kind</part>
+    </key>
+    <key type="INDEX" name="index_tasks_on_assignee_id">
+      <part>assignee_id</part>
+    </key>
+    <comment>Assigned task. actionable_type and actionable_id form a Rails polymorphic reference. review_bidder_list targets Approval. PostgreSQL does not enforce that polymorphic reference as a foreign key.</comment>
+  </table>
+  <table x="1540" y="430" name="user_roles">
+    <row name="id" null="0" autoincrement="1">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="0" autoincrement="0">
+      <datatype>BIGINT</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="role" null="0" autoincrement="0">
+      <datatype>VARCHAR</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+    <key type="UNIQUE" name="index_user_roles_on_user_id_and_role">
+      <part>user_id</part>
+      <part>role</part>
+    </key>
+    <comment>Role grants: base, buyer, approver, viewer, keyuser, admin or auditor.</comment>
+  </table>
+</sql>

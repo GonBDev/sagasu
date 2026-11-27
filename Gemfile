@@ -50,6 +50,7 @@ gem "sassc-rails"
 #  Use pundit fo Authorizing actions by user or roles.
 gem "pundit"
 gem "ruby_llm", "~> 1.16.0" # Use the RubyLLM version covered in the Le Wagon lesson.
+gem "csv"
 
 group :development, :test do
   gem "dotenv-rails"
