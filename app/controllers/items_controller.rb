@@ -74,6 +74,16 @@ class ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @project = current_user.projects.find(params[:project_id])
+    @project.with_lock do
+      authorize @project, :edit_material?
+      @project.items.find(params[:id]).destroy!
+    end
+
+    redirect_to bidder_list_materials_project_path(@project), notice: "Material deleted.", status: :see_other
+  end
+
   private
 
   def load_material_import_project
@@ -99,7 +109,7 @@ class ItemsController < ApplicationController
 
   def material_access_denied
     redirect_to project_path(@project),
-                alert: "You can only change materials on your own draft or returned RFQs.", # Show why the material change was denied.
+                alert: "You can only change materials on your own draft or returned projects.", # Show why the material change was denied.
                 status: :see_other
   end
 

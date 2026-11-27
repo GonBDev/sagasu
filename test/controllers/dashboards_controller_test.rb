@@ -15,7 +15,7 @@ class DashboardsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to dashboard_path
     follow_redirect!
     assert_select "nav[aria-label='Main navigation'] .navbar-nav > li:first-child a", text: "Dashboard"
-    assert_select "a[href=?]", dashboard_path(anchor: "quick-start"), text: "Quick Start"
+    assert_select "nav[aria-label='Main navigation'] a", text: "Quick Start", count: 0
     assert_select "main a[href=?]", new_project_path, count: 0
   end
 
@@ -44,7 +44,7 @@ class DashboardsControllerTest < ActionDispatch::IntegrationTest
     assert_select "#quick-start a", text: "Own returned RFQ"
     assert_select "article h3", text: "Private approval RFQ", count: 0
     assert_select "article progress[value='1'][max='1']"
-    assert_select "main a[href=?]", new_project_path, text: /New RFQ project/
+    assert_select "main a[href=?]", new_project_path, text: /New project/
     get dashboard_path, params: { status: "returned" }
     assert_select "article h3", text: "Own returned RFQ"
     assert_select "article h3", text: "Own draft RFQ", count: 0

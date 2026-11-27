@@ -50,9 +50,16 @@
                 </td>
                 <% if can_edit_materials && !assign_groups %>
                   <td class="py-3 text-end">
-                    <%= link_to edit_project_item_path(@project, item), class: "btn btn-outline-primary btn-sm", aria: { label: "Edit #{item.description}" } do %>
-                      <i class="fas fa-pen" aria-hidden="true"></i><span class="visually-hidden">Edit</span>
-                    <% end %>
+                    <div class="d-inline-flex align-items-center gap-2">
+                      <%= link_to edit_project_item_path(@project, item), class: "btn btn-outline-primary btn-sm", aria: { label: "Edit #{item.description}" } do %>
+                        <i class="fas fa-pen" aria-hidden="true"></i><span class="visually-hidden">Edit</span>
+                      <% end %>
+                      <%= button_to project_item_path(@project, item), method: :delete, class: "btn btn-outline-danger btn-sm",
+                                    aria: { label: "Delete #{item.description}" },
+                                    form: { data: { turbo_confirm: "Delete this material: #{item.description}?" } } do %>
+                        <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                      <% end %>
+                    </div>
                   </td>
                 <% end %>
               </tr>

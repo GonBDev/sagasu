@@ -49,6 +49,46 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     end # Finish the lock test for this status.
   end # Finish defining the locked-status tests.
 
+  %i[draft returned].each do |status|
+    test "buyer can delete a material on their #{status} project" do
+      @project.update!(status: status)
+      get bidder_list_materials_project_path(@project)
+      assert_select "form[action=?][data-turbo-confirm] button[aria-label=?] .fa-trash-can",
+                    project_item_path(@project, @item), "Delete Cable"
+
+      assert_difference -> { @project.items.count }, -1 do
+        delete project_item_path(@project, @item)
+      end
+      assert_redirected_to bidder_list_materials_project_path(@project)
+      assert_not Item.exists?(@item.id)
+      assert ItemGroup.exists?(@source_group.id)
+    end
+  end
+
+  %i[pending_approval approved].each do |status|
+    test "buyer cannot delete a material on their #{status} project" do
+      @project.update!(status: status)
+      get bidder_list_materials_project_path(@project)
+      assert_select "button[aria-label='Delete Cable']", count: 0
+
+      assert_no_difference -> { @project.items.count } do
+        delete project_item_path(@project, @item)
+      end
+      assert_redirected_to project_path(@project)
+    end
+  end
+
+  test "a buyer cannot delete a material from another buyer's project" do
+    other_buyer = User.create!(email: "other-buyer@example.com", password: "test-password")
+    other_buyer.user_roles.create!(role: :buyer)
+    sign_in other_buyer
+
+    assert_no_difference -> { @project.items.count } do
+      delete project_item_path(@project, @item)
+    end
+    assert_response :not_found
+  end
+
   private # Keep the request helper internal to this test class.
 
   def move_material_to(group_id) # Submit the same parameters as the Move material form.

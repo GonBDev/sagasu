@@ -1,4 +1,4 @@
-<% content_for :title, "Supplier Discovery and RFQ Projects | Sagasu" %>
+<% content_for :title, "Supplier Discovery and Supply Projects | Sagasu" %>
 
 <main class="sagasu-home">
   <section class="sagasu-home__hero" aria-labelledby="home-title">
@@ -9,13 +9,13 @@
             <%= image_tag "sagasu-logo-mark.svg", alt: "", width: 36, height: 36 %>
             <span>Sagasu</span>
           </div>
-          <h1 id="home-title">Find the right suppliers <span>for your RFQ.</span></h1>
-          <p class="sagasu-home__intro">Bring your purchasing needs and supplier research together. Define your RFQ, group related materials, and review supplier records as you prepare a bidder list.</p>
+          <h1 id="home-title">Find the right suppliers <span>for your supply project.</span></h1>
+          <p class="sagasu-home__intro">Bring your purchasing needs and supplier research together. Define what you need to buy, group related materials, and review supplier records as you prepare a bidder list.</p>
 
           <div id="quick-start" class="d-flex flex-wrap gap-2">
             <% if user_signed_in? %>
               <% if policy(Project).new? %>
-                <%= link_to "Create an RFQ", new_project_path, class: "btn sagasu-home__primary" %>
+                <%= link_to "New project", new_project_path, class: "btn sagasu-home__primary" %>
               <% end %>
               <%= link_to "My Projects", projects_path, class: "btn sagasu-home__secondary" %>
             <% else %>
@@ -36,7 +36,7 @@
         <div class="col-lg-6">
           <figure class="sagasu-home__preview mb-0">
             <figcaption class="sagasu-home__preview-heading pb-3">
-              <span>Example RFQ</span>
+              <span>Example supply project</span>
               <span class="badge rounded-pill sagasu-home__draft">Draft</span>
             </figcaption>
             <p class="h4 mt-3 mb-1">Shinjuku office tower</p>
@@ -63,7 +63,7 @@
       <h2 id="home-workflow">From purchasing need to supplier research</h2>
       <ol class="row row-cols-1 row-cols-md-3 g-3 list-unstyled mt-3 mb-0">
         <% [
-          ["clipboard-list", "Describe the need", "Create an RFQ and enter the materials you need to buy."],
+          ["clipboard-list", "Describe the need", "Create a supply project and enter the materials you need to buy."],
           ["layer-group", "Group related materials", "Keep items that can go to the same type of supplier together."],
           ["search", "Review supplier records", "Check the directory for supplier categories, locations, and contact details."]
         ].each do |icon, title, description| %>
