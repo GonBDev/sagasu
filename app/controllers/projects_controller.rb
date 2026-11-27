@@ -131,17 +131,23 @@ class ProjectsController < ApplicationController
 
   def load_approval_workspace
     approvals = @project.approvals.includes(:approver, :bidder_list_version)
-    if policy(@project).show? || current_user.has_role?(:admin)
+    full_access = policy(@project).show? || current_user.has_role?(:admin)
+    if full_access
       @review_state = approvals.order(created_at: :desc, id: :desc).first
     else
       @review_state = approvals.where(approver: current_user).order(created_at: :desc, id: :desc).first
     end
 
+    if full_access && (@project.draft? || @project.returned?)
+      latest_saved_version = @project.bidder_list_versions.order(version_number: :desc).first
+    end
+    @bidder_list_summary_version = latest_saved_version || @review_state&.bidder_list_version
+
     load_supplier_invitations if policy(@project).prepare_supplier_invitations?
 
     return unless policy(@project).submit_approval?
 
-    @submission_version = @project.bidder_list_versions.order(version_number: :desc).first
+    @submission_version = latest_saved_version
     @submission_outdated = @submission_version && @submission_version.snapshot != BidderListSnapshot.for_project(@project)
     @eligible_approvers = eligible_approvers.order(:name, :email)
   end

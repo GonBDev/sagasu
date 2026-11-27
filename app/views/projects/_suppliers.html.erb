@@ -1,9 +1,23 @@
 <section aria-labelledby="supplier-suggestions-title">
-  <header class="mb-3">
-    <h2 id="supplier-suggestions-title" class="h4 mb-1">
-      <i class="fas fa-magnifying-glass me-1" aria-hidden="true"></i> Supplier suggestions
-    </h2>
-    <p class="text-body-secondary mb-0">Review the catalog evidence and confirm suitability with the supplier.</p>
+  <header class="d-flex flex-wrap flex-md-nowrap justify-content-between align-items-start gap-3 mb-3">
+    <div>
+      <h2 id="supplier-suggestions-title" class="h4 mb-1">
+        <i class="fas fa-magnifying-glass me-1" aria-hidden="true"></i> Supplier suggestions
+      </h2>
+      <% suggested_count = suggestions_by_group.values.flatten.map(&:supplier_id).uniq.size %>
+      <p class="small text-body-secondary mb-0">
+        <%= pluralize(groups.size, "group") %> · <%= pluralize(@items.size, "material") %> ·
+        <%= materials_by_group.fetch(nil, []).size %> ungrouped · <%= pluralize(suggested_count, "supplier") %> suggested
+      </p>
+    </div>
+    <% if can_manage_groups && groups.any? { |group| materials_by_group.key?(group.id) } %>
+      <%= button_to suggest_suppliers_for_all_project_item_groups_path(project), method: :post, class: "btn btn-ai text-nowrap",
+                    form: { class: "flex-shrink-0 ms-auto" },
+                    aria: { label: "AI Suggestion for all groups with materials" },
+                    data: { turbo_submits_with: "Finding suppliers…" } do %>
+        AI Suggestion <i class="fa-solid fa-wand-magic-sparkles ms-1" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
   </header>
 
   <% if groups.empty? %>
@@ -24,12 +38,17 @@
         <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
           <div class="text-break">
             <h3 id="<%= dom_id(group, :suppliers_title) %>" class="h5 mb-1"><%= group.title %></h3>
-            <p class="small text-body-secondary mb-0"><%= pluralize(materials.size, "material") %></p>
+            <p class="small text-body-secondary mb-0">
+              <%= pluralize(materials.size, "material") %> · <%= pluralize(selected_ids.size, "supplier") %>
+            </p>
           </div>
           <% if can_manage_groups && materials.any? %>
-            <%= button_to "Suggest suppliers", suggest_suppliers_project_item_group_path(project, group),
-                          method: :post, class: "btn btn-outline-primary",
-                          data: { turbo_submits_with: "Finding suppliers…" } %>
+            <%= button_to suggest_suppliers_project_item_group_path(project, group),
+                          method: :post, class: "btn btn-outline-ai", title: "Suggest suppliers",
+                          aria: { label: "Suggest suppliers for #{group.title}" },
+                          data: { turbo_submits_with: "Finding suppliers…" } do %>
+              <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            <% end %>
           <% end %>
         </div>
 

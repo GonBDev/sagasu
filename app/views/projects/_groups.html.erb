@@ -6,7 +6,10 @@
     </p>
   </div>
   <% if can_manage_groups && ungrouped_materials.any? %>
-    <%= button_to "Suggest groups", propose_project_item_groups_path(@project), method: :post, class: "btn btn-outline-primary mb-3" %>
+    <%= button_to propose_project_item_groups_path(@project), method: :post, class: "btn btn-ai mb-3",
+                  aria: { label: "Group with AI" } do %>
+      Group with AI <i class="fa-solid fa-wand-magic-sparkles ms-1" aria-hidden="true"></i>
+    <% end %>
   <% end %>
 </div>
 
@@ -14,35 +17,63 @@
   <%= render "item_group_proposal", project: @project, groups: @proposed_groups, materials_by_id: @items.index_by(&:id), proposal_id: @proposal_id %>
 <% end %>
 
-<% if can_manage_groups %>
-  <details class="card bg-white rounded-4 p-3 mb-3">
-    <summary class="fw-semibold text-primary">Create a group manually</summary>
-    <%= simple_form_for :item_group, url: project_item_groups_path(@project), method: :post, html: { class: "mt-3" } do |form| %>
-      <%= form.input :title, label: "Group name", required: true %>
-      <%= form.button :submit, "Create group", class: "btn btn-primary" %>
-    <% end %>
-  </details>
-<% end %>
-
-<% groups.each do |group| %>
-  <section class="card bg-white rounded-4 mb-3 overflow-hidden">
-    <div class="card-header bg-body px-3 py-3">
-      <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
-        <h3 class="h5 mb-0 text-break"><i class="fas fa-layer-group me-1" aria-hidden="true"></i><%= group.title %></h3>
-        <span class="small text-body-secondary"><%= pluralize(materials_by_group.fetch(group.id, []).size, "material") %></span>
-      </div>
-    </div>
-
+<% if can_manage_groups || groups.any? %>
+  <section class="card bg-white rounded-4 mb-3" aria-labelledby="manage-groups-title">
+    <header class="d-flex flex-wrap justify-content-between align-items-center gap-2 px-3 px-md-4 py-3">
+      <h3 id="manage-groups-title" class="h5 mb-0"><%= can_manage_groups ? "Manage groups" : "Groups" %></h3>
+      <% if can_manage_groups %>
+        <button type="button" class="btn btn-outline-primary text-nowrap" data-bs-toggle="collapse"
+                data-bs-target="#new-group-panel" aria-controls="new-group-panel" aria-expanded="false">
+          <i class="fas fa-plus me-1" aria-hidden="true"></i> New group
+        </button>
+      <% end %>
+    </header>
     <% if can_manage_groups %>
-      <details class="card-footer bg-white px-3 py-3">
-        <summary class="fw-semibold text-primary">Manage group</summary>
-        <%= simple_form_for group, url: project_item_group_path(@project, group), method: :patch, html: { class: "mt-3" } do |form| %>
-          <%= form.input :title, label: "Group name", input_html: { id: dom_id(group, :title) } %>
-          <%= form.button :submit, "Rename group", class: "btn btn-outline-primary" %>
+      <div class="collapse" id="new-group-panel">
+        <%= simple_form_for :item_group, url: project_item_groups_path(@project), method: :post,
+                            html: { class: "d-flex flex-wrap align-items-start gap-2 px-3 px-md-4 pb-3" } do |form| %>
+          <%= form.input :title, label: "Group name", required: true, label_html: { class: "visually-hidden" },
+                         wrapper_html: { class: "flex-grow-1 mb-0" }, input_html: { placeholder: "Group name" } %>
+          <%= form.button :submit, "Create group", class: "btn btn-primary flex-shrink-0" %>
         <% end %>
-        <%= button_to "Delete group", project_item_group_path(@project, group), method: :delete, class: "btn btn-outline-danger mt-2", form: { data: { turbo_confirm: "Delete this group? Its materials will become ungrouped." } } %>
-      </details>
+      </div>
     <% end %>
+    <ul class="list-group list-group-flush px-3 px-md-4 pb-2" role="list">
+      <% groups.each do |group| %>
+        <% material_count = materials_by_group.fetch(group.id, []).size %>
+        <% rename_panel_id = dom_id(group, :rename) %>
+        <li class="list-group-item bg-white px-0 py-2">
+          <div class="d-flex align-items-center gap-2">
+            <span class="fw-semibold flex-grow-1 text-truncate" title="<%= group.title %>"><%= group.title %></span>
+            <span class="small text-body-secondary text-nowrap" aria-hidden="true"><%= material_count %> mat.</span>
+            <span class="visually-hidden"><%= pluralize(material_count, "material") %></span>
+            <% if can_manage_groups %>
+              <button type="button" class="btn btn-outline-primary btn-sm flex-shrink-0" title="Edit group name"
+                      data-bs-toggle="collapse" data-bs-target="#<%= rename_panel_id %>"
+                      aria-controls="<%= rename_panel_id %>" aria-expanded="false" aria-label="Rename <%= group.title %>">
+                <i class="fas fa-pen" aria-hidden="true"></i>
+              </button>
+              <%= button_to project_item_group_path(@project, group), method: :delete, class: "btn btn-outline-danger btn-sm",
+                            aria: { label: "Delete #{group.title}" }, title: "Delete group",
+                            form: { class: "flex-shrink-0", data: { turbo_confirm: "Delete this group? Its materials will become ungrouped." } } do %>
+                <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+              <% end %>
+            <% end %>
+          </div>
+
+          <% if can_manage_groups %>
+            <div class="collapse" id="<%= rename_panel_id %>">
+              <%= simple_form_for group, url: project_item_group_path(@project, group), method: :patch,
+                                  html: { class: "d-flex flex-wrap align-items-start gap-2 pt-2" } do |form| %>
+                <%= form.input :title, as: :string, label: "Group name", label_html: { class: "visually-hidden" },
+                               wrapper_html: { class: "flex-grow-1" }, input_html: { id: dom_id(group, :title) } %>
+                <%= form.button :submit, "Rename", class: "btn btn-outline-primary flex-shrink-0" %>
+              <% end %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </section>
 <% end %>
 <%= render "materials", can_edit_materials: can_edit_materials, assign_groups: true,

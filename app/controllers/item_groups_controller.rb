@@ -32,39 +32,11 @@ class ItemGroupsController < ApplicationController
   end
 
   def suggest_suppliers
-    result = SupplierSuggester.new(@item_group).call
-    suggestions = result.fetch(:suggestions)
+    generate_supplier_suggestions([@item_group])
+  end
 
-    @project.with_lock do
-      authorize @project, :manage_item_groups?
-      @item_group.lock!
-      supplier_ids = suggestions.map { |suggestion| suggestion.fetch("supplier_id") }
-      active_ids = Supplier.where(id: supplier_ids, active: true).order(:id).lock.pluck(:id)
-      unless active_ids == supplier_ids.sort
-        raise SupplierSuggester::InvalidSuggestions, "The supplier directory changed. Generate suggestions again."
-      end
-
-      run = AiRun.create!(
-        project: @project, user: current_user, kind: :supplier_suggestion, model: result.fetch(:model),
-        prompt: SupplierSuggester::INSTRUCTIONS, output: JSON.generate(suggestions), status: "completed"
-      )
-
-      suggestions.each do |suggestion|
-        candidate = GroupSupplier.find_or_initialize_by(
-          item_group: @item_group, supplier_id: suggestion.fetch("supplier_id")
-        )
-        candidate.source = :ai if candidate.new_record?
-        candidate.update!(ai_run: run, ai_suggested: true, ai_reason: suggestion.fetch("reason"))
-      end
-    end
-
-    notice = suggestions.empty? ? "No supported supplier matches were found." : "Supplier suggestions generated."
-    redirect_to bidder_list_suppliers_project_path(@project), notice: notice, status: :see_other
-  rescue SupplierSuggester::NoMaterials, SupplierSuggester::NoCandidates, SupplierSuggester::InvalidSuggestions => error
-    redirect_to bidder_list_suppliers_project_path(@project), alert: error.message, status: :see_other
-  rescue RubyLLM::Error, Faraday::Error, ActiveRecord::RecordInvalid
-    redirect_to bidder_list_suppliers_project_path(@project),
-                alert: "Could not generate supplier suggestions. Please try again.", status: :see_other
+  def suggest_suppliers_for_all
+    generate_supplier_suggestions(@project.item_groups.where(id: @project.items.select(:item_group_id)).order(:id))
   end
 
   def propose
@@ -148,6 +120,55 @@ class ItemGroupsController < ApplicationController
   end
 
   private
+
+  def generate_supplier_suggestions(groups)
+    if groups.empty?
+      raise SupplierSuggester::NoMaterials, "Add materials to a group before suggesting suppliers."
+    end
+
+    results = groups.to_h { |group| [group, SupplierSuggester.new(group).call] }
+    @project.with_lock do
+      authorize @project, :manage_item_groups?
+      supplier_ids = results.values.flat_map { |result| result.fetch(:suggestions).pluck("supplier_id") }.uniq.sort
+      active_ids = Supplier.where(id: supplier_ids, active: true).order(:id).lock.pluck(:id)
+      unless active_ids == supplier_ids
+        raise SupplierSuggester::InvalidSuggestions, "The supplier directory changed. Generate suggestions again."
+      end
+
+      results.each { |group, result| save_supplier_suggestions(group, result) }
+    end
+
+    found = results.values.any? { |result| result.fetch(:suggestions).any? }
+    notice = found ? "Supplier suggestions generated." : "No supported supplier matches were found."
+    respond_to_supplier_suggestions(:notice, notice)
+  rescue SupplierSuggester::NoMaterials, SupplierSuggester::NoCandidates, SupplierSuggester::InvalidSuggestions => error
+    respond_to_supplier_suggestions(:alert, error.message)
+  rescue RubyLLM::Error, Faraday::Error, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
+    respond_to_supplier_suggestions(:alert, "Could not generate supplier suggestions. Please try again.")
+  end
+
+  def respond_to_supplier_suggestions(level, message)
+    flash[level] = message
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.refresh(request_id: nil, method: :morph, scroll: :preserve) }
+      format.html { redirect_to bidder_list_suppliers_project_path(@project), status: :see_other }
+    end
+  end
+
+  def save_supplier_suggestions(group, result)
+    group.lock!
+    suggestions = result.fetch(:suggestions)
+    run = AiRun.create!(
+      project: @project, user: current_user, kind: :supplier_suggestion, model: result.fetch(:model),
+      prompt: SupplierSuggester::INSTRUCTIONS, output: JSON.generate(suggestions), status: "completed"
+    )
+
+    suggestions.each do |suggestion|
+      candidate = GroupSupplier.find_or_initialize_by(item_group: group, supplier_id: suggestion.fetch("supplier_id"))
+      candidate.source = :ai if candidate.new_record?
+      candidate.update!(ai_run: run, ai_suggested: true, ai_reason: suggestion.fetch("reason"))
+    end
+  end
 
   def load_project
     @project = current_user.projects.find(params[:project_id])
