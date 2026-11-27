@@ -2,6 +2,21 @@
     <%= f.input :erp_material, label: "ERP material code", as: :string %>
     <%= f.input :description %>
     <%= f.input :quantity, input_html: { step: "any" } %>
-    <%= f.input :unit_of_measure, as: :string %>
+    <% if local_assigns[:show_unit_suggestions] %>
+      <div class="material-unit-field mb-3" data-controller="unit-suggestions">
+        <%= f.input :unit_of_measure, as: :string,
+                    input_html: { data: { unit_suggestions_target: "field", action: "input->unit-suggestions#sync" } } %>
+        <div class="material-unit-suggestions mt-2" role="group" aria-label="Suggested units of measure">
+          <% %w[each kg lb m m² m³].each do |unit| %>
+            <button type="button" aria-pressed="<%= item.unit_of_measure == unit %>"
+                    data-unit-suggestions-target="chip" data-unit-suggestions-unit-param="<%= unit %>"
+                    data-action="unit-suggestions#choose"><%= unit %></button>
+          <% end %>
+        </div>
+        <span class="visually-hidden" role="status" data-unit-suggestions-target="status"></span>
+      </div>
+    <% else %>
+      <%= f.input :unit_of_measure, as: :string %>
+    <% end %>
     <%= f.button :submit, submit_label, class: "btn btn-primary" %>
   <% end %>

@@ -38,7 +38,7 @@
           <%= link_to "Go to Suppliers", bidder_list_suppliers_project_path(project) %>
         <% end %>
       <% elsif eligible_approvers.empty? %>
-        <p class="mb-0">No eligible approvers are available for this RFQ.</p>
+        <p class="mb-0">No eligible approvers are available for this project.</p>
       <% elsif !review_state&.pending? %>
         <p><%= link_to "Review saved version #{submission_version.version_number}",
                        project_bidder_list_version_path(project, submission_version) %></p>

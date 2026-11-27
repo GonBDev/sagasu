@@ -25,6 +25,10 @@ class ProjectPolicy < ApplicationPolicy
     record.user_id == user.id || user.has_role?(:viewer) || user.has_role?(:auditor) # Allow owners, viewers, and auditors to open RFQs.
   end
 
+  def update?
+    editable_by_owner?
+  end
+
   def add_material?
     editable_by_owner? # Apply the shared edit rule when adding materials.
   end

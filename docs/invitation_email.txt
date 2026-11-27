@@ -2,7 +2,7 @@ Subject: Request for quotation {{rfq_reference}} | {{project_title}}
 
 Hello {{supplier_name}},
 
-We invite you to provide a quotation for the materials below for {{project_title}} (RFQ {{rfq_reference}}).
+We invite you to provide a quotation for the materials below for {{project_title}} (Reference {{rfq_reference}}).
 
 {{material_list}}
 

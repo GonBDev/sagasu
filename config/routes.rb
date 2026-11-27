@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :projects, only: %i[index new create show] do
+  resources :projects, only: %i[index new create show edit update] do
     member do # Route each workspace step through the existing project show action.
       get "bidder-list/materials", to: "projects#show", as: :bidder_list_materials, defaults: { workspace_step: "materials" }
       get "bidder-list/groups", to: "projects#show", as: :bidder_list_groups, defaults: { workspace_step: "groups" }
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
     resources :bidder_list_versions, only: %i[create show]
 
-    resources :items, only: %i[create edit update] do
+    resources :items, only: %i[create edit update destroy] do
       post :preview_import, on: :collection
       post :import, on: :collection
     end

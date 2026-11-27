@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   rescue_from Pundit::NotAuthorizedError, with: :project_access_denied
+  before_action :load_project_for_edit, only: %i[edit update]
 
   def new
     @project = current_user.projects.build
@@ -14,7 +15,25 @@ class ProjectsController < ApplicationController
     authorize @project
 
     if @project.save
-      redirect_to project_path(@project), notice: "RFQ draft created.", status: :see_other
+      redirect_to project_path(@project), notice: "Draft supply project created.", status: :see_other
+    else
+      render :new, status: 422
+    end
+  end
+
+  def edit
+    authorize @project
+    render :new
+  end
+
+  def update
+    saved = @project.with_lock do
+      authorize @project
+      @project.update(project_params)
+    end
+
+    if saved
+      redirect_to project_path(@project), notice: "Project information updated.", status: :see_other
     else
       render :new, status: 422
     end
@@ -52,7 +71,7 @@ class ProjectsController < ApplicationController
     alert = @project.with_lock do
       authorize @project, :submit_approval?
       if @project.approvals.pending.exists?
-        next "This RFQ already has a pending approval."
+        next "This project already has a pending approval."
       end
 
       latest = @project.bidder_list_versions.order(version_number: :desc).first
@@ -79,15 +98,36 @@ class ProjectsController < ApplicationController
 
   def index
     @query = params[:q].to_s.strip
-    @projects = policy_scope(Project).order(updated_at: :desc)
+    @status = params[:status].presence_in(Project.statuses.keys)
+    projects = policy_scope(Project)
 
-    return unless @query.present?
+    if @query.present?
+      term = Project.sanitize_sql_like(@query)
+      projects = projects.where("title ILIKE ?", "%#{term}%")
+    end
 
-    term = Project.sanitize_sql_like(@query)
-    @projects = @projects.where("title ILIKE ?", "%#{term}%")
+    @status_counts = projects.group(:status).count
+    projects = projects.where(status: @status) if @status
+    @projects = projects.order(updated_at: :desc, id: :desc).to_a
+    load_index_card_counts
   end
 
   private
+
+  def load_index_card_counts
+    project_ids = @projects.map(&:id)
+    items = Item.where(project_id: project_ids)
+    @material_counts = items.group(:project_id).count
+    @grouped_counts = items.where.not(item_group_id: nil).group(:project_id).count
+    @group_counts = ItemGroup.where(project_id: project_ids).group(:project_id).count
+    @selection_counts = GroupSupplier.joins(:item_group)
+                                     .where(selected: true, item_groups: { project_id: project_ids })
+                                     .group("item_groups.project_id").count
+  end
+
+  def load_project_for_edit
+    @project = current_user.projects.find(params[:id])
+  end
 
   def load_approval_workspace
     approvals = @project.approvals.includes(:approver, :bidder_list_version)
@@ -140,7 +180,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_access_denied
-    redirect_to root_path, alert: "You don't have access to that RFQ action.",
+    redirect_to root_path, alert: "You don't have access to that project action.",
                            status: :see_other
   end
 

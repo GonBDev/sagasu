@@ -23,7 +23,7 @@
               <% end %>
               <% @returned_projects.each do |project| %>
                 <li class="list-group-item px-0">
-                  <strong>Revise returned RFQ</strong>
+                  <strong>Revise returned project</strong>
                   <%= link_to project.title, bidder_list_approval_project_path(project), class: "d-block text-break" %>
                 </li>
               <% end %>

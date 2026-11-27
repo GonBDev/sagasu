@@ -1,2 +1,288 @@
 // Import page-specific CSS files here.
 @import "home";
+
+.projects-index {
+  &__search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+
+    .form-control {
+      flex: 1 1 13rem;
+      width: auto;
+      min-width: 0;
+    }
+  }
+
+  &__filters .nav-link {
+    border-radius: .5rem;
+    padding: .5rem .75rem;
+
+    &:hover:not(.active) { background: $pacific-soft; }
+  }
+
+  &__card:hover,
+  &__card:focus-within {
+    border-color: $pacific-blue;
+  }
+
+  &__title {
+    color: $blue-slate;
+    text-decoration: none;
+
+    &:hover, &:focus-visible { text-decoration: underline; }
+  }
+
+  &__title:focus-visible,
+  &__filters .nav-link:focus-visible {
+    outline: 2px solid $blue-slate;
+    outline-offset: 2px;
+  }
+
+  &__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.25rem;
+    row-gap: .5rem;
+
+    dt { color: $muted; font-weight: 500; }
+    dd { margin: 0; font-size: 1.125rem; font-weight: 700; }
+  }
+
+  &__progress {
+    display: block;
+    appearance: none;
+    width: 100%;
+    height: .375rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 50rem;
+    background: $platinum;
+    accent-color: $blue-slate;
+
+    &::-webkit-progress-bar { background: $platinum; }
+    &::-webkit-progress-value { background: $blue-slate; border-radius: 50rem; }
+    &::-moz-progress-bar { background: $blue-slate; border-radius: 50rem; }
+  }
+}
+
+.supplier-directory {
+  .supplier-search-field {
+    flex: 1 1 13rem;
+    min-width: 0;
+  }
+
+  &__card:hover,
+  &__card:focus-within {
+    border-color: $pacific-blue;
+  }
+
+  &__title {
+    color: $blue-slate;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible { text-decoration: underline; }
+
+    &:focus-visible {
+      outline: 2px solid $blue-slate;
+      outline-offset: 2px;
+    }
+  }
+
+  &__tags {
+    font-size: .8125rem;
+
+    li { max-width: 100%; }
+  }
+}
+
+.rfq-workflow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .625rem;
+
+  &__step {
+    position: relative;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    height: 100%;
+    padding: .75rem .625rem;
+    border: 1px solid $border-subtle;
+    border-radius: .75rem;
+    background: $white;
+    color: $ink;
+    text-decoration: none;
+
+    &:hover, &[aria-current="step"] {
+      border-color: $blue-slate;
+      background: $pacific-soft;
+      color: $slate-dark;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $blue-slate;
+      outline-offset: 2px;
+    }
+
+    &[aria-current="step"] .rfq-workflow__marker:not(.rfq-workflow__marker--approved) {
+      color: $white;
+      background: $blue-slate;
+    }
+  }
+
+  &__marker {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: $canvas;
+    color: $slate-dark;
+    font-size: .875rem;
+    font-weight: 700;
+
+    &--approved {
+      background: $green;
+      color: $white;
+    }
+  }
+
+  &__text {
+    min-width: 0;
+  }
+
+  &__summary {
+    color: $muted;
+    font-size: .8125rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+
+    &__step:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 1rem;
+      border-top: 1px solid $border-subtle;
+      content: "";
+      pointer-events: none;
+    }
+
+    &__link {
+      padding: .875rem;
+    }
+  }
+}
+
+.rfq-project-details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: 0;
+  border: 0;
+  border-radius: .25rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+
+  &:focus-visible {
+    outline: 2px solid $blue-slate;
+    outline-offset: 3px;
+  }
+
+  i {
+    flex-shrink: 0;
+    font-size: .875rem;
+  }
+
+  &[aria-expanded="true"] i {
+    transform: rotate(180deg);
+  }
+}
+
+.project-form-disclosure {
+  > summary {
+    display: block;
+    cursor: pointer;
+    border-radius: inherit;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $blue-slate;
+      outline-offset: -2px;
+    }
+  }
+
+  &:not([open]) &__chevron,
+  &[open] &__plus {
+    display: none;
+  }
+
+  &[open] &__chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.material-unit-field > .mb-3 {
+  margin-bottom: 0 !important;
+}
+
+.material-unit-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+
+  button {
+    min-width: 2.375rem;
+    min-height: 2rem;
+    padding: .25rem .5625rem;
+    border: 1px solid $border-subtle;
+    border-radius: 50rem;
+    background: $pacific-soft;
+    color: $slate-dark;
+    font-size: .875rem;
+
+    &:hover { border-color: $blue-slate; }
+
+    &:focus-visible {
+      outline: 2px solid $blue-slate;
+      outline-offset: 2px;
+    }
+
+    &[aria-pressed="true"] {
+      background: $blue-slate;
+      border-color: $blue-slate;
+      color: $white;
+    }
+
+    @media (pointer: coarse) {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .project-workspace-sidebar {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+  }
+}

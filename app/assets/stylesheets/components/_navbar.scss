@@ -75,6 +75,19 @@
     }
   }
 
+  .sagasu-nav-messages {
+    justify-content: center;
+    min-width: 44px;
+    padding: .25rem;
+    color: $blue-slate;
+    font-size: 1.25rem;
+
+    &:hover, &[aria-current="page"] {
+      color: $slate-dark;
+      background: $pacific-soft;
+    }
+  }
+
   .sagasu-nav-account {
     display: inline-flex;
     align-items: center;

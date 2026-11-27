@@ -2,9 +2,12 @@
   <% if group_id %>
     <%= form.hidden_field :supplier_group_id, value: group_id, id: nil %>
   <% end %>
-  <div>
+  <div class="supplier-search-field">
     <%= form.label :q, "Search suppliers", for: input_id, class: "form-label mb-1" %>
     <%= form.search_field :q, id: input_id, value: query, class: "form-control", placeholder: "Name, category, or tag" %>
   </div>
   <%= form.submit "Search", class: "btn btn-outline-primary" %>
+  <% if local_assigns[:clear_path] %>
+    <%= link_to "Clear search", clear_path, class: "btn btn-link text-nowrap" %>
+  <% end %>
 <% end %>

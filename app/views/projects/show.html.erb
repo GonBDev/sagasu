@@ -9,174 +9,226 @@
 <% material_group_options = groups.map { |group| [group.title, group.id] } %>
 <% status_color = { "approved" => "success", "pending_approval" => "warning", "returned" => "danger" }.fetch(@project.status, "primary") %>
 
-<main class="container py-4 py-lg-5">
-  <nav aria-label="Breadcrumb" class="mb-3">
-    <%= link_to "← All projects", projects_path, class: "link-primary text-decoration-underline" %>
-  </nav>
-
+<main class="container pt-3 pb-4 pb-lg-5">
   <header class="card bg-white rounded-4 mb-4">
     <div class="card-body p-3 p-md-4">
-      <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
-        <div class="text-break">
-          <p class="small text-body-secondary mb-1"><%= @project.erp_rfq.presence || "RFQ project" %></p>
-          <h1 class="h2 mb-0"><%= @project.title %></h1>
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <div class="d-flex align-items-center gap-2 mw-100">
+          <%= link_to projects_path, class: "btn btn-link flex-shrink-0 p-2 fs-4 lh-1",
+                      aria: { label: "Back to projects" }, title: "Back to projects" do %>
+            <i class="fa-solid fa-square-caret-left" aria-hidden="true"></i>
+          <% end %>
+          <h1 class="h2 mb-0 text-break">
+            <button type="button" class="rfq-project-details-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#rfq-project-details"
+                    aria-controls="rfq-project-details" aria-expanded="false">
+              <span><%= @project.title %><span class="visually-hidden">, project details</span></span>
+              <i class="fas fa-chevron-down small" aria-hidden="true"></i>
+            </button>
+          </h1>
         </div>
-        <span class="badge rounded-pill border bg-<%= status_color %>-subtle text-<%= status_color %>-emphasis">
-          Status: <%= @project.status.humanize %>
-        </span>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+          <span class="badge rounded-pill border bg-<%= status_color %>-subtle text-<%= status_color %>-emphasis">
+            Status: <%= @project.status.humanize %>
+          </span>
+          <% if policy(@project).edit? %>
+            <%= link_to edit_project_path(@project), class: "btn btn-outline-primary btn-sm",
+                        aria: { label: "Edit project information" }, title: "Edit project information" do %>
+              <i class="fas fa-pen" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </div>
       </div>
 
-      <% if @project.scope.present? %>
-        <h2 class="h6 mb-1">Scope</h2>
-        <p class="text-break mb-3"><%= @project.scope %></p>
-      <% end %>
+      <div class="collapse" id="rfq-project-details">
+        <div class="border-top mt-3 pt-3">
+          <p class="small text-body-secondary mb-2"><%= @project.erp_rfq.presence || "Supply project" %></p>
 
-      <dl class="row g-3 mb-0 small">
-        <div class="col-sm-4 text-break">
-          <dt class="text-body-secondary">Client</dt>
-          <dd class="mb-0"><%= @project.client_name.presence || "—" %></dd>
+          <% if @project.scope.present? %>
+            <h2 class="h6 mb-1">Scope</h2>
+            <p class="text-break mb-3"><%= @project.scope %></p>
+          <% end %>
+
+          <dl class="row g-3 mb-0 small">
+            <div class="col-sm-4 text-break">
+              <dt class="text-body-secondary">Client</dt>
+              <dd class="mb-0"><%= @project.client_name.presence || "—" %></dd>
+            </div>
+            <div class="col-sm-4 text-break">
+              <dt class="text-body-secondary">Client area</dt>
+              <dd class="mb-0"><%= @project.client_area.presence || "—" %></dd>
+            </div>
+            <div class="col-sm-4 text-break">
+              <dt class="text-body-secondary">Budget</dt>
+              <dd class="mb-0">
+                <% if @project.budget_amount.present? %>
+                  <%= number_with_delimiter(@project.budget_amount.to_s("F")) %> <%= @project.budget_currency %>
+                <% else %>
+                  —
+                <% end %>
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div class="col-sm-4 text-break">
-          <dt class="text-body-secondary">Client area</dt>
-          <dd class="mb-0"><%= @project.client_area.presence || "—" %></dd>
-        </div>
-        <div class="col-sm-4 text-break">
-          <dt class="text-body-secondary">Budget</dt>
-          <dd class="mb-0">
-            <% if @project.budget_amount.present? %>
-              <%= number_with_delimiter(@project.budget_amount.to_s("F")) %> <%= @project.budget_currency %>
-            <% else %>
-              —
-            <% end %>
-          </dd>
-        </div>
-      </dl>
+      </div>
     </div>
   </header>
 
   <% active_step = request.path_parameters.fetch(:workspace_step, "materials") %>
-  <nav aria-label="Bidder list steps" class="nav nav-pills flex-wrap gap-2 mb-4">
-    <% if can_open_workspace %>
-      <%= link_to "Materials", bidder_list_materials_project_path(@project),
-                  class: class_names("nav-link", active: active_step == "materials"),
-                  aria: { current: ("step" if active_step == "materials") } %>
-      <%= link_to "Groups", bidder_list_groups_project_path(@project),
-                  class: class_names("nav-link", active: active_step == "groups"),
-                  aria: { current: ("step" if active_step == "groups") } %>
-      <%= link_to "Suppliers", bidder_list_suppliers_project_path(@project),
-                  class: class_names("nav-link", active: active_step == "suppliers"),
-                  aria: { current: ("step" if active_step == "suppliers") } %>
-    <% end %>
-    <%= link_to "Approval", bidder_list_approval_project_path(@project),
-                class: class_names("nav-link", active: active_step == "approval"),
-                aria: { current: ("step" if active_step == "approval") } %>
-  </nav>
+  <% workflow_steps = [] %>
+  <% if can_open_workspace %>
+    <% grouped_count = @items.size - ungrouped_materials.size %>
+    <% selected_count = GroupSupplier.where(item_group_id: groups.map(&:id), selected: true).distinct.count(:supplier_id) %>
+    <% workflow_steps = [
+      [1, "materials", "Materials", bidder_list_materials_project_path(@project), pluralize(@items.size, "material")],
+      [2, "groups", "Groups", bidder_list_groups_project_path(@project), "#{grouped_count} of #{@items.size} grouped"],
+      [3, "suppliers", "Suppliers", bidder_list_suppliers_project_path(@project), "#{pluralize(selected_count, 'supplier')} selected"]
+    ] %>
+  <% end %>
+  <% approval_summary = { "draft" => "Not submitted", "pending_approval" => "Awaiting review",
+                          "returned" => "Returned", "approved" => "Approved" }.fetch(@project.status) %>
+  <% workflow_steps << [4, "approval", "Approval", bidder_list_approval_project_path(@project), approval_summary] %>
 
-  <div class="row g-4 align-items-start">
-    <% if active_step == "approval" %>
-      <div class="col-lg-8">
-        <%= render "projects/approval", project: @project, review_state: @review_state,
-                                        can_submit: policy(@project).submit_approval?, can_open_suppliers: can_open_workspace,
-                                        submission_version: @submission_version, submission_outdated: @submission_outdated,
-                                        eligible_approvers: @eligible_approvers %>
-      </div>
-    <% elsif active_step == "groups" %>
-      <section class="col-lg-8" aria-labelledby="material-groups-title">
-        <%= render "groups", groups: groups, materials_by_group: materials_by_group,
-                            ungrouped_materials: ungrouped_materials, material_group_options: material_group_options,
-                            can_manage_groups: can_manage_groups, can_edit_materials: can_edit_materials %>
-      </section>
-
-      <aside class="col-lg-4" aria-labelledby="group-summary-title">
-        <div class="card bg-white rounded-4">
-          <div class="card-body p-3 p-md-4">
-            <h2 id="group-summary-title" class="h5">Group summary</h2>
-            <dl class="mb-0">
-              <% groups.each do |group| %>
-                <div class="d-flex flex-wrap justify-content-between gap-2 border-bottom py-2">
-                  <dt class="text-break"><%= group.title %></dt>
-                  <dd class="mb-0"><%= pluralize(materials_by_group.fetch(group.id, []).size, "material") %></dd>
-                </div>
-              <% end %>
-              <div class="d-flex flex-wrap justify-content-between gap-2 pt-2">
-                <dt>Ungrouped</dt>
-                <dd class="mb-0"><%= pluralize(ungrouped_materials.size, "material") %></dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </aside>
-    <% elsif active_step == "suppliers" %>
-      <div class="col-lg-8">
-        <%= render "projects/suppliers", project: @project, groups: groups, materials_by_group: materials_by_group,
-                                        suggestions_by_group: @supplier_suggestions_by_group, can_manage_groups: can_manage_groups,
-                                        selected_by_group: @selected_suppliers_by_group, search_group: @supplier_search_group,
-                                        search_query: @supplier_query, search_results: @supplier_search_results %>
-      </div>
-      <aside class="col-lg-4" aria-labelledby="draft-bidder-list-title">
-        <div class="card bg-white rounded-4">
-          <div class="card-body p-3 p-md-4">
-            <h2 id="draft-bidder-list-title" class="h5">Draft bidder list</h2>
-            <% if @latest_bidder_list_version %>
-              <div class="mb-3 small" role="status">
-                <span class="fw-semibold">Saved version <%= @latest_bidder_list_version.version_number %></span>
-                <% if @bidder_list_unsaved %>
-                  <span class="badge bg-warning-subtle text-warning-emphasis">Unsaved changes</span>
+  <%= turbo_frame_tag "project-workspace", target: "_top", class: "d-block" do %>
+    <nav aria-label="Bidder list steps" class="mb-4">
+      <ol class="rfq-workflow list-unstyled mb-0" role="list">
+        <% workflow_steps.each do |number, key, label, path, summary| %>
+          <% approved_step = key == "approval" && @project.approved? %>
+          <li class="rfq-workflow__step">
+            <%= link_to path, class: "rfq-workflow__link", aria: { current: ("step" if active_step == key) },
+                        data: { turbo_frame: "project-workspace", turbo_action: "advance" },
+                        autofocus: turbo_frame_request_id == "project-workspace" && active_step == key do %>
+              <span class="<%= class_names('rfq-workflow__marker', 'rfq-workflow__marker--approved' => approved_step) %>" aria-hidden="true">
+                <% if approved_step %>
+                  <i class="fas fa-check"></i>
+                <% else %>
+                  <%= number %>
                 <% end %>
-                <p class="text-body-secondary mb-1"><%= l(@latest_bidder_list_version.created_at, format: :short) %></p>
-                <%= link_to "View saved version", project_bidder_list_version_path(@project, @latest_bidder_list_version) %>
-              </div>
+              </span>
+              <span class="rfq-workflow__text">
+                <span class="fw-semibold"><%= label %></span>
+                <span class="rfq-workflow__summary d-block"><%= summary %></span>
+              </span>
             <% end %>
-            <% if @selected_suppliers_by_group.empty? %>
-              <p class="text-body-secondary mb-0">No suppliers selected.</p>
-            <% else %>
-              <% groups.each do |group| %>
-                <% selections = @selected_suppliers_by_group.fetch(group.id, []) %>
-                <% next if selections.empty? %>
-                <h3 class="h6 mt-3 mb-1 text-break"><%= group.title %></h3>
-                <ul class="list-group list-group-flush">
-                  <% selections.each do |entry| %>
-                    <li class="list-group-item px-0 d-flex flex-wrap align-items-center justify-content-between gap-2">
-                      <%= link_to entry.supplier.name, supplier_path(entry.supplier), class: "text-break" %>
-                      <% unless entry.supplier.active? %>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Inactive</span>
-                      <% end %>
-                      <% if can_manage_groups %>
-                        <%= button_to "Remove", shortlist_supplier_project_item_group_path(@project, group),
-                                      method: :patch, params: { supplier_id: entry.supplier_id, selected: "false" },
-                                      class: "btn btn-sm btn-outline-secondary", aria: { label: "Remove #{entry.supplier.name} from #{group.title}" } %>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            <% end %>
-            <% if can_manage_groups && @selected_suppliers_by_group.any? %>
-              <%= button_to "Save bidder list", project_bidder_list_versions_path(@project), method: :post,
-                            class: "btn btn-primary mt-3", data: { turbo_submits_with: "Saving…" } %>
-            <% end %>
-          </div>
+          </li>
+        <% end %>
+      </ol>
+    </nav>
+
+    <div class="row g-4 align-items-start">
+      <% if active_step == "approval" %>
+        <div class="col-lg-8">
+          <%= render "projects/approval", project: @project, review_state: @review_state,
+                                          can_submit: policy(@project).submit_approval?, can_open_suppliers: can_open_workspace,
+                                          submission_version: @submission_version, submission_outdated: @submission_outdated,
+                                          eligible_approvers: @eligible_approvers %>
         </div>
-      </aside>
-    <% else %>
-      <section class="<%= can_add_material ? 'col-lg-8' : 'col-12' %>" aria-labelledby="materials-title">
-        <%= render "projects/materials", can_edit_materials: can_edit_materials, assign_groups: false,
-                                material_group_options: material_group_options %>
-      </section>
-      <% if can_add_material %>
-        <aside class="col-lg-4" aria-labelledby="add-material-title">
+      <% elsif active_step == "groups" %>
+        <section class="col-lg-8" aria-labelledby="material-groups-title">
+          <%= render "groups", groups: groups, materials_by_group: materials_by_group,
+                              ungrouped_materials: ungrouped_materials, material_group_options: material_group_options,
+                              can_manage_groups: can_manage_groups, can_edit_materials: can_edit_materials %>
+        </section>
+
+        <aside class="col-lg-4 project-workspace-sidebar" aria-labelledby="group-summary-title">
           <div class="card bg-white rounded-4">
             <div class="card-body p-3 p-md-4">
-              <h2 id="add-material-title" class="h4 mb-3">Add material</h2>
-              <%= render "items/form", project: @project, item: @item, submit_label: "Add material" %>
+              <h2 id="group-summary-title" class="h5">Group summary</h2>
+              <dl class="mb-0">
+                <% groups.each do |group| %>
+                  <div class="d-flex flex-wrap justify-content-between gap-2 border-bottom py-2">
+                    <dt class="text-break"><%= group.title %></dt>
+                    <dd class="mb-0"><%= pluralize(materials_by_group.fetch(group.id, []).size, "material") %></dd>
+                  </div>
+                <% end %>
+                <div class="d-flex flex-wrap justify-content-between gap-2 pt-2">
+                  <dt>Ungrouped</dt>
+                  <dd class="mb-0"><%= pluralize(ungrouped_materials.size, "material") %></dd>
+                </div>
+              </dl>
             </div>
           </div>
-          <div class="mt-3">
-            <%= render "projects/material_import", project: @project, pasted_text: @material_import_text,
-                                                  result: @material_import, token: @material_import_token %>
+        </aside>
+      <% elsif active_step == "suppliers" %>
+        <div class="col-lg-8">
+          <%= render "projects/suppliers", project: @project, groups: groups, materials_by_group: materials_by_group,
+                                          suggestions_by_group: @supplier_suggestions_by_group, can_manage_groups: can_manage_groups,
+                                          selected_by_group: @selected_suppliers_by_group, search_group: @supplier_search_group,
+                                          search_query: @supplier_query, search_results: @supplier_search_results %>
+        </div>
+        <aside class="col-lg-4 project-workspace-sidebar" aria-labelledby="draft-bidder-list-title">
+          <div class="card bg-white rounded-4">
+            <div class="card-body p-3 p-md-4">
+              <h2 id="draft-bidder-list-title" class="h5">Draft bidder list</h2>
+              <% if @latest_bidder_list_version %>
+                <div class="mb-3 small" role="status">
+                  <span class="fw-semibold">Saved version <%= @latest_bidder_list_version.version_number %></span>
+                  <% if @bidder_list_unsaved %>
+                    <span class="badge bg-warning-subtle text-warning-emphasis">Unsaved changes</span>
+                  <% end %>
+                  <p class="text-body-secondary mb-1"><%= l(@latest_bidder_list_version.created_at, format: :short) %></p>
+                  <%= link_to "View saved version", project_bidder_list_version_path(@project, @latest_bidder_list_version) %>
+                </div>
+              <% end %>
+              <% if @selected_suppliers_by_group.empty? %>
+                <p class="text-body-secondary mb-0">No suppliers selected.</p>
+              <% else %>
+                <% groups.each do |group| %>
+                  <% selections = @selected_suppliers_by_group.fetch(group.id, []) %>
+                  <% next if selections.empty? %>
+                  <h3 class="h6 mt-3 mb-1 text-break"><%= group.title %></h3>
+                  <ul class="list-group list-group-flush">
+                    <% selections.each do |entry| %>
+                      <li class="list-group-item px-0 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                        <%= link_to entry.supplier.name, supplier_path(entry.supplier), class: "text-break" %>
+                        <% unless entry.supplier.active? %>
+                          <span class="badge bg-secondary-subtle text-secondary-emphasis">Inactive</span>
+                        <% end %>
+                        <% if can_manage_groups %>
+                          <%= button_to "Remove", shortlist_supplier_project_item_group_path(@project, group),
+                                        method: :patch, params: { supplier_id: entry.supplier_id, selected: "false" },
+                                        class: "btn btn-sm btn-outline-secondary", aria: { label: "Remove #{entry.supplier.name} from #{group.title}" } %>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              <% end %>
+              <% if can_manage_groups && @selected_suppliers_by_group.any? %>
+                <%= button_to "Save bidder list", project_bidder_list_versions_path(@project), method: :post,
+                              class: "btn btn-primary mt-3", data: { turbo_submits_with: "Saving…" } %>
+              <% end %>
+            </div>
           </div>
         </aside>
+      <% else %>
+        <section class="<%= can_add_material ? 'col-lg-8' : 'col-12' %>" aria-labelledby="materials-title">
+          <%= render "projects/materials", can_edit_materials: can_edit_materials, assign_groups: false,
+                                  material_group_options: material_group_options %>
+        </section>
+        <% if can_add_material %>
+          <aside class="col-lg-4 project-workspace-sidebar" aria-label="Material entry">
+            <%= tag.details class: "card bg-white rounded-4 project-form-disclosure", open: @item.errors.any? do %>
+              <summary class="p-3 p-md-4">
+                <h2 id="add-material-title" class="h4 mb-0 d-flex align-items-center justify-content-between gap-2">
+                  Add material
+                  <span aria-hidden="true">
+                    <i class="fas fa-plus small project-form-disclosure__plus"></i>
+                    <i class="fas fa-chevron-down small project-form-disclosure__chevron"></i>
+                  </span>
+                </h2>
+              </summary>
+              <div class="card-body px-3 px-md-4 pb-3 pb-md-4 pt-0">
+                <%= render "items/form", project: @project, item: @item, submit_label: "Add material", show_unit_suggestions: true %>
+              </div>
+            <% end %>
+            <div class="mt-3">
+              <%= render "projects/material_import", project: @project, pasted_text: @material_import_text,
+                                                    result: @material_import, token: @material_import_token %>
+            </div>
+          </aside>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </main>

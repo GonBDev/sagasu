@@ -38,4 +38,67 @@ test "buyer with viewer access cannot move another buyer's material" do # Check 
   assert_response :not_found # Verify the write lookup excludes the RFQ.
   assert_nil @item.reload.item_group_id # Verify the material stayed ungrouped.
 end # Finish the cross-owner write test.
+
+  test "project index combines title search with status and counts only visible matches" do
+    owner = @project.user
+    approved = owner.projects.create!(title: "Warehouse roofing", status: :approved)
+    owner.projects.create!(title: "Office lighting", status: :approved)
+    @reader.projects.create!(title: "Warehouse drainage", status: :approved)
+    @item.update!(item_group: @group)
+    sign_in owner
+
+    get projects_path, params: { q: "warehouse", status: "draft" }
+    assert_response :success
+    assert_select "article h2 a", text: @project.title
+    assert_select "article progress[value='1'][max='1']"
+    assert_select "article h2 a", text: approved.title, count: 0
+    assert_select "nav[aria-label='Filter projects by status'] a[href=?] .badge",
+                  projects_path(status: "approved", q: "warehouse"), text: "1"
+
+    get projects_path, params: { q: "warehouse", status: "approved" }
+    assert_select "article h2 a", text: approved.title
+    assert_select "article h2 a", count: 1
+    assert_select "form[role='search'] input[name='status'][value='approved']"
+  end
+
+  test "owning buyer can edit project information on draft and returned RFQs" do
+    owner = @project.user
+    owner.user_roles.create!(role: :buyer)
+    sign_in owner
+
+    get project_path(@project)
+    assert_select "a[href=?] i.fas.fa-pen", edit_project_path(@project)
+    get edit_project_path(@project)
+    assert_response :success
+    assert_select "textarea[name='project[title]']", text: @project.title
+
+    patch project_path(@project), params: { project: { title: "", scope: "New scope" } }
+    assert_response 422
+    assert_equal "Warehouse lighting", @project.reload.title
+
+    @project.returned!
+    patch project_path(@project), params: { project: { title: "Updated RFQ", scope: "New scope", status: "approved" } }
+    assert_redirected_to project_path(@project)
+    assert_equal "Updated RFQ", @project.reload.title
+    assert_equal "New scope", @project.scope
+    assert @project.returned?
+  end
+
+  test "approved RFQs and other owners' RFQs cannot be edited" do
+    owner = @project.user
+    owner.user_roles.create!(role: :buyer)
+    @project.approved!
+    sign_in owner
+
+    get project_path(@project)
+    assert_select "a[href=?]", edit_project_path(@project), count: 0
+    patch project_path(@project), params: { project: { title: "Blocked" } }
+    assert_redirected_to root_path
+    assert_equal "Warehouse lighting", @project.reload.title
+
+    @reader.user_roles.create!(role: :auditor)
+    sign_in @reader
+    get edit_project_path(@project)
+    assert_response :not_found
+  end
 end

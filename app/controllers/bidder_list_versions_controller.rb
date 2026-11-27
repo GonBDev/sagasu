@@ -3,7 +3,7 @@ class BidderListVersionsController < ApplicationController
   before_action :load_project
 
   rescue_from Pundit::NotAuthorizedError do
-    redirect_to root_path, alert: "You don't have access to that RFQ action.", status: :see_other
+    redirect_to root_path, alert: "You don't have access to that project action.", status: :see_other
   end
 
   def show

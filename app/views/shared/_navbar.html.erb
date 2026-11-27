@@ -15,7 +15,6 @@
           <li class="nav-item">
             <%= link_to "Dashboard", dashboard_path, class: "nav-link", aria: { current: ("page" if current_page?(dashboard_path)) } %>
           </li>
-          <li class="nav-item"><%= link_to "Quick Start", dashboard_path(anchor: "quick-start"), class: "nav-link" %></li>
           <li class="nav-item">
             <%= link_to "My Projects", projects_path, class: "nav-link", aria: { current: ("page" if current_page?(projects_path)) } %>
           </li>
@@ -27,12 +26,7 @@
               <%= link_to "Approvals", approvals_path, class: "nav-link", aria: { current: ("page" if current_page?(approvals_path)) } %>
             </li>
           <% end %>
-          <li class="nav-item">
-            <%= link_to "Messages", messages_path, class: "nav-link",
-                        aria: { current: ("page" if controller_name == "chats") } %>
-          </li>
         <% else %>
-          <li class="nav-item"><%= link_to "Quick Start", root_path(anchor: "quick-start"), class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "How it works", root_path(anchor: "how-it-works"), class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "Trust & evidence", root_path(anchor: "trust-and-evidence"), class: "nav-link" %></li>
         <% end %>
@@ -44,6 +38,10 @@
             <%= link_to new_project_path, class: "btn btn-primary gap-2 fw-semibold" do %>
               <i class="fas fa-plus" aria-hidden="true"></i> New project
             <% end %>
+          <% end %>
+          <%= link_to messages_path, class: "btn sagasu-nav-messages", title: "Messages",
+                      aria: { label: "Messages", current: ("page" if controller_name == "chats") } do %>
+            <i class="fa-regular fa-comments" aria-hidden="true"></i>
           <% end %>
           <% account_name = current_user.name.to_s.squish.presence %>
           <% name_parts = account_name.to_s.split %>
