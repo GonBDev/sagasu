@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :projects, only: %i[index new create show edit update] do
+    post :smart_fill, on: :collection
+
     member do # Route each workspace step through the existing project show action.
       get "bidder-list/materials", to: "projects#show", as: :bidder_list_materials, defaults: { workspace_step: "materials" }
       get "bidder-list/groups", to: "projects#show", as: :bidder_list_groups, defaults: { workspace_step: "groups" }

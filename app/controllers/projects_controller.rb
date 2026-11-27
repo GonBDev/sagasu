@@ -10,6 +10,18 @@ class ProjectsController < ApplicationController
     authorize @project
   end
 
+  def smart_fill
+    authorize Project, :create?
+    render json: { fields: ProjectSmartFill.new(params[:smart_fill_text]).call }
+  rescue Pundit::NotAuthorizedError
+    render json: { error: "You don’t have permission to create projects." }, status: :forbidden
+  rescue ProjectSmartFill::InvalidInput => error
+    render json: { error: error.message }, status: 422
+  rescue ProjectSmartFill::InvalidResponse, RubyLLM::Error, RubyLLM::ConfigurationError, Faraday::Error, KeyError
+    render json: { error: "Smart Fill couldn’t process the text. Try again or enter the details manually." },
+           status: :service_unavailable
+  end
+
   def create
     @project = current_user.projects.build(project_params)
     authorize @project
