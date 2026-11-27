@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     end
     resources :item_groups, only: %i[create update destroy] do
       post :suggest_suppliers, on: :member
+      post :suggest_suppliers_for_all, on: :collection
       patch :shortlist_supplier, on: :member
       post :propose, on: :collection
       post :apply_proposal, on: :collection
